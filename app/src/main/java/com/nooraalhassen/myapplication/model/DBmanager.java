@@ -1,0 +1,141 @@
+package com.nooraalhassen.myapplication.model;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * Created by nooraalhassen on 2/24/16.
+ */
+public class DBmanager extends SQLiteOpenHelper {
+
+    static int DB_VERSION = 1;
+    static String DB_NAME = "Selfmanaging.db";
+
+    public DBmanager(Context context) {
+        super(context,DB_NAME, null, DB_VERSION);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(UsersTable.sql_create);
+        db.execSQL(UsersProfileTable.sql_create);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(UsersTable.sql_drop);
+        db.execSQL(UsersProfileTable.sql_drop);
+
+        onCreate(db);
+    }
+
+
+    // creating a UserTable in database
+    private static class UsersTable implements BaseColumns {
+
+        // creating columns in UserTable
+        public static String table_name = "userRegister";
+        public static String Col_username = "username";
+        public static String Col_password = "password";
+
+
+        public static String sql_create = "create table "+table_name+ "("+
+                _ID + "INTEGER Primary key AUTOINCREMENT, "+
+                Col_username+ "TEXT not null, "+
+                Col_password+ "TEXT not null"+
+                ")";
+
+        public static String sql_drop = "drop table "+table_name+" if exists";
+    }
+
+    // creating UserProfileTable in database
+    private static class UsersProfileTable implements BaseColumns {
+
+        // creating columns in UserProfileTable
+        public static String table_name = "userProfile";
+        public static String Col_userID = "user_id";
+        public static String Col_name = "name";
+        public static String Col_birthdate = "birthdate";
+        public static String Col_gender = "gender";
+        public static String Col_startStudy = "startStudy";
+        public static String Col_gradStudy = "gradStudy";
+        public static String Col_sleepinghr = "sleepinghrs";
+        public static String Col_exercisesFreq = "exerciseFreq";
+
+
+        public static String sql_create = "create table "+table_name+ "("+
+                _ID + "INTEGER Primary key AUTOINCREMENT, "+
+                Col_userID+ "INTEGER not null, "+
+                Col_name+ "TEXT not null, "+
+                Col_birthdate+ "TEXT not null, "+
+                Col_gender+ "TEXT not null, "+
+                Col_startStudy+ "TEXT, "+
+                Col_gradStudy+ "TEXT, "+
+                Col_sleepinghr+ "REAL, "+
+                Col_exercisesFreq+ "TEXT"+
+                ")";
+
+        public static String sql_drop = "drop table "+table_name+" if exists";
+    }
+
+
+    public boolean signup (String username, String name, String password, String birthdate, char gender){
+
+        // allow to write into database
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(UsersTable.Col_username, username);
+        values.put(UsersTable.Col_password, password);
+        long id = db.insert(UsersTable.table_name, null, values);
+
+        if (id != -1){
+            ContentValues vals = new ContentValues();
+            vals.put(UsersProfileTable.Col_userID, id);
+            vals.put(UsersProfileTable.Col_name, name);
+            vals.put(UsersProfileTable.Col_birthdate, birthdate);
+            vals.put(UsersProfileTable.Col_gender, Character.toString(gender));
+
+            id = db.insert(UsersProfileTable.table_name, null, vals);
+        }
+
+        // Closing database
+        db.close();
+
+        if (id == -1){
+            return false;
+        }
+        return true;
+    }
+
+
+    public boolean updateProfile(String name, Date birthdate, char gender, Date start_Study, Date grad_Study, float sleepinghr, char exerciseFreq){
+        SQLiteDatabase db = getWritableDatabase();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        ContentValues values = new ContentValues();
+        values.put(UsersProfileTable.Col_name, name);
+        values.put(UsersProfileTable.Col_birthdate, simpleDateFormat.format(birthdate));
+        values.put(UsersProfileTable.Col_gender, Character.toString(gender));
+        values.put(UsersProfileTable.Col_startStudy, simpleDateFormat.format(start_Study));
+        values.put(UsersProfileTable.Col_gradStudy, simpleDateFormat.format(grad_Study));
+        values.put(UsersProfileTable.Col_sleepinghr, sleepinghr);
+        values.put(UsersProfileTable.Col_exercisesFreq, Character.toString(exerciseFreq));
+
+        long id = db.update(UsersProfileTable.table_name, values, null, null);
+
+        // Closing database
+        db.close();
+
+        if (id == -1){
+            return false;
+        }
+        return true;
+    }
+}
