@@ -23,10 +23,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // button declaration
         btnlogin = (Button) findViewById(R.id.buttonLog);
         btnSignup = (Button) findViewById(R.id.buttonSign);
 
-
+        // login button action
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // signup button action
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

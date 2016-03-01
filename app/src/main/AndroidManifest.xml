@@ -27,8 +27,12 @@
             android:label="@string/title_activity_sign_up"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".physical"
+            android:name=".Physical"
             android:label="@string/title_activity_physical"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LandingView"
+            android:label="@string/title_activity_landing_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
