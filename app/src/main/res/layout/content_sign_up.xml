@@ -154,5 +154,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/signName"
         android:layout_alignEnd="@+id/signName"
-        android:text="username" />
+        android:text="email address"
+        android:inputType="textEmailAddress" />
 </RelativeLayout>

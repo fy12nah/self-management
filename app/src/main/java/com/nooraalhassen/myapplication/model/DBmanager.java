@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class DBmanager extends SQLiteOpenHelper {
 
-    static int DB_VERSION = 1;
+    static int DB_VERSION = 2;
     static String DB_NAME = "Selfmanaging.db";
 
     public DBmanager(Context context) {
@@ -25,13 +25,14 @@ public class DBmanager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(UsersTable.sql_create);
         db.execSQL(UsersProfileTable.sql_create);
+        db.execSQL(UsersPhysicalTable.sql_create);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(UsersTable.sql_drop);
         db.execSQL(UsersProfileTable.sql_drop);
-
+        db.execSQL(UsersPhysicalTable.sql_drop);
         onCreate(db);
     }
 
@@ -46,12 +47,12 @@ public class DBmanager extends SQLiteOpenHelper {
 
 
         public static String sql_create = "create table "+table_name+ "("+
-                _ID + "INTEGER Primary key AUTOINCREMENT, "+
-                Col_username+ "TEXT not null, "+
-                Col_password+ "TEXT not null"+
+                _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_username+ " TEXT not null, "+
+                Col_password+ " TEXT not null"+
                 ")";
 
-        public static String sql_drop = "drop table "+table_name+" if exists";
+        public static String sql_drop = "drop table if exists "+table_name;
     }
 
     // creating UserProfileTable in database
@@ -70,18 +71,18 @@ public class DBmanager extends SQLiteOpenHelper {
 
 
         public static String sql_create = "create table "+table_name+ "("+
-                _ID + "INTEGER Primary key AUTOINCREMENT, "+
-                Col_userID+ "INTEGER not null, "+
-                Col_name+ "TEXT not null, "+
-                Col_birthdate+ "TEXT not null, "+
-                Col_gender+ "TEXT not null, "+
-                Col_startStudy+ "TEXT, "+
-                Col_gradStudy+ "TEXT, "+
-                Col_sleepinghr+ "REAL, "+
-                Col_exercisesFreq+ "TEXT"+
+                _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_userID+ " INTEGER not null, "+
+                Col_name+ " TEXT not null, "+
+                Col_birthdate+ " TEXT not null, "+
+                Col_gender+ " TEXT not null, "+
+                Col_startStudy+ " TEXT, "+
+                Col_gradStudy+ " TEXT, "+
+                Col_sleepinghr+ " REAL, "+
+                Col_exercisesFreq+ " TEXT"+
                 ")";
 
-        public static String sql_drop = "drop table "+table_name+" if exists";
+        public static String sql_drop = "drop table if exists "+table_name;
     }
 
 
@@ -96,13 +97,13 @@ public class DBmanager extends SQLiteOpenHelper {
 
 
         public static String sql_create = "create table "+table_name+ "("+
-                _ID + "INTEGER Primary key AUTOINCREMENT, "+
-                Col_weight+ "REAL, "+
-                Col_height+ "REAL, "+
-                Col_date+ "TEXT"+
+                _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_weight+ " REAL, "+
+                Col_height+ " REAL, "+
+                Col_date+ " TEXT"+
                 ")";
 
-        public static String sql_drop = "drop table "+table_name+" if exists";
+        public static String sql_drop = "drop table if exists "+table_name;
     }
 
 

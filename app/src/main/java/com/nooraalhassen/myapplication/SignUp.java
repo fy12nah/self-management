@@ -1,5 +1,6 @@
 package com.nooraalhassen.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
 
@@ -52,7 +54,12 @@ public class SignUp extends AppCompatActivity {
                     gender = 'F';
                 }
 
-                mgr.signup(username, name, password, birthdate, gender);
+                boolean signed =  mgr.signup(username, name, password, birthdate, gender);
+                if (signed == true){
+                    Intent intent = new Intent(SignUp.this, Profile.class);
+                    startActivity(intent);
+                }
+                else Toast.makeText(SignUp.this, "Failed to signup", Toast.LENGTH_LONG).show();
 
             }
         });
