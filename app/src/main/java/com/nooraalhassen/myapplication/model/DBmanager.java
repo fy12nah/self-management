@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by nooraalhassen on 2/24/16.
+ * Created by nooraalhassen
  */
 public class DBmanager extends SQLiteOpenHelper {
 
@@ -85,6 +85,27 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
+    // creating a UserPhysicalTable in database
+    private static class UsersPhysicalTable implements BaseColumns {
+
+        // creating columns in UserPhysicalTable
+        public static String table_name = "userPhysical";
+        public static String Col_weight = "weight";
+        public static String Col_height = "height";
+        public static String Col_date = "date";
+
+
+        public static String sql_create = "create table "+table_name+ "("+
+                _ID + "INTEGER Primary key AUTOINCREMENT, "+
+                Col_weight+ "REAL, "+
+                Col_height+ "REAL, "+
+                Col_date+ "TEXT"+
+                ")";
+
+        public static String sql_drop = "drop table "+table_name+" if exists";
+    }
+
+
     public boolean signup (String username, String name, String password, String birthdate, char gender){
 
         // allow to write into database
@@ -129,6 +150,30 @@ public class DBmanager extends SQLiteOpenHelper {
         values.put(UsersProfileTable.Col_exercisesFreq, Character.toString(exerciseFreq));
 
         long id = db.update(UsersProfileTable.table_name, values, null, null);
+
+        // Closing database
+        db.close();
+
+        if (id == -1){
+            return false;
+        }
+        return true;
+    }
+
+    // insert data into userPhysicalTable
+    public boolean insert_physical (float weight, float height, Date physicaldate){
+
+        // allow to write into database
+        SQLiteDatabase db = getWritableDatabase();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        ContentValues values = new ContentValues();
+        values.put(UsersPhysicalTable.Col_weight, weight);
+        values.put(UsersPhysicalTable.Col_height, height);
+        values.put(UsersPhysicalTable.Col_date, simpleDateFormat.format(physicaldate));
+        long id = db.insert(UsersTable.table_name, null, values);
+
 
         // Closing database
         db.close();

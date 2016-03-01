@@ -56,8 +56,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
+        android:text="save"
+        android:id="@+id/physical_save"
         android:layout_below="@+id/textView21"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -91,7 +91,7 @@
         android:inputType="date"
         android:ems="10"
         android:id="@+id/editText"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/physical_save"
         android:layout_alignLeft="@+id/height"
         android:layout_alignStart="@+id/height" />
 
