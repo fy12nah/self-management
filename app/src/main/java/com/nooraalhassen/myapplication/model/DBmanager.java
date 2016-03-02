@@ -121,10 +121,11 @@ public class DBmanager extends SQLiteOpenHelper {
         long id = db.insert(UsersTable.table_name, null, values);
 
         if (id != -1){
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             ContentValues vals = new ContentValues();
             vals.put(UsersProfileTable.Col_userID, id);
             vals.put(UsersProfileTable.Col_name, name);
-            vals.put(UsersProfileTable.Col_birthdate, birthdate);
+            vals.put(UsersProfileTable.Col_birthdate, simpleDateFormat.format(birthdate));
             vals.put(UsersProfileTable.Col_gender, Character.toString(gender));
 
             id = db.insert(UsersProfileTable.table_name, null, vals);
