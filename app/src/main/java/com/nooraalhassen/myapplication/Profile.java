@@ -48,7 +48,7 @@ public class Profile extends AppCompatActivity {
         bddialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePick = new DatePickerDialog(Profile.this, new BirthDateDailogListener(),0,0,0);
+                DatePickerDialog datePick = new DatePickerDialog(Profile.this, new BirthDateDailogListener(), 0, 0, 0);
             }
         });
 
@@ -168,7 +168,7 @@ public class Profile extends AppCompatActivity {
     }
 
     // creating a calander dialog for birthdate
-    private class BirthDateDailogListener implements  DatePickerDialog.OnDateSetListener{
+    private class BirthDateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             birthDText.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
@@ -176,7 +176,7 @@ public class Profile extends AppCompatActivity {
     }
 
     // creating a calander dialog for start study date
-    private class sDateDailogListener implements  DatePickerDialog.OnDateSetListener{
+    private class sDateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             startDText.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
@@ -184,7 +184,7 @@ public class Profile extends AppCompatActivity {
     }
 
     // creating a calander dialog for grad study date
-    private class gDateDailogListener implements  DatePickerDialog.OnDateSetListener{
+    private class gDateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             gradDText.setText(dayOfMonth+"/"+monthOfYear+"/"+year);

@@ -60,7 +60,7 @@
         android:text="save"
         android:id="@+id/physical_save"
         android:layout_marginTop="61dp"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/phys_date"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:inputType="date"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/phys_date"
         android:layout_alignBottom="@+id/physicald_Dialog"
         android:layout_alignLeft="@+id/height"
         android:layout_alignStart="@+id/height" />
@@ -102,8 +102,8 @@
         android:id="@+id/physicald_Dialog"
         android:src="@android:drawable/ic_menu_month"
         android:layout_alignBottom="@+id/textView21"
-        android:layout_toLeftOf="@+id/editText"
-        android:layout_toStartOf="@+id/editText" />
+        android:layout_toLeftOf="@+id/phys_date"
+        android:layout_toStartOf="@+id/phys_date" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -122,8 +122,8 @@
         android:text="cm"
         android:id="@+id/textView23"
         android:layout_alignBottom="@+id/height"
-        android:layout_alignRight="@+id/editText"
-        android:layout_alignEnd="@+id/editText" />
+        android:layout_alignRight="@+id/phys_date"
+        android:layout_alignEnd="@+id/phys_date" />
 
 
 </RelativeLayout>
