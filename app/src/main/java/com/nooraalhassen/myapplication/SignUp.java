@@ -23,7 +23,7 @@ import java.util.Date;
 
 public class SignUp extends AppCompatActivity {
 
-    private EditText birthdate_edittext;
+    EditText birthdate_edittext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
