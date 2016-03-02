@@ -30,7 +30,8 @@
         android:layout_marginTop="105dp"
         android:layout_below="@+id/textView18"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="31dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,10 +39,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Height:"
         android:id="@+id/textView20"
-        android:layout_below="@+id/textView19"
+        android:layout_above="@+id/physicald_Dialog"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="41dp" />
+        android:layout_marginBottom="31dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -58,12 +59,12 @@
         android:layout_height="wrap_content"
         android:text="save"
         android:id="@+id/physical_save"
-        android:layout_below="@+id/textView21"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="81dp"
+        android:layout_marginTop="61dp"
+        android:layout_below="@+id/editText"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="180dp"
@@ -71,7 +72,7 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/weight"
-        android:layout_above="@+id/textView20"
+        android:layout_alignBottom="@+id/textView22"
         android:layout_alignLeft="@+id/textView18"
         android:layout_alignStart="@+id/textView18" />
 
@@ -91,7 +92,7 @@
         android:inputType="date"
         android:ems="10"
         android:id="@+id/editText"
-        android:layout_above="@+id/physical_save"
+        android:layout_alignBottom="@+id/physicald_Dialog"
         android:layout_alignLeft="@+id/height"
         android:layout_alignStart="@+id/height" />
 

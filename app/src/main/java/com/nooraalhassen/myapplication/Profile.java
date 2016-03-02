@@ -1,6 +1,7 @@
 package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,6 +28,7 @@ public class Profile extends AppCompatActivity {
     private EditText birthDText ;
     private EditText startDText;
     private EditText gradDText;
+    ImageView profile_save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +37,11 @@ public class Profile extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        // declaring widgets
         birthDText = (EditText) findViewById(R.id.birthD);
         startDText = (EditText) findViewById(R.id.start_study);
         gradDText = (EditText) findViewById(R.id.grad_study);
+        profile_save = (ImageView) findViewById(R.id.profile_save);
 
 
         ImageView bddialog = (ImageView) findViewById(R.id.bdDialog);
@@ -62,6 +65,14 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePick = new DatePickerDialog(Profile.this, new gDateDailogListener(),0,0,0);
+            }
+        });
+
+
+        profile_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // save and update profile
             }
         });
 
