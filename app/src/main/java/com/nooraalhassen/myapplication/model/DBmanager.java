@@ -109,7 +109,7 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
-    public boolean signup (String username, String name, String password, String birthdate, char gender){
+    public boolean signup (String username, String name, String password, Date birthdate, char gender){
 
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
