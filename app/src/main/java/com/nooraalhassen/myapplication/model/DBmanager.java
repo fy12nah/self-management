@@ -23,6 +23,7 @@ public class DBmanager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // creating tables
         db.execSQL(UsersTable.sql_create);
         db.execSQL(UsersProfileTable.sql_create);
         db.execSQL(UsersPhysicalTable.sql_create);
@@ -30,6 +31,7 @@ public class DBmanager extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // dropping tables
         db.execSQL(UsersTable.sql_drop);
         db.execSQL(UsersProfileTable.sql_drop);
         db.execSQL(UsersPhysicalTable.sql_drop);
@@ -112,6 +114,7 @@ public class DBmanager extends SQLiteOpenHelper {
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
 
+        // input values in col
         ContentValues values = new ContentValues();
         values.put(UsersTable.Col_username, username);
         values.put(UsersTable.Col_password, password);
@@ -167,9 +170,12 @@ public class DBmanager extends SQLiteOpenHelper {
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
 
+        // date form 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         ContentValues values = new ContentValues();
+
+        // input values in col
         values.put(UsersPhysicalTable.Col_weight, weight);
         values.put(UsersPhysicalTable.Col_height, height);
         values.put(UsersPhysicalTable.Col_date, simpleDateFormat.format(physicaldate));
