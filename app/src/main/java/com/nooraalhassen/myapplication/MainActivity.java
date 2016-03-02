@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // button declaration
+        // buttons declaration
         btnlogin = (Button) findViewById(R.id.buttonLog);
         btnSignup = (Button) findViewById(R.id.buttonSign);
 
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // go to another view - landing view
                 Intent intent = new Intent(MainActivity.this, LandingView.class);
                 startActivity(intent);
             }
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // go to another view - signup
                 Intent intent = new Intent(MainActivity.this, SignUp.class);
                 startActivity(intent);
             }

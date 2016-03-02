@@ -165,12 +165,12 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
     // insert data into userPhysicalTable
-    public boolean insert_physical (float weight, float height, Date physicaldate){
+    public boolean insert_physical (String weight, String height, String physicaldate){
 
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
 
-        // date form 
+        // date form
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         ContentValues values = new ContentValues();

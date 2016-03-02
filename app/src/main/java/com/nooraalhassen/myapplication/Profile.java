@@ -44,6 +44,7 @@ public class Profile extends AppCompatActivity {
         profile_save = (ImageView) findViewById(R.id.profile_save);
 
 
+        // calander dialog for birthdate
         ImageView bddialog = (ImageView) findViewById(R.id.bdDialog);
         bddialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +53,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        // calander dialog for start date
         ImageView sddialog = (ImageView) findViewById(R.id.sdDialog);
         sddialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +62,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        // calander dialog for grad date
         ImageView gddialog = (ImageView) findViewById(R.id.gdDialog);
         gddialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,17 +106,18 @@ public class Profile extends AppCompatActivity {
 
     private void saveprofile() {
 
+        // declaring widgets
         EditText nameText = (EditText) findViewById(R.id.name);
-
-
         EditText sleephrText = (EditText) findViewById(R.id.sleeplinghr);
 
+        // getting values of widgets
         String name = nameText.getText().toString();
         String birthD = birthDText.getText().toString();
         String startD = startDText.getText().toString();
         String gradD = gradDText.getText().toString();
         float slphrs = Float.parseFloat(sleephrText.getText().toString());
 
+        // getting values of Gender radio group
         RadioGroup radioGroupGender = (RadioGroup) findViewById(R.id.radioGroupGender);
         char gender = 'M';
         int selectedRadioButton = radioGroupGender.getCheckedRadioButtonId();

@@ -17,6 +17,10 @@ import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class physical extends AppCompatActivity {
 
     private EditText phys_date;
@@ -57,6 +61,24 @@ public class physical extends AppCompatActivity {
                 String height = height_edittext.getText().toString();
                 String phys_date = date_edittext.getText().toString();
 
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+                Date physdate = null;
+
+                try {
+                    physdate = simpleDateFormat.parse(phys_date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+                // boolean saved = mgr.insert_physical (weight, height, physdate);
+                // if (saved == true){
+                //    Toast.makeText(this, "Profile updated", Toast.LENGTH_LONG).show();
+               // }
+                //else {
+                //    Toast.makeText(this, "Profile failed to update", Toast.LENGTH_LONG).show();
+               // }
                 // save data in db
                 // gives Toast msg
 
