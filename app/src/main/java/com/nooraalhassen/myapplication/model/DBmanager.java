@@ -165,7 +165,7 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
     // insert data into userPhysicalTable
-    public boolean insert_physical (String weight, String height, String physicaldate){
+    public boolean insert_physical (String weight, String height, Date physicaldate){
 
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();

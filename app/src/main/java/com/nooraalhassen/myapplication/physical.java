@@ -72,16 +72,13 @@ public class physical extends AppCompatActivity {
                 }
 
 
-                // boolean saved = mgr.insert_physical (weight, height, physdate);
-                // if (saved == true){
-                //    Toast.makeText(this, "Profile updated", Toast.LENGTH_LONG).show();
-               // }
-                //else {
-                //    Toast.makeText(this, "Profile failed to update", Toast.LENGTH_LONG).show();
-               // }
-                // save data in db
-                // gives Toast msg
-
+                boolean saved = mgr.insert_physical (weight, height, physdate);
+                if (saved == true){
+                    Toast.makeText(physical.this, "Physical entries saved", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(physical.this, "Failed to save physical entries", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
