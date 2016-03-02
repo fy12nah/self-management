@@ -73,6 +73,7 @@
         android:layout_height="wrap_content"
         android:text="Login"
         android:id="@+id/buttonLog"
+        android:layout_below="@+id/signPass"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

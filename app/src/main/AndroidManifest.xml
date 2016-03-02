@@ -27,7 +27,7 @@
             android:label="@string/title_activity_sign_up"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Physical"
+            android:name=".physical"
             android:label="@string/title_activity_physical"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

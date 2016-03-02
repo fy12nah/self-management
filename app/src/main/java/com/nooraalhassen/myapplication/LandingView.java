@@ -11,6 +11,8 @@ public class LandingView extends AppCompatActivity {
 
     TextView profile_tv;
     TextView physical_tv;
+    TextView lifestyle_tv;
+    TextView illness_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,8 @@ public class LandingView extends AppCompatActivity {
 
         profile_tv = (TextView) findViewById(R.id.profile_tv);
         physical_tv = (TextView) findViewById(R.id.physical_tv);
+        lifestyle_tv = (TextView) findViewById(R.id.lifes_tv);
+        illness_tv = (TextView) findViewById(R.id.illness_tv);
 
         // action
         profile_tv.setOnClickListener(new View.OnClickListener() {
@@ -37,8 +41,28 @@ public class LandingView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(LandingView.this, Physical.class);
+                Intent intent = new Intent(LandingView.this, physical.class);
                 startActivity(intent);
+            }
+        });
+
+        // action
+        lifestyle_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Intent intent = new Intent(LandingView.this, Lifestyle.class);
+               // startActivity(intent);
+            }
+        });
+
+        // action
+        illness_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Intent intent = new Intent(LandingView.this, Illness.class);
+               // startActivity(intent);
             }
         });
     }
