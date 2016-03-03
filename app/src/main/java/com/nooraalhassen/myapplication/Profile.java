@@ -46,6 +46,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePick = new DatePickerDialog(Profile.this, new BirthDateDailogListener(), 0, 0, 0);
+                datePick.show();
             }
         });
 
