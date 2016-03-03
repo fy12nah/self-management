@@ -187,68 +187,75 @@
         android:id="@+id/radioGroupPersonalize"
         android:layout_below="@+id/textView9">
 
-        <TableRow>
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Profile"
                 android:id="@+id/radioProf"
-                android:checked="false" />
+                android:checked="false"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Meals"
                 android:id="@+id/radioMeals"
-                android:checked="false"/>
-
-        </TableRow>
-
-
-        <TableRow>
+                android:checked="false"
+                android:layout_toRightOf="@+id/radioProf"
+                android:layout_marginLeft="50dp"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Physical"
             android:id="@+id/radioPhys"
-            android:checked="false" />
+            android:checked="false"
+            android:layout_below="@+id/radioProf"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mood status"
             android:id="@+id/radioMood"
-            android:checked="false" />
-
-        </TableRow>
-
-
-        <TableRow>
+            android:checked="false"
+            android:layout_toRightOf="@+id/radioPhys"
+            android:layout_below="@+id/radioMeals"
+            android:layout_alignLeft="@+id/radioMeals"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Illness"
             android:id="@+id/radioIllness"
-            android:checked="false" />
+            android:checked="false"
+            android:layout_below="@+id/radioPhys"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Exercises"
             android:id="@+id/radioExer"
-            android:checked="false" />
+            android:checked="false"
+            android:layout_below="@+id/radioMood"
+            android:layout_toRightOf="@+id/radioIllness"
+            android:layout_alignLeft="@+id/radioMeals"/>
 
-        </TableRow>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sleeping Hours"
             android:id="@+id/radioSleep"
-            android:checked="false" />
+            android:checked="false"
+            android:layout_below="@+id/radioExer"
+            android:layout_alignLeft="@+id/radioMeals"/>
+
+        </RelativeLayout>
 
     </RadioGroup>
 

@@ -177,7 +177,7 @@ public class DBmanager extends SQLiteOpenHelper {
         values.put(UsersPhysicalTable.Col_weight, weight);
         values.put(UsersPhysicalTable.Col_height, height);
         values.put(UsersPhysicalTable.Col_date, simpleDateFormat.format(physicaldate));
-        long id = db.insert(UsersTable.table_name, null, values);
+        long id = db.insert(UsersPhysicalTable.table_name, null, values);
 
 
         // Closing database
