@@ -2,6 +2,7 @@ package com.nooraalhassen.myapplication.model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
@@ -161,6 +162,13 @@ public class DBmanager extends SQLiteOpenHelper {
         }
         return true;
     }
+
+    public Cursor getProfile(long profileid){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query(UsersProfileTable.table_name, null, " _id = ? ", new String[]{String.valueOf(profileid)}, null, null, null);
+        return c;
+    }
+
 
     // insert data into userPhysicalTable
     public boolean insert_physical (String weight, String height, Date physicaldate){

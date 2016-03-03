@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,6 +39,9 @@ public class Profile extends AppCompatActivity {
         startDText = (EditText) findViewById(R.id.start_study);
         gradDText = (EditText) findViewById(R.id.grad_study);
         profile_save = (ImageView) findViewById(R.id.profile_save);
+
+        DBmanager manager = new DBmanager(this);
+        // manager.getProfile();
 
 
         // calander dialog for birthdate
@@ -75,6 +79,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // save and update profile
+
             }
         });
 
@@ -126,33 +131,46 @@ public class Profile extends AppCompatActivity {
             gender = 'F';
         }
 
-        RadioGroup most_used = (RadioGroup) findViewById(R.id.radioGroupPersonalize);
-        selectedRadioButton = most_used.getCheckedRadioButtonId();
-        char personalize = 'P';
-        if (selectedRadioButton == R.id.radioProf){
-            personalize = 'P';
-        }
-        else if (selectedRadioButton == R.id.radioPhys){
-            personalize = 'W';
-        }
-        else if (selectedRadioButton == R.id.radioMeals){
-            personalize = 'M';
-        }
-        else if (selectedRadioButton == R.id.radioMood){
-            personalize = 'D';
-        }
-        else if (selectedRadioButton == R.id.radioExer){
-            personalize = 'E';
-        }
-        else if (selectedRadioButton == R.id.radioSleep){
-            personalize = 'S';
-        }
-        else if (selectedRadioButton == R.id.radioIllness){
-            personalize = 'I';
+
+        CheckBox chkProfile = (CheckBox) findViewById(R.id.radioProf);
+        CheckBox chkPhys = (CheckBox) findViewById(R.id.radioPhys);
+        CheckBox chkMeals = (CheckBox) findViewById(R.id.radioMeals);
+        CheckBox chkExer = (CheckBox) findViewById(R.id.radioExer);
+        CheckBox chkSleep = (CheckBox) findViewById(R.id.radioSleep);
+        CheckBox chkMood = (CheckBox) findViewById(R.id.radioMood);
+        CheckBox chkIllness = (CheckBox) findViewById(R.id.radioIllness);
+
+
+        if (chkProfile.isChecked()){
+
         }
 
+        if (chkPhys.isChecked()){
+
+        }
+
+        if (chkIllness.isChecked()){
+
+        }
+
+        if (chkMeals.isChecked()){
+
+        }
+
+        if (chkExer.isChecked()){
+
+        }
+
+        if (chkSleep.isChecked()){
+
+        }
+
+        if (chkMood.isChecked()){
+
+        }
+
+        // date format
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
         Date bd = null;
         Date sd = null;
         Date gd = null;
@@ -166,9 +184,9 @@ public class Profile extends AppCompatActivity {
         }
 
 
-
+        // add var for checkbox
         DBmanager manager = new DBmanager(this);
-        boolean update = manager.updateProfile(name, bd, gender, sd, gd, personalize);
+        boolean update = manager.updateProfile(name, bd, gender, sd, gd, most_Used);
         if (update == true){
             Toast.makeText(this, "Profile updated", Toast.LENGTH_LONG).show();
         }
