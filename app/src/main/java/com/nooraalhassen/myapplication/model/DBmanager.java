@@ -68,8 +68,7 @@ public class DBmanager extends SQLiteOpenHelper {
         public static String Col_gender = "gender";
         public static String Col_startStudy = "startStudy";
         public static String Col_gradStudy = "gradStudy";
-        public static String Col_sleepinghr = "sleepinghrs";
-        public static String Col_exercisesFreq = "exerciseFreq";
+        public static String Col_mostUsed = "Most_Used";
 
 
         public static String sql_create = "create table "+table_name+ "("+
@@ -80,8 +79,7 @@ public class DBmanager extends SQLiteOpenHelper {
                 Col_gender+ " TEXT not null, "+
                 Col_startStudy+ " TEXT, "+
                 Col_gradStudy+ " TEXT, "+
-                Col_sleepinghr+ " REAL, "+
-                Col_exercisesFreq+ " TEXT"+
+                Col_mostUsed + " REAL, "+
                 ")";
 
         public static String sql_drop = "drop table if exists "+table_name;
@@ -141,7 +139,7 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
-    public boolean updateProfile(String name, Date birthdate, char gender, Date start_Study, Date grad_Study, float sleepinghr, char exerciseFreq){
+    public boolean updateProfile(String name, Date birthdate, char gender, Date start_Study, Date grad_Study, char mostUsed){
         SQLiteDatabase db = getWritableDatabase();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -151,8 +149,7 @@ public class DBmanager extends SQLiteOpenHelper {
         values.put(UsersProfileTable.Col_gender, Character.toString(gender));
         values.put(UsersProfileTable.Col_startStudy, simpleDateFormat.format(start_Study));
         values.put(UsersProfileTable.Col_gradStudy, simpleDateFormat.format(grad_Study));
-        values.put(UsersProfileTable.Col_sleepinghr, sleepinghr);
-        values.put(UsersProfileTable.Col_exercisesFreq, Character.toString(exerciseFreq));
+        values.put(UsersProfileTable.Col_mostUsed, Character.toString(mostUsed));
 
         long id = db.update(UsersProfileTable.table_name, values, null, null);
 

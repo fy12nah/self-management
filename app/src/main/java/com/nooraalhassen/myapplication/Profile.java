@@ -1,11 +1,7 @@
 package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -108,14 +104,13 @@ public class Profile extends AppCompatActivity {
 
         // declaring widgets
         EditText nameText = (EditText) findViewById(R.id.name);
-        EditText sleephrText = (EditText) findViewById(R.id.sleeplinghr);
+
 
         // getting values of widgets
         String name = nameText.getText().toString();
         String birthD = birthDText.getText().toString();
         String startD = startDText.getText().toString();
         String gradD = gradDText.getText().toString();
-        float slphrs = Float.parseFloat(sleephrText.getText().toString());
 
         // getting values of Gender radio group
         RadioGroup radioGroupGender = (RadioGroup) findViewById(R.id.radioGroupGender);
@@ -128,20 +123,29 @@ public class Profile extends AppCompatActivity {
             gender = 'F';
         }
 
-        RadioGroup exerFreq = (RadioGroup) findViewById(R.id.radioGroupExer);
-        selectedRadioButton = exerFreq.getCheckedRadioButtonId();
-        char frequency = 'N';
-        if (selectedRadioButton == R.id.radioNever){
-            frequency = 'N';
+        RadioGroup most_used = (RadioGroup) findViewById(R.id.radioGroupPersonalize);
+        selectedRadioButton = most_used.getCheckedRadioButtonId();
+        char personalize = 'P';
+        if (selectedRadioButton == R.id.radioProf){
+            personalize = 'P';
         }
-        else if (selectedRadioButton == R.id.radioRarely){
-            frequency = 'R';
+        else if (selectedRadioButton == R.id.radioPhys){
+            personalize = 'W';
         }
-        else if (selectedRadioButton == R.id.radioMoreOften){
-            frequency = 'O';
+        else if (selectedRadioButton == R.id.radioMeals){
+            personalize = 'M';
         }
-        else if (selectedRadioButton == R.id.radioReg){
-            frequency = 'D';
+        else if (selectedRadioButton == R.id.radioMood){
+            personalize = 'D';
+        }
+        else if (selectedRadioButton == R.id.radioExer){
+            personalize = 'E';
+        }
+        else if (selectedRadioButton == R.id.radioSleep){
+            personalize = 'S';
+        }
+        else if (selectedRadioButton == R.id.radioIllness){
+            personalize = 'I';
         }
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -161,7 +165,7 @@ public class Profile extends AppCompatActivity {
 
 
         DBmanager manager = new DBmanager(this);
-        boolean update = manager.updateProfile(name, bd, gender, sd, gd, slphrs, frequency);
+        boolean update = manager.updateProfile(name, bd, gender, sd, gd, personalize);
         if (update == true){
             Toast.makeText(this, "Profile updated", Toast.LENGTH_LONG).show();
         }

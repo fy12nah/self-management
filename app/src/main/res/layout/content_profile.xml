@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Lifestyle"
+        android:text="Choose Most Used:"
         android:id="@+id/textView9"
         android:layout_below="@+id/textView14"
         android:layout_alignParentLeft="true"
@@ -110,36 +110,15 @@
         android:layout_toStartOf="@+id/start_study"
         android:layout_marginTop="3dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Sleeping duration:"
-        android:id="@+id/textView15"
-        android:layout_below="@+id/textView9"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="3dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Exercising frequency:"
-        android:id="@+id/textView16"
-        android:layout_below="@+id/textView15"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="3dp"/>
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="date"
         android:ems="10"
         android:id="@+id/grad_study"
-        android:layout_alignBottom="@+id/textView14"
-        android:layout_toRightOf="@+id/gdDialog" />
+        android:layout_above="@+id/textView9"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -147,18 +126,9 @@
         android:inputType="date"
         android:ems="10"
         android:id="@+id/start_study"
-        android:layout_alignBottom="@+id/textView13"
-        android:layout_toEndOf="@+id/textView16"
-        android:layout_toRightOf="@+id/textView16" />
-
-    <EditText
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/sleeplinghr"
-        android:layout_above="@+id/textView16"
-        android:layout_toRightOf="@+id/gdDialog" />
+        android:layout_alignBottom="@+id/sdDialog"
+        android:layout_alignLeft="@+id/grad_study"
+        android:layout_alignStart="@+id/grad_study" />
 
 
     <EditText
@@ -169,21 +139,18 @@
         android:ems="10"
         android:id="@+id/name"
         android:layout_above="@+id/textView11"
-        android:layout_toRightOf="@+id/textView15"
-        android:layout_toEndOf="@+id/textView15" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="date"
         android:ems="10"
-        android:layout_marginTop="20dp"
         android:id="@+id/birthD"
-        android:layout_above="@+id/textView12"
-        android:layout_alignRight="@+id/name"
-        android:layout_alignEnd="@+id/name"
-        android:layout_alignLeft="@+id/name"
-        android:layout_alignStart="@+id/name" />
+        android:layout_alignBottom="@+id/textView11"
+        android:layout_alignLeft="@+id/start_study"
+        android:layout_alignStart="@+id/start_study" />
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -215,38 +182,74 @@
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView16"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/radioGroupExer">
+        android:id="@+id/radioGroupPersonalize"
+        android:layout_below="@+id/textView9">
+
+        <TableRow>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:id="@+id/radioProf"
+                android:checked="false" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meals"
+                android:id="@+id/radioMeals"
+                android:checked="false"/>
+
+        </TableRow>
+
+
+        <TableRow>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Never"
-            android:id="@+id/radioNever"
+            android:text="Physical"
+            android:id="@+id/radioPhys"
             android:checked="false" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rarely"
-            android:id="@+id/radioRarely"
+            android:text="Mood status"
+            android:id="@+id/radioMood"
+            android:checked="false" />
+
+        </TableRow>
+
+
+        <TableRow>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Illness"
+            android:id="@+id/radioIllness"
             android:checked="false" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="More Often"
-            android:id="@+id/radioMoreOften"
+            android:text="Exercises"
+            android:id="@+id/radioExer"
             android:checked="false" />
+
+        </TableRow>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Regularally"
-            android:id="@+id/radioReg"
+            android:text="Sleeping Hours"
+            android:id="@+id/radioSleep"
             android:checked="false" />
+
     </RadioGroup>
 
     <ImageView
@@ -276,22 +279,12 @@
         android:layout_alignLeft="@+id/sdDialog"
         android:layout_alignStart="@+id/sdDialog" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="hours"
-        android:id="@+id/textView29"
-        android:layout_alignBottom="@+id/sleeplinghr"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/profile_save"
-        android:layout_above="@+id/birthD"
+        android:src="@android:drawable/ic_menu_save"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:src="@android:drawable/ic_menu_save"/>
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
