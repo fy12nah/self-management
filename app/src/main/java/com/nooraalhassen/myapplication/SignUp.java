@@ -19,6 +19,7 @@ import com.nooraalhassen.myapplication.model.DBmanager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class SignUp extends AppCompatActivity {
@@ -45,6 +46,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePick = new DatePickerDialog(SignUp.this, new BirthDateDailogListener(), 0, 0, 0);
+                datePick.show();
             }
         });
 

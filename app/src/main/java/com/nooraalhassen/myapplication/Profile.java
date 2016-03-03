@@ -55,6 +55,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePick = new DatePickerDialog(Profile.this, new sDateDailogListener(),0,0,0);
+                datePick.show();
             }
         });
 
@@ -64,6 +65,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePick = new DatePickerDialog(Profile.this, new gDateDailogListener(),0,0,0);
+                datePick.show();
             }
         });
 

@@ -19,6 +19,7 @@ import com.nooraalhassen.myapplication.model.DBmanager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class physical extends AppCompatActivity {
@@ -33,13 +34,18 @@ public class physical extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         phys_date = (EditText) findViewById(R.id.phys_date);
+        final Calendar c = Calendar.getInstance();
+        final int year = c.get(Calendar.YEAR);
+        final int month = c.get(Calendar.MONTH);
+        final int day = c.get(Calendar.DAY_OF_MONTH);
 
         // date calander dialog
         ImageView physd_dialog = (ImageView) findViewById(R.id.physicald_Dialog);
         physd_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePick = new DatePickerDialog(physical.this, new PhysdDailogListener(), 0, 0, 0);
+                DatePickerDialog datePick = new DatePickerDialog(physical.this, new PhysdDailogListener(), year, month, day);
+                datePick.show();
             }
         });
 
