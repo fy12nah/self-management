@@ -40,6 +40,7 @@ public class Profile extends AppCompatActivity {
         gradDText = (EditText) findViewById(R.id.grad_study);
         profile_save = (ImageView) findViewById(R.id.profile_save);
 
+        // autofill data entry
         DBmanager manager = new DBmanager(this);
         // manager.getProfile();
 
@@ -186,13 +187,13 @@ public class Profile extends AppCompatActivity {
 
         // add var for checkbox
         DBmanager manager = new DBmanager(this);
-        boolean update = manager.updateProfile(name, bd, gender, sd, gd, most_Used);
-        if (update == true){
-            Toast.makeText(this, "Profile updated", Toast.LENGTH_LONG).show();
-        }
-        else {
-            Toast.makeText(this, "Profile failed to update", Toast.LENGTH_LONG).show();
-        }
+        //boolean update = manager.updateProfile(name, bd, gender, sd, gd, most_Used);
+        //if (update == true){
+        //    Toast.makeText(this, "Profile updated", Toast.LENGTH_LONG).show();
+        //}
+        // else {
+        //    Toast.makeText(this, "Profile failed to update", Toast.LENGTH_LONG).show();
+        //}
 
     }
 

@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class DBmanager extends SQLiteOpenHelper {
 
-    static int DB_VERSION = 2;
+    static int DB_VERSION = 3;
     static String DB_NAME = "Selfmanaging.db";
 
     public DBmanager(Context context) {
