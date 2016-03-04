@@ -19,7 +19,7 @@ public class DBmanager extends SQLiteOpenHelper {
     static String DB_NAME = "Selfmanaging.db";
 
     public DBmanager(Context context) {
-        super(context,DB_NAME, null, DB_VERSION);
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
@@ -137,6 +137,29 @@ public class DBmanager extends SQLiteOpenHelper {
             return false;
         }
         return true;
+    }
+
+    public String searchPass(String username) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "select username, password from "+UsersTable.table_name;
+        Cursor c = db.rawQuery(query, null);
+        String uname, pass;
+        pass = "Not found!";
+        if (c.moveToFirst()){
+            do{
+                uname = c.getString(0);
+
+                if (uname == username){
+                    pass = c.getString(1);
+                    break;
+                }
+            }
+            while (c.moveToNext());
+        }
+        return pass;
+
+
     }
 
 

@@ -10,9 +10,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.nooraalhassen.myapplication.model.DBmanager;
 
 public class MainActivity extends AppCompatActivity {
 
+    DBmanager helper = new DBmanager(this);
     Button btnlogin;
     Button btnSignup;
 
@@ -32,9 +37,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // go to another view - landing view
-                Intent intent = new Intent(MainActivity.this, LandingView.class);
-                startActivity(intent);
+                EditText username = (EditText) findViewById(R.id.signName);
+                EditText pass = (EditText) findViewById(R.id.signPass);
+
+                String checkUser = username.getText().toString();
+                String checkPass = pass.getText().toString();
+
+                // if username and password are found in database together, then user is a member
+                String password = helper.searchPass(checkUser);
+                if (checkPass == password){
+
+                    // go to another view - landing view
+                    Intent intent = new Intent(MainActivity.this, LandingView.class);
+                    startActivity(intent);
+                }
+                else Toast.makeText(MainActivity.this, "Username and password do not match!", Toast.LENGTH_LONG).show();
             }
         });
 
