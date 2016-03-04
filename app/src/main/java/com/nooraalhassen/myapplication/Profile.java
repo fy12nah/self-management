@@ -1,6 +1,7 @@
 package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -45,7 +46,7 @@ public class Profile extends AppCompatActivity {
         // manager.getProfile();
 
 
-        // calander dialog for birthdate
+        // calendar dialog for birthdate when image is clicked
         ImageView bddialog = (ImageView) findViewById(R.id.bdDialog);
         bddialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +56,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        // calander dialog for start date
+        // calendar dialog for start date when image is clicked
         ImageView sddialog = (ImageView) findViewById(R.id.sdDialog);
         sddialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +66,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        // calander dialog for grad date
+        // calendar dialog for grad date
         ImageView gddialog = (ImageView) findViewById(R.id.gdDialog);
         gddialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,10 +77,20 @@ public class Profile extends AppCompatActivity {
         });
 
 
+        // action when save button is clicked
         profile_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // save and update profile
+
+                // move to landing view
+                //boolean saved =
+                //if (saved == true){
+
+                //    Intent intent = new Intent(Profile.this, LandingView.class);
+                //    startActivity(intent);
+                //}
+                //else Toast.makeText(Profile.this, "Failed to saved changes in profile", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -132,7 +143,7 @@ public class Profile extends AppCompatActivity {
             gender = 'F';
         }
 
-
+        // declaring checkbox widgets
         CheckBox chkProfile = (CheckBox) findViewById(R.id.radioProf);
         CheckBox chkPhys = (CheckBox) findViewById(R.id.radioPhys);
         CheckBox chkMeals = (CheckBox) findViewById(R.id.radioMeals);
@@ -141,7 +152,7 @@ public class Profile extends AppCompatActivity {
         CheckBox chkMood = (CheckBox) findViewById(R.id.radioMood);
         CheckBox chkIllness = (CheckBox) findViewById(R.id.radioIllness);
 
-
+        // actions in checkbox are checked
         if (chkProfile.isChecked()){
 
         }

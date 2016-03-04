@@ -40,7 +40,7 @@ public class SignUp extends AppCompatActivity {
         final EditText birthdate_edittext = (EditText) findViewById(R.id.signBirth);
         final RadioGroup gender_RG = (RadioGroup) findViewById(R.id.genderGroup);
 
-        // calander dialog for birthdate
+        // calendar dialog for birthdate
         ImageView bddialog = (ImageView) findViewById(R.id.bdprof_dialog);
         bddialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +64,7 @@ public class SignUp extends AppCompatActivity {
                 String password = password_edittext.getText().toString();
                 String birthdate = birthdate_edittext.getText().toString();
 
-
+                // date format
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 Date birthdialog = null;
 
@@ -74,7 +74,7 @@ public class SignUp extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
+                // way to save selected gender radio button
                 char gender = 'M';
                 int selectedRadioButton = gender_RG.getCheckedRadioButtonId();
                 if (selectedRadioButton == R.id.signMale){
@@ -84,18 +84,21 @@ public class SignUp extends AppCompatActivity {
                     gender = 'F';
                 }
 
+                // action when signup data are entered
                 boolean signed =  mgr.signup(username, name, password, birthdialog, gender);
                 if (signed == true){
+                    // goes to profile view
                     Intent intent = new Intent(SignUp.this, Profile.class);
                     startActivity(intent);
                 }
+                // gives user a failure msg
                 else Toast.makeText(SignUp.this, "Failed to signup", Toast.LENGTH_LONG).show();
 
             }
         });
     }
 
-    // creating a calander dialog for birthdate
+    // creating a calendar dialog for birthdate
     private class BirthDateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {

@@ -26,7 +26,7 @@ public class LandingView extends AppCompatActivity {
         lifestyle_tv = (TextView) findViewById(R.id.lifes_tv);
         illness_tv = (TextView) findViewById(R.id.illness_tv);
 
-        // action
+        // action - goes to Profile view when text is clicked
         profile_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,7 +36,7 @@ public class LandingView extends AppCompatActivity {
             }
         });
 
-        // action
+        // action - goes to Physical view when text is clicked
         physical_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +46,7 @@ public class LandingView extends AppCompatActivity {
             }
         });
 
-        // action
+        // action - goes to Lifestyle view when text is clicked
         lifestyle_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +56,7 @@ public class LandingView extends AppCompatActivity {
             }
         });
 
-        // action
+        // action - goes to Illness view when text is clicked
         illness_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
