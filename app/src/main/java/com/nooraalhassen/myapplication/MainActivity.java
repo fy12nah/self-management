@@ -17,7 +17,7 @@ import com.nooraalhassen.myapplication.model.DBmanager;
 
 public class MainActivity extends AppCompatActivity {
 
-    DBmanager helper = new DBmanager(this);
+    //DBmanager helper = new DBmanager(this);
     Button btnlogin;
     Button btnSignup;
 
@@ -37,22 +37,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                EditText username = (EditText) findViewById(R.id.signName);
-                EditText pass = (EditText) findViewById(R.id.signPass);
+                //EditText username = (EditText) findViewById(R.id.signName);
+                //EditText pass = (EditText) findViewById(R.id.signPass);
 
-                String checkUser = username.getText().toString();
-                String checkPass = pass.getText().toString();
+                //String checkUser = username.getText().toString();
+                //String checkPass = pass.getText().toString();
 
-                // if username and password are found in database together, then user is a member
-                String password = helper.searchPass(checkUser);
-                if (checkPass == password){
-
+                // if username and password do match in database, then user is a member
+                //String password = helper.searchPass(checkUser);
+                //if (checkPass == password){
                     // go to another view - landing view
                     Intent intent = new Intent(MainActivity.this, LandingView.class);
                     startActivity(intent);
                 }
-                else Toast.makeText(MainActivity.this, "Username and password do not match!", Toast.LENGTH_LONG).show();
-            }
+                //else Toast.makeText(MainActivity.this, "Username and password do not match!", Toast.LENGTH_LONG).show();
+           // }
         });
 
         // signup button action
