@@ -87,8 +87,8 @@ public class Profile extends AppCompatActivity {
                 //boolean saved =
                 //if (saved == true){
 
-                //    Intent intent = new Intent(Profile.this, LandingView.class);
-                //    startActivity(intent);
+                    Intent intent = new Intent(Profile.this, LandingView.class);
+                    startActivity(intent);
                 //}
                 //else Toast.makeText(Profile.this, "Failed to saved changes in profile", Toast.LENGTH_LONG).show();
 
@@ -153,33 +153,42 @@ public class Profile extends AppCompatActivity {
         CheckBox chkIllness = (CheckBox) findViewById(R.id.radioIllness);
 
         // actions in checkbox are checked
-        if (chkProfile.isChecked()){
+        char profilecheck = 'Y';
+        char physicalcheck = 'Y';
+        char mealscheck = 'Y';
+        char exercheck = 'Y';
+        char moodcheck = 'Y';
+        char sleepcheck = 'Y';
+        char illnesscheck = 'Y';
 
-        }
+
+        if (chkProfile.isChecked()){
+            profilecheck = 'Y';
+        } else profilecheck = 'N';
 
         if (chkPhys.isChecked()){
-
-        }
+            physicalcheck = 'Y';
+        } physicalcheck = 'N';
 
         if (chkIllness.isChecked()){
-
-        }
+            illnesscheck = 'Y';
+        } else illnesscheck = 'N';
 
         if (chkMeals.isChecked()){
-
-        }
+            mealscheck = 'Y';
+        } else mealscheck = 'N';
 
         if (chkExer.isChecked()){
-
-        }
+            exercheck = 'Y';
+        } else exercheck = 'N';
 
         if (chkSleep.isChecked()){
-
-        }
+            sleepcheck = 'Y';
+        } else sleepcheck = 'N';
 
         if (chkMood.isChecked()){
-
-        }
+            moodcheck = 'Y';
+        } else moodcheck = 'N';
 
         // date format
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -198,13 +207,14 @@ public class Profile extends AppCompatActivity {
 
         // add var for checkbox
         DBmanager manager = new DBmanager(this);
-        //boolean update = manager.updateProfile(name, bd, gender, sd, gd, most_Used);
-        //if (update == true){
-        //    Toast.makeText(this, "Profile updated", Toast.LENGTH_LONG).show();
-        //}
-        // else {
-        //    Toast.makeText(this, "Profile failed to update", Toast.LENGTH_LONG).show();
-        //}
+        boolean update = manager.updateProfile(name, bd, gender, sd, gd, profilecheck, physicalcheck, illnesscheck,
+                mealscheck, moodcheck, exercheck, sleepcheck);
+        if (update == true){
+            Toast.makeText(this, "Profile updated", Toast.LENGTH_LONG).show();
+        }
+        else {
+           Toast.makeText(this, "Profile failed to update", Toast.LENGTH_LONG).show();
+        }
 
     }
 

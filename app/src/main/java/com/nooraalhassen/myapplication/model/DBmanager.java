@@ -69,7 +69,14 @@ public class DBmanager extends SQLiteOpenHelper {
         public static String Col_gender = "gender";
         public static String Col_startStudy = "startStudy";
         public static String Col_gradStudy = "gradStudy";
-        public static String Col_mostUsed = "Most_Used";
+        public static String Col_profileCheck = "checkProfile";
+        public static String Col_physicalCheck = "checkPhysical";
+        public static String Col_illnessCheck = "checkIllness";
+        public static String Col_mealsCheck = "checkMeals";
+        public static String Col_exerCheck = "checkExer";
+        public static String Col_sleepCheck = "checkSleep";
+        public static String Col_moodCheck = "checkMood";
+
 
 
         public static String sql_create = "create table "+table_name+ "("+
@@ -80,7 +87,13 @@ public class DBmanager extends SQLiteOpenHelper {
                 Col_gender+ " TEXT not null, "+
                 Col_startStudy+ " TEXT, "+
                 Col_gradStudy+ " TEXT, "+
-                Col_mostUsed + " REAL, "+
+                Col_profileCheck + " REAL, "+
+                Col_physicalCheck + " REAL, "+
+                Col_illnessCheck + " REAL, "+
+                Col_mealsCheck + " REAL, "+
+                Col_moodCheck + " REAL, "+
+                Col_exerCheck + " REAL, "+
+                Col_sleepCheck + " REAL, "+
                 ")";
 
         public static String sql_drop = "drop table if exists "+table_name;
@@ -163,7 +176,8 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
-    public boolean updateProfile(String name, Date birthdate, char gender, Date start_Study, Date grad_Study, char mostUsed){
+    public boolean updateProfile(String name, Date birthdate, char gender, Date start_Study, Date grad_Study, char profileCheck,
+                                 char physicalCheck, char illnessCheck, char mealsCheck, char moodCheck, char exerCheck, char sleepCheck ){
         SQLiteDatabase db = getWritableDatabase();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -173,7 +187,15 @@ public class DBmanager extends SQLiteOpenHelper {
         values.put(UsersProfileTable.Col_gender, Character.toString(gender));
         values.put(UsersProfileTable.Col_startStudy, simpleDateFormat.format(start_Study));
         values.put(UsersProfileTable.Col_gradStudy, simpleDateFormat.format(grad_Study));
-        values.put(UsersProfileTable.Col_mostUsed, Character.toString(mostUsed));
+
+        // values for checkboxes
+        values.put(UsersProfileTable.Col_profileCheck, Character.toString(profileCheck));
+        values.put(UsersProfileTable.Col_physicalCheck, Character.toString(physicalCheck));
+        values.put(UsersProfileTable.Col_illnessCheck, Character.toString(illnessCheck));
+        values.put(UsersProfileTable.Col_mealsCheck, Character.toString(mealsCheck));
+        values.put(UsersProfileTable.Col_moodCheck, Character.toString(moodCheck));
+        values.put(UsersProfileTable.Col_exerCheck, Character.toString(exerCheck));
+        values.put(UsersProfileTable.Col_sleepCheck, Character.toString(sleepCheck));
 
         long id = db.update(UsersProfileTable.table_name, values, null, null);
 
