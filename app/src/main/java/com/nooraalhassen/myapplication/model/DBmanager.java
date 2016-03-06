@@ -87,13 +87,13 @@ public class DBmanager extends SQLiteOpenHelper {
                 Col_gender+ " TEXT not null, "+
                 Col_startStudy+ " TEXT, "+
                 Col_gradStudy+ " TEXT, "+
-                Col_profileCheck + " REAL, "+
-                Col_physicalCheck + " REAL, "+
-                Col_illnessCheck + " REAL, "+
-                Col_mealsCheck + " REAL, "+
-                Col_moodCheck + " REAL, "+
-                Col_exerCheck + " REAL, "+
-                Col_sleepCheck + " REAL, "+
+                Col_profileCheck + " TEXT, "+
+                Col_physicalCheck + " TEXT, "+
+                Col_illnessCheck + " TEXT, "+
+                Col_mealsCheck + " TEXT, "+
+                Col_moodCheck + " TEXT, "+
+                Col_exerCheck + " TEXT, "+
+                Col_sleepCheck + " TEXT, "+
                 ")";
 
         public static String sql_drop = "drop table if exists "+table_name;
@@ -114,7 +114,7 @@ public class DBmanager extends SQLiteOpenHelper {
                 _ID + " INTEGER Primary key AUTOINCREMENT, "+
                 Col_weight+ " REAL, "+
                 Col_height+ " REAL, "+
-                Col_date+ " TEXT"+
+                Col_date+ " TEXT not null"+
                 ")";
 
         public static String sql_drop = "drop table if exists "+table_name;
@@ -242,3 +242,4 @@ public class DBmanager extends SQLiteOpenHelper {
         return true;
     }
 }
+

@@ -85,7 +85,8 @@ public class SignUp extends AppCompatActivity {
                 }
 
                 // action when signup data are entered
-                boolean signed =  mgr.signup(username, name, password, birthdialog, gender);
+                boolean signed;
+                signed =  mgr.signup(username, name, password, birthdialog, gender);
                 if (signed == true){
                     // goes to profile view
                     Intent intent = new Intent(SignUp.this, Profile.class);
@@ -98,7 +99,7 @@ public class SignUp extends AppCompatActivity {
         });
     }
 
-    // creating a calendar dialog for birthdate
+    // creating a calander dialog for physical date
     private class BirthDateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -106,4 +107,6 @@ public class SignUp extends AppCompatActivity {
         }
     }
 
+
 }
+
