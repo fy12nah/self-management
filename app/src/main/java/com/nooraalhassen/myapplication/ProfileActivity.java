@@ -2,6 +2,7 @@ package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Profile extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private EditText birthDText ;
     private EditText startDText;
@@ -43,7 +44,12 @@ public class Profile extends AppCompatActivity {
 
         // autofill data entry
         DBmanager manager = new DBmanager(this);
-        // manager.getProfile();
+        SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+        long id = preferences.getLong(Constants.userId, -1);
+        if (id != -1){
+            manager.getProfile(id);
+        }
+        else Toast.makeText(this, "Try to login", Toast.LENGTH_LONG).show();
 
 
         // calendar dialog for birthdate when image is clicked
@@ -51,7 +57,7 @@ public class Profile extends AppCompatActivity {
         bddialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePick = new DatePickerDialog(Profile.this, new BirthDateDailogListener(), 0, 0, 0);
+                DatePickerDialog datePick = new DatePickerDialog(ProfileActivity.this, new BirthDateDailogListener(), 0, 0, 0);
                 datePick.show();
             }
         });
@@ -61,7 +67,7 @@ public class Profile extends AppCompatActivity {
         sddialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePick = new DatePickerDialog(Profile.this, new sDateDailogListener(),0,0,0);
+                DatePickerDialog datePick = new DatePickerDialog(ProfileActivity.this, new sDateDailogListener(),0,0,0);
                 datePick.show();
             }
         });
@@ -71,7 +77,7 @@ public class Profile extends AppCompatActivity {
         gddialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePick = new DatePickerDialog(Profile.this, new gDateDailogListener(),0,0,0);
+                DatePickerDialog datePick = new DatePickerDialog(ProfileActivity.this, new gDateDailogListener(),0,0,0);
                 datePick.show();
             }
         });
@@ -82,15 +88,11 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // save and update profile
+                saveprofile();
 
                 // move to landing view
-                //boolean saved =
-                //if (saved == true){
-
-                    Intent intent = new Intent(Profile.this, LandingView.class);
+                    Intent intent = new Intent(ProfileActivity.this, LandingView.class);
                     startActivity(intent);
-                //}
-                //else Toast.makeText(Profile.this, "Failed to saved changes in profile", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -168,7 +170,7 @@ public class Profile extends AppCompatActivity {
 
         if (chkPhys.isChecked()){
             physicalcheck = 'Y';
-        } physicalcheck = 'N';
+        } else physicalcheck = 'N';
 
         if (chkIllness.isChecked()){
             illnesscheck = 'Y';
