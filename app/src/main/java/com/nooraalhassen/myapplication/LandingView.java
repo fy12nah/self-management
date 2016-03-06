@@ -43,7 +43,7 @@ public class LandingView extends AppCompatActivity {
             }
         });
 
-        // action - goes to Physical view when text is clicked
+        // action - goes to physical view when text is clicked
         physical_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,8 +70,8 @@ public class LandingView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Intent intent = new Intent(LandingView.this, Meals.class);
-                // startActivity(intent);
+                Intent intent = new Intent(LandingView.this, Meals.class);
+                startActivity(intent);
             }
         });
 

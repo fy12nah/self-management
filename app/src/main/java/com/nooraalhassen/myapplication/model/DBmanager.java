@@ -214,7 +214,7 @@ public class DBmanager extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         // date form
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         ContentValues values = new ContentValues();
 
@@ -223,7 +223,6 @@ public class DBmanager extends SQLiteOpenHelper {
         values.put(UsersPhysicalTable.Col_height, height);
         values.put(UsersPhysicalTable.Col_date, simpleDateFormat.format(physicaldate));
         long id = db.insert(UsersPhysicalTable.table_name, null, values);
-
 
         // Closing database
         db.close();

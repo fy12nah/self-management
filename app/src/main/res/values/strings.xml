@@ -7,4 +7,5 @@
     <string name="title_activity_physical">physical</string>
     <string name="title_activity_landing_view">LandingView</string>
     <string name="title_activity_lifestyle">Lifestyle</string>
+    <string name="title_activity_meals">Meals</string>
 </resources>

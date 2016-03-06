@@ -37,6 +37,10 @@
         <activity
             android:name=".Lifestyle"
             android:label="@string/title_activity_lifestyle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Meals"
+            android:label="@string/title_activity_meals"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

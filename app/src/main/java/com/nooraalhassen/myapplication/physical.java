@@ -1,10 +1,7 @@
 package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,7 +9,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
@@ -24,7 +20,7 @@ import java.util.Date;
 
 public class physical extends AppCompatActivity {
 
-    private EditText phys_date;
+    EditText phys_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +76,7 @@ public class physical extends AppCompatActivity {
 
                 boolean saved = mgr.insert_physical (weight, height, physdate);
                 if (saved == true){
-                    Toast.makeText(physical.this, "Physical entries saved", Toast.LENGTH_LONG).show();
+                    Toast.makeText(physical.this, "physical entries saved", Toast.LENGTH_LONG).show();
                 }
                 else {
                     Toast.makeText(physical.this, "Failed to save physical entries", Toast.LENGTH_LONG).show();
