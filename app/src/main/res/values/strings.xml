@@ -8,4 +8,8 @@
     <string name="title_activity_landing_view">LandingView</string>
     <string name="title_activity_lifestyle">Lifestyle</string>
     <string name="title_activity_meals">Meals</string>
+    <string name="title_activity_mood">MoodActivity</string>
+    <string name="title_activity_exercises">ExercisesActivity</string>
+    <string name="title_activity_sleeping">SleepingActivity</string>
+    <string name="title_activity_illness">IllnessActivity</string>
 </resources>

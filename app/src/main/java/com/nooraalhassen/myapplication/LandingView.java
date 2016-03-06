@@ -59,8 +59,8 @@ public class LandingView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Intent intent = new Intent(LandingView.this, Illness.class);
-               // startActivity(intent);
+                Intent intent = new Intent(LandingView.this, IllnessActivity.class);
+               startActivity(intent);
             }
         });
 
@@ -80,8 +80,8 @@ public class LandingView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Intent intent = new Intent(LandingView.this, Mood.class);
-                // startActivity(intent);
+                Intent intent = new Intent(LandingView.this, MoodActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -90,8 +90,8 @@ public class LandingView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Intent intent = new Intent(LandingView.this, Exercises.class);
-                // startActivity(intent);
+                Intent intent = new Intent(LandingView.this, ExercisesActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -100,8 +100,8 @@ public class LandingView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Intent intent = new Intent(LandingView.this, Sleeping.class);
-                // startActivity(intent);
+                Intent intent = new Intent(LandingView.this, SleepingActivity.class);
+                startActivity(intent);
             }
         });
     }
