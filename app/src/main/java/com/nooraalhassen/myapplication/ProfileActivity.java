@@ -83,6 +83,21 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
 
+
+        //chkProfile.setOnClickListener(new View.OnClickListener() {
+        //    public void onClick(View v) {
+
+                //if (((CheckBox) v).isChecked()) {
+                    //btn1.setVisibility(View.VISIBLE);
+               // }
+                //else btn1.setVisibility(View.INVISIBLE);
+        //    }
+
+        //});
+
+
+
+
         // action when save button is clicked
         profile_save.setOnClickListener(new View.OnClickListener() {
             @Override
