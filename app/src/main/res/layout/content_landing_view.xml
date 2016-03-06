@@ -12,98 +12,81 @@
     tools:context="com.nooraalhassen.myapplication.LandingView"
     tools:showIn="@layout/activity_landing_view">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Profile"
-        android:id="@+id/profile_tv"
-        android:layout_marginTop="87dp"
-        android:layout_marginLeft="47dp"
-        android:layout_marginStart="47dp"
-        android:layout_alignParentTop="true"
+        android:text="PROFILE"
+        android:id="@+id/landing_profile"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="52dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PHYSICAL"
+        android:id="@+id/landing_physical"
+        android:layout_below="@+id/landing_profile"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/landing_profile"
+        android:layout_alignEnd="@+id/landing_profile" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ILLNESS"
+        android:id="@+id/landing_illness"
+        android:layout_below="@+id/landing_physical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/landing_physical"
+        android:layout_alignEnd="@+id/landing_physical" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MEALS"
+        android:id="@+id/landing_meals"
+        android:layout_below="@+id/landing_illness"
+        android:layout_alignRight="@+id/landing_illness"
+        android:layout_alignEnd="@+id/landing_illness"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="View and manage your profile "
-        android:id="@+id/textView25"
-        android:layout_below="@+id/profile_tv"
-        android:layout_alignLeft="@+id/profile_tv"
-        android:layout_alignStart="@+id/profile_tv" />
+        android:text="MOOD"
+        android:id="@+id/landing_mood"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/landing_meals"
+        android:layout_alignEnd="@+id/landing_meals"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Physical"
-        android:id="@+id/physical_tv"
-        android:layout_below="@+id/textView25"
-        android:layout_alignLeft="@+id/textView25"
-        android:layout_alignStart="@+id/textView25"
-        android:layout_marginTop="43dp" />
+        android:text="EXERCISES"
+        android:id="@+id/landing_exer"
+        android:layout_below="@+id/landing_mood"
+        android:layout_alignRight="@+id/landing_mood"
+        android:layout_alignEnd="@+id/landing_mood"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Enter today&apos;s weight and height"
-        android:id="@+id/textView24"
-        android:layout_below="@+id/physical_tv"
-        android:layout_alignLeft="@+id/physical_tv"
-        android:layout_alignStart="@+id/physical_tv" />
+        android:text="SLEEPING HOURS"
+        android:id="@+id/landing_sleep"
+        android:layout_below="@+id/landing_exer"
+        android:layout_alignRight="@+id/landing_exer"
+        android:layout_alignEnd="@+id/landing_exer"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Lifestyle"
-        android:id="@+id/lifes_tv"
-        android:layout_below="@+id/textView24"
-        android:layout_alignLeft="@+id/textView24"
-        android:layout_alignStart="@+id/textView24"
-        android:layout_marginTop="45dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Monitor your behaviors"
-        android:id="@+id/textView26"
-        android:layout_below="@+id/lifes_tv"
-        android:layout_alignLeft="@+id/lifes_tv"
-        android:layout_alignStart="@+id/lifes_tv" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Illness"
-        android:id="@+id/illness_tv"
-        android:layout_below="@+id/textView26"
-        android:layout_alignLeft="@+id/textView26"
-        android:layout_alignStart="@+id/textView26"
-        android:layout_marginTop="49dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Monitor your illness and diseases"
-        android:id="@+id/textView27"
-        android:layout_below="@+id/illness_tv"
-        android:layout_alignLeft="@+id/illness_tv"
-        android:layout_alignStart="@+id/illness_tv" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Self-Health Managing!"
-        android:id="@+id/textView28"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>
