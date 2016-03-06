@@ -66,12 +66,42 @@ public class LandingView extends AppCompatActivity {
         });
 
 
-        // action - goes to Lifestyle view when text is clicked
+        // action - goes to Meals view when text is clicked
         meals_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // Intent intent = new Intent(LandingView.this, Meals.class);
+                // startActivity(intent);
+            }
+        });
+
+        // action - goes to Mood view when text is clicked
+        mood_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Intent intent = new Intent(LandingView.this, Mood.class);
+                // startActivity(intent);
+            }
+        });
+
+        // action - goes to exercises view when text is clicked
+        exer_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Intent intent = new Intent(LandingView.this, Exercises.class);
+                // startActivity(intent);
+            }
+        });
+
+        // action - goes to sleeping hours view when text is clicked
+        sleep_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Intent intent = new Intent(LandingView.this, Sleeping.class);
                 // startActivity(intent);
             }
         });
