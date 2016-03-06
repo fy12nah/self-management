@@ -33,6 +33,10 @@
         <activity
             android:name=".LandingView"
             android:label="@string/title_activity_landing_view"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Lifestyle"
+            android:label="@string/title_activity_lifestyle"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
