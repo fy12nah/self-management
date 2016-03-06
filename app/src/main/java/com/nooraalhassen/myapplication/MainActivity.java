@@ -1,6 +1,7 @@
 package com.nooraalhassen.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnlogin;
     Button btnSignup;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,18 +39,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //EditText username = (EditText) findViewById(R.id.signName);
-                //EditText pass = (EditText) findViewById(R.id.signPass);
+                EditText username = (EditText) findViewById(R.id.signName);
+                EditText pass = (EditText) findViewById(R.id.signPass);
 
-                //String checkUser = username.getText().toString();
-                //String checkPass = pass.getText().toString();
+                String checkUser = username.getText().toString();
+                String checkPass = pass.getText().toString();
 
                 // if username and password do match in database, then user is a member
-                //String password = helper.searchPass(checkUser);
-                //if (checkPass == password){
+
+                DBmanager manager = new DBmanager(MainActivity.this);
+                long id = manager.authenticate(checkUser, checkPass);
+                if (id != -1){
+
+                    // save user id in shared preferences for multi user environment
+                    SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putLong(Constants.userId, id);
+                    editor.commit();
+
                     // go to another view - landing view
                     Intent intent = new Intent(MainActivity.this, LandingView.class);
                     startActivity(intent);
+                }
+                else Toast.makeText(MainActivity.this, "Login Failed!", Toast.LENGTH_LONG).show();
+
                 }
                 //else Toast.makeText(MainActivity.this, "Username and password do not match!", Toast.LENGTH_LONG).show();
            // }
@@ -58,13 +72,11 @@ public class MainActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // go to another view - signup
                 Intent intent = new Intent(MainActivity.this, SignUp.class);
                 startActivity(intent);
             }
         });
-
     }
 
 
@@ -90,3 +102,5 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+

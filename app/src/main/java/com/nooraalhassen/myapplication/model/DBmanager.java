@@ -152,27 +152,19 @@ public class DBmanager extends SQLiteOpenHelper {
         return true;
     }
 
-    public String searchPass(String username) {
+    public long authenticate(String username, String password) {
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "select username, password from "+UsersTable.table_name;
-        Cursor c = db.rawQuery(query, null);
-        String uname, pass;
-        pass = "Not found!";
+        String query = "select username, password from "+UsersTable.table_name+" where username";
+        String selection = UsersTable.Col_username+ " = ? and "+UsersTable.Col_password+ " = ? ";
+        String[] args = new String[]{username, password};
+        Cursor c = db.query(UsersTable.table_name, null, selection, args, null, null, null);
+        long id = -1;
+
         if (c.moveToFirst()){
-            do{
-                uname = c.getString(0);
-
-                if (uname == username){
-                    pass = c.getString(1);
-                    break;
-                }
-            }
-            while (c.moveToNext());
+                id = c.getLong(c.getColumnIndex(UsersTable._ID));
         }
-        return pass;
-
-
+        return id;
     }
 
 
@@ -208,11 +200,11 @@ public class DBmanager extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor getProfile(long profileid){
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.query(UsersProfileTable.table_name, null, " _id = ? ", new String[]{String.valueOf(profileid)}, null, null, null);
-        return c;
-    }
+    //public Profile getProfile(long profileid){
+    //    SQLiteDatabase db = getReadableDatabase();
+    //    Cursor c = db.query(UsersProfileTable.table_name, null, " _id = ? ", new String[]{String.valueOf(profileid)}, null, null, null);
+    //    return c;
+    //}
 
 
     // insert data into userPhysicalTable

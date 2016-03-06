@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class LandingView extends AppCompatActivity {
 
@@ -34,12 +33,12 @@ public class LandingView extends AppCompatActivity {
         sleep_tv = (Button) findViewById(R.id.landing_sleep);
 
 
-        // action - goes to Profile view when text is clicked
+        // action - goes to ProfileActivity view when text is clicked
         profile_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(LandingView.this, Profile.class);
+                Intent intent = new Intent(LandingView.this, ProfileActivity.class);
                 startActivity(intent);
             }
         });

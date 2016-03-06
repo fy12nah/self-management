@@ -3,8 +3,6 @@ package com.nooraalhassen.myapplication;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,7 +17,6 @@ import com.nooraalhassen.myapplication.model.DBmanager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class SignUp extends AppCompatActivity {
@@ -33,11 +30,12 @@ public class SignUp extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         // defining widgets for use
         final EditText username_edittext = (EditText) findViewById(R.id.signUsername);
         final EditText name_edittext = (EditText) findViewById(R.id.signName);
         final EditText password_edittext = (EditText) findViewById(R.id.signPass);
-        final EditText birthdate_edittext = (EditText) findViewById(R.id.signBirth);
+        birthdate_edittext = (EditText) findViewById(R.id.signBirth);
         final RadioGroup gender_RG = (RadioGroup) findViewById(R.id.genderGroup);
 
         // calendar dialog for birthdate
@@ -89,7 +87,7 @@ public class SignUp extends AppCompatActivity {
                 signed =  mgr.signup(username, name, password, birthdialog, gender);
                 if (signed == true){
                     // goes to profile view
-                    Intent intent = new Intent(SignUp.this, Profile.class);
+                    Intent intent = new Intent(SignUp.this, ProfileActivity.class);
                     startActivity(intent);
                 }
                 // gives user a failure msg

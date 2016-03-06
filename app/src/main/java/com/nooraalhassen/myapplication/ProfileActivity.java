@@ -44,12 +44,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         // autofill data entry
         DBmanager manager = new DBmanager(this);
-        SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
-        long id = preferences.getLong(Constants.userId, -1);
-        if (id != -1){
-            manager.getProfile(id);
-        }
-        else Toast.makeText(this, "Try to login", Toast.LENGTH_LONG).show();
+        //SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+        //long id = preferences.getLong(Constants.userId, -1);
+        //if (id != -1){
+        //    manager.getProfile(id);
+        //}
+        //else Toast.makeText(this, "Try to login", Toast.LENGTH_LONG).show();
 
 
         // calendar dialog for birthdate when image is clicked
@@ -91,8 +91,8 @@ public class ProfileActivity extends AppCompatActivity {
                 saveprofile();
 
                 // move to landing view
-                    Intent intent = new Intent(ProfileActivity.this, LandingView.class);
-                    startActivity(intent);
+                Intent intent = new Intent(ProfileActivity.this, LandingView.class);
+                startActivity(intent);
 
             }
         });
@@ -126,7 +126,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         // declaring widgets
         EditText nameText = (EditText) findViewById(R.id.name);
-
 
         // getting values of widgets
         String name = nameText.getText().toString();
