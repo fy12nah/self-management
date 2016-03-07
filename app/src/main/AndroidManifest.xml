@@ -57,6 +57,22 @@
         <activity
             android:name=".IllnessActivity"
             android:label="@string/title_activity_illness"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BreakfastActivity"
+            android:label="@string/title_activity_breakfast"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DinnerActivity"
+            android:label="@string/title_activity_dinner"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LunchActivity"
+            android:label="@string/title_activity_lunch"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SnacksActivity"
+            android:label="@string/title_activity_snacks"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

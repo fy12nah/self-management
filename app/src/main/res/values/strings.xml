@@ -12,4 +12,8 @@
     <string name="title_activity_exercises">ExercisesActivity</string>
     <string name="title_activity_sleeping">SleepingActivity</string>
     <string name="title_activity_illness">IllnessActivity</string>
+    <string name="title_activity_breakfast">BreakfastActivity</string>
+    <string name="title_activity_dinner">DinnerActivity</string>
+    <string name="title_activity_lunch">LunchActivity</string>
+    <string name="title_activity_snacks">SnacksActivity</string>
 </resources>
