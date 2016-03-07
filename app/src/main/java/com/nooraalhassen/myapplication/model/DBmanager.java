@@ -133,7 +133,7 @@ public class DBmanager extends SQLiteOpenHelper {
         long id = db.insert(UsersTable.table_name, null, values);
 
         if (id != -1){
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             ContentValues vals = new ContentValues();
             vals.put(UsersProfileTable.Col_userID, id);
             vals.put(UsersProfileTable.Col_name, name);
@@ -172,7 +172,7 @@ public class DBmanager extends SQLiteOpenHelper {
                                  char physicalCheck, char illnessCheck, char mealsCheck, char moodCheck, char exerCheck, char sleepCheck ){
         SQLiteDatabase db = getWritableDatabase();
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         ContentValues values = new ContentValues();
         values.put(UsersProfileTable.Col_name, name);
         values.put(UsersProfileTable.Col_birthdate, simpleDateFormat.format(birthdate));
