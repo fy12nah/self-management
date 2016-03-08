@@ -5,17 +5,23 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
+import android.view.View;
 
+import com.nooraalhassen.myapplication.Constants;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by nooraalhassen
  */
 public class DBmanager extends SQLiteOpenHelper {
 
-    static int DB_VERSION = 4;
+    static int DB_VERSION = 6;
     static String DB_NAME = "Selfmanaging.db";
 
     public DBmanager(Context context) {
@@ -28,7 +34,12 @@ public class DBmanager extends SQLiteOpenHelper {
         db.execSQL(UsersTable.sql_create);
         db.execSQL(UsersProfileTable.sql_create);
         db.execSQL(UsersPhysicalTable.sql_create);
+        db.execSQL(CategoryTable.sql_create);
+        db.execSQL(ProfileCategoryTable.sql_create);
+
+        populateCategotyTable(db);
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -36,6 +47,8 @@ public class DBmanager extends SQLiteOpenHelper {
         db.execSQL(UsersTable.sql_drop);
         db.execSQL(UsersProfileTable.sql_drop);
         db.execSQL(UsersPhysicalTable.sql_drop);
+        db.execSQL(CategoryTable.sql_drop);
+        db.execSQL(ProfileCategoryTable.sql_drop);
         onCreate(db);
     }
 
@@ -69,14 +82,6 @@ public class DBmanager extends SQLiteOpenHelper {
         public static String Col_gender = "gender";
         public static String Col_startStudy = "startStudy";
         public static String Col_gradStudy = "gradStudy";
-        public static String Col_profileCheck = "checkProfile";
-        public static String Col_physicalCheck = "checkPhysical";
-        public static String Col_illnessCheck = "checkIllness";
-        public static String Col_mealsCheck = "checkMeals";
-        public static String Col_exerCheck = "checkExer";
-        public static String Col_sleepCheck = "checkSleep";
-        public static String Col_moodCheck = "checkMood";
-
 
 
         public static String sql_create = "create table "+table_name+ "("+
@@ -86,14 +91,43 @@ public class DBmanager extends SQLiteOpenHelper {
                 Col_birthdate+ " TEXT not null, "+
                 Col_gender+ " TEXT not null, "+
                 Col_startStudy+ " TEXT, "+
-                Col_gradStudy+ " TEXT, "+
-                Col_profileCheck + " TEXT, "+
-                Col_physicalCheck + " TEXT, "+
-                Col_illnessCheck + " TEXT, "+
-                Col_mealsCheck + " TEXT, "+
-                Col_moodCheck + " TEXT, "+
-                Col_exerCheck + " TEXT, "+
-                Col_sleepCheck + " TEXT, "+
+                Col_gradStudy+ " TEXT "+
+                ")";
+
+        public static String sql_drop = "drop table if exists "+table_name;
+    }
+
+    // creating a UserTable in database
+    private static class ProfileCategoryTable implements BaseColumns {
+
+        // creating columns in UserTable
+        public static String table_name = "profileCategory";
+        public static String Col_profileId = "profileId";
+        public static String Col_categoryId = "categoryId";
+        public static String Col_showInLanding = "showLanding";
+
+
+        public static String sql_create = "create table "+table_name+ "("+
+                _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_profileId+ " INTEGER not null, "+
+                Col_categoryId+ " INTEGER not null, "+
+                Col_showInLanding+ " INTEGER not null"+
+                ")";
+
+        public static String sql_drop = "drop table if exists "+table_name;
+    }
+
+    // creating a UserTable in database
+    private static class CategoryTable implements BaseColumns {
+
+        // creating columns in UserTable
+        public static String table_name = "category";
+        public static String Col_categoryname = "categoryName";
+
+
+        public static String sql_create = "create table "+table_name+ "("+
+                _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_categoryname+ " TEXT not null "+
                 ")";
 
         public static String sql_drop = "drop table if exists "+table_name;
@@ -121,7 +155,7 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
-    public boolean signup (String username, String name, String password, Date birthdate, char gender){
+    public long signup (String username, String name, String password, Date birthdate, char gender){
 
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
@@ -130,26 +164,53 @@ public class DBmanager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(UsersTable.Col_username, username);
         values.put(UsersTable.Col_password, password);
-        long id = db.insert(UsersTable.table_name, null, values);
+        long user_id = db.insert(UsersTable.table_name, null, values);
 
-        if (id != -1){
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if (user_id != -1){
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
             ContentValues vals = new ContentValues();
-            vals.put(UsersProfileTable.Col_userID, id);
+            vals.put(UsersProfileTable.Col_userID, user_id);
             vals.put(UsersProfileTable.Col_name, name);
             vals.put(UsersProfileTable.Col_birthdate, simpleDateFormat.format(birthdate));
             vals.put(UsersProfileTable.Col_gender, Character.toString(gender));
 
-            id = db.insert(UsersProfileTable.table_name, null, vals);
+
+            long profileId = db.insert(UsersProfileTable.table_name, null, vals);
+
+            populateProfileCategories(db, profileId);
+
         }
 
         // Closing database
         db.close();
 
-        if (id == -1){
-            return false;
-        }
-        return true;
+        return user_id;
+    }
+
+    private void populateProfileCategories(SQLiteDatabase db, long profileId) {
+        String SQL = "insert into "+ProfileCategoryTable.table_name+
+                "("+ProfileCategoryTable.Col_profileId + ","+ ProfileCategoryTable.Col_categoryId+","+ProfileCategoryTable.Col_showInLanding+")"+
+                " select "+profileId+" ,"+
+                CategoryTable._ID+" ,1"+
+                " from "+CategoryTable.table_name;
+        db.execSQL(SQL);
+    }
+
+    private void populateCategotyTable(SQLiteDatabase db) {
+        String SQL = "insert into "+CategoryTable.table_name+"("+CategoryTable.Col_categoryname+") values('Profile');";
+        db.execSQL(SQL);
+        SQL= "insert into "+CategoryTable.table_name+"("+CategoryTable.Col_categoryname+") values('Physical');";
+        db.execSQL(SQL);
+        SQL= "insert into "+CategoryTable.table_name+"("+CategoryTable.Col_categoryname+") values('Illness');";
+        db.execSQL(SQL);
+        SQL= "insert into "+CategoryTable.table_name+"("+CategoryTable.Col_categoryname+") values('Meals');";
+        db.execSQL(SQL);
+        SQL= "insert into "+CategoryTable.table_name+"("+CategoryTable.Col_categoryname+") values('Mood Status');";
+        db.execSQL(SQL);
+        SQL= "insert into "+CategoryTable.table_name+"("+CategoryTable.Col_categoryname+") values('Exercises');";
+        db.execSQL(SQL);
+        SQL= "insert into "+CategoryTable.table_name+"("+CategoryTable.Col_categoryname+") values('Sleeping Hours');";
+        db.execSQL(SQL);
     }
 
     public long authenticate(String username, String password) {
@@ -168,28 +229,27 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
-    public boolean updateProfile(String name, Date birthdate, char gender, Date start_Study, Date grad_Study, char profileCheck,
-                                 char physicalCheck, char illnessCheck, char mealsCheck, char moodCheck, char exerCheck, char sleepCheck ){
+    public boolean updateProfile(Profile profile){
         SQLiteDatabase db = getWritableDatabase();
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
         ContentValues values = new ContentValues();
-        values.put(UsersProfileTable.Col_name, name);
-        values.put(UsersProfileTable.Col_birthdate, simpleDateFormat.format(birthdate));
-        values.put(UsersProfileTable.Col_gender, Character.toString(gender));
-        values.put(UsersProfileTable.Col_startStudy, simpleDateFormat.format(start_Study));
-        values.put(UsersProfileTable.Col_gradStudy, simpleDateFormat.format(grad_Study));
+        values.put(UsersProfileTable.Col_name, profile.getName());
+        values.put(UsersProfileTable.Col_birthdate, simpleDateFormat.format(profile.getBirthdate()));
+        values.put(UsersProfileTable.Col_gender, Character.toString(profile.getGender()));
+        values.put(UsersProfileTable.Col_startStudy, simpleDateFormat.format(profile.getStart_Study()));
+        values.put(UsersProfileTable.Col_gradStudy, simpleDateFormat.format(profile.getGrad_Study()));
 
-        // values for checkboxes
-        values.put(UsersProfileTable.Col_profileCheck, Character.toString(profileCheck));
-        values.put(UsersProfileTable.Col_physicalCheck, Character.toString(physicalCheck));
-        values.put(UsersProfileTable.Col_illnessCheck, Character.toString(illnessCheck));
-        values.put(UsersProfileTable.Col_mealsCheck, Character.toString(mealsCheck));
-        values.put(UsersProfileTable.Col_moodCheck, Character.toString(moodCheck));
-        values.put(UsersProfileTable.Col_exerCheck, Character.toString(exerCheck));
-        values.put(UsersProfileTable.Col_sleepCheck, Character.toString(sleepCheck));
 
-        long id = db.update(UsersProfileTable.table_name, values, null, null);
+        long id = db.update(UsersProfileTable.table_name, values, UsersProfileTable._ID+" = "+profile.getId(), null);
+
+        for (HashMap.Entry<String, Boolean> s: profile.getCategories().entrySet()){
+            values = new ContentValues();
+            values.put(ProfileCategoryTable.Col_showInLanding, s.getValue()?1:0);
+            db.update(ProfileCategoryTable.table_name, values, ProfileCategoryTable.Col_profileId+" = ? and "
+                    +ProfileCategoryTable.Col_categoryId+" = (select "+CategoryTable._ID+" from "+CategoryTable.table_name+
+                    " where "+CategoryTable.Col_categoryname+" = ?)", new String[]{String.valueOf(profile.getId()), s.getKey()});
+        }
 
         // Closing database
         db.close();
@@ -200,11 +260,66 @@ public class DBmanager extends SQLiteOpenHelper {
         return true;
     }
 
-    //public Profile getProfile(long profileid){
-    //    SQLiteDatabase db = getReadableDatabase();
-    //    Cursor c = db.query(UsersProfileTable.table_name, null, " _id = ? ", new String[]{String.valueOf(profileid)}, null, null, null);
-    //    return c;
-    //}
+    public Profile getProfile(long userid){
+        SQLiteDatabase db = getReadableDatabase();
+
+
+        Cursor c = db.query(UsersProfileTable.table_name, null, UsersProfileTable.Col_userID+ " = ? ",
+                new String[]{String.valueOf(userid)}, null, null, null);
+
+        Profile p = null;
+        if (c.moveToFirst()){
+
+            try {
+                long id = c.getLong(c.getColumnIndex(UsersProfileTable._ID));
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+            String name = c.getString(c.getColumnIndex(UsersProfileTable.Col_name));
+
+                Date birthdate = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersProfileTable.Col_birthdate)));
+                String temp = c.getString(c.getColumnIndex(UsersProfileTable.Col_startStudy));
+                Date start_Study = null;
+                Date grad_Study = null;
+
+                if (temp != null){
+                    start_Study = simpleDateFormat.parse(temp);
+                }
+
+                temp = c.getString(c.getColumnIndex(UsersProfileTable.Col_gradStudy));
+                if (temp != null){
+                    grad_Study = simpleDateFormat.parse(temp);
+                }
+
+                char gender = c.getString(c.getColumnIndex(UsersProfileTable.Col_gender)).charAt(0);
+                p = new Profile(id,name, birthdate, start_Study, grad_Study, gender);
+
+                c.close();
+
+                SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+                queryBuilder.setTables(ProfileCategoryTable.table_name+" inner join "+CategoryTable.table_name+" on "+
+                        ProfileCategoryTable.Col_categoryId+" = "+CategoryTable.table_name+"."+CategoryTable._ID);
+
+                c = queryBuilder.query(db, null, ProfileCategoryTable.Col_profileId+ " = ? ", new String[]{String.valueOf(id)}, null, null, null);
+
+                while (c.moveToNext()){
+                    String catName = c.getString(c.getColumnIndex(CategoryTable.Col_categoryname));
+                    int temp2 = c.getInt(c.getColumnIndex(ProfileCategoryTable.Col_showInLanding));
+                    Boolean show = temp2 == 1;
+
+                    p.addCategory(catName, show);
+                }
+
+
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+        return p;
+
+    }
 
 
     // insert data into userPhysicalTable
@@ -214,7 +329,7 @@ public class DBmanager extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         // date form
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
 
         ContentValues values = new ContentValues();
 

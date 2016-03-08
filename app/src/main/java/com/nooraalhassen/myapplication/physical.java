@@ -1,6 +1,7 @@
 package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -77,6 +78,10 @@ public class physical extends AppCompatActivity {
                 boolean saved = mgr.insert_physical (weight, height, physdate);
                 if (saved == true){
                     Toast.makeText(physical.this, "physical entries saved", Toast.LENGTH_LONG).show();
+
+                    // go to another view - landing view
+                    Intent intent = new Intent(physical.this, LandingView.class);
+                    startActivity(intent);
                 }
                 else {
                     Toast.makeText(physical.this, "Failed to save physical entries", Toast.LENGTH_LONG).show();

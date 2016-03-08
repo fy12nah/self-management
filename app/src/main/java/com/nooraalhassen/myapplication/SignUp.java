@@ -2,9 +2,11 @@ package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -83,10 +85,19 @@ public class SignUp extends AppCompatActivity {
                 }
 
                 // action when signup data are entered
-                boolean signed;
-                signed =  mgr.signup(username, name, password, birthdialog, gender);
-                if (signed == true){
-                    // goes to profile view
+                long id;
+
+                id =  mgr.signup(username, name, password, birthdialog, gender);
+
+                if (id != -1){
+
+                    // save user id in shared preferences for multi user environment
+                    SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putLong(Constants.userId, id);
+                    editor.commit();
+
+                    // goes to profile view to complete profile entries
                     Intent intent = new Intent(SignUp.this, ProfileActivity.class);
                     startActivity(intent);
                 }

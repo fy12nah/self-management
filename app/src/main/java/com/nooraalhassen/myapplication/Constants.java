@@ -5,6 +5,9 @@ package com.nooraalhassen.myapplication;
  */
 public class Constants {
 
+    public static final String SQLite_DatePattern = "yyyy-MM-dd HH:mm:ss";
+    public static final String display_DatePattern = "dd/MM/yyyy";
+
     public static String sharedpreferencesId = "SHM";
     public static String userId = "UserId";
 

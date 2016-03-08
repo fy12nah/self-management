@@ -45,27 +45,26 @@ public class MainActivity extends AppCompatActivity {
                 String checkUser = username.getText().toString();
                 String checkPass = pass.getText().toString();
 
-                // if username and password do match in database, then user is a member
 
-                //DBmanager manager = new DBmanager(MainActivity.this);
-                //long id = manager.authenticate(checkUser, checkPass);
-                //if (id != -1){
+                DBmanager manager = new DBmanager(MainActivity.this);
+
+                // if username and password do match in database, then user is a member
+                long id = manager.authenticate(checkUser, checkPass);
+                if (id != -1){
 
                     // save user id in shared preferences for multi user environment
-                    //SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
-                    //SharedPreferences.Editor editor = preferences.edit();
-                    //editor.putLong(Constants.userId, id);
-                    //editor.commit();
+                    SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putLong(Constants.userId, id);
+                    editor.commit();
 
                     // go to another view - landing view
                     Intent intent = new Intent(MainActivity.this, LandingView.class);
                     startActivity(intent);
                 }
-                //else Toast.makeText(MainActivity.this, "Login Failed!", Toast.LENGTH_LONG).show();
+                else Toast.makeText(MainActivity.this, "Login Failed!", Toast.LENGTH_LONG).show();
 
-                //}
-                //else Toast.makeText(MainActivity.this, "Username and password do not match!", Toast.LENGTH_LONG).show();
-           // }
+            }
         });
 
         // signup button action
