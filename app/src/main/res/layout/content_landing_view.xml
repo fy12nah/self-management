@@ -17,12 +17,13 @@
         android:layout_height="wrap_content"
         android:text="PROFILE"
         android:id="@+id/landing_profile"
+        android:layout_marginTop="34dp"
+        android:visibility="visible"
+        android:layout_below="@+id/btnLogout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="52dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:visibility="visible"/>
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -105,5 +106,14 @@
         android:id="@+id/textView15"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnLogout"
+        android:src="@android:drawable/ic_lock_power_off"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

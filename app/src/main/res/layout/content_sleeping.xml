@@ -20,4 +20,78 @@
         android:id="@+id/textView27"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Start Time:"
+        android:id="@+id/textView47"
+        android:layout_below="@+id/textView27"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="47dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="End Time:"
+        android:id="@+id/textView48"
+        android:layout_below="@+id/textView47"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="47dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addSleep"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/sleepStart"
+        android:layout_alignEnd="@+id/sleepStart" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/sleepStart"
+        android:layout_above="@+id/textView48"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/sleepEnd"
+        android:layout_alignBottom="@+id/textView48"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="save"
+        android:id="@+id/sleepSave"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="129dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You Slept ... "
+        android:id="@+id/sleepMsg"
+        android:layout_below="@+id/sleepEnd"
+        android:layout_alignLeft="@+id/sleepEnd"
+        android:layout_alignStart="@+id/sleepEnd"
+        android:layout_marginTop="43dp" />
+
 </RelativeLayout>
