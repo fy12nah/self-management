@@ -12,4 +12,104 @@
     tools:context="com.nooraalhassen.myapplication.DinnerActivity"
     tools:showIn="@layout/activity_dinner">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Dinner"
+        android:id="@+id/textView32"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Monitor your Dinner"
+        android:id="@+id/textView33"
+        android:layout_below="@+id/textView32"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Dinner Name:"
+        android:id="@+id/textView34"
+        android:layout_below="@+id/textView33"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="47dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Items:"
+        android:id="@+id/textView35"
+        android:layout_below="@+id/textView34"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="41dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Time:"
+        android:id="@+id/textView36"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dinnerName"
+        android:layout_above="@+id/textView35"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/textView32"
+        android:layout_alignStart="@+id/textView32" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemDinner"
+        android:layout_alignBottom="@+id/textView35"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/dinnerName"
+        android:layout_alignStart="@+id/dinnerName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/dinnerTime"
+        android:layout_alignBottom="@+id/textView36"
+        android:layout_alignLeft="@+id/itemDinner"
+        android:layout_alignStart="@+id/itemDinner" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addDinner"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_alignBottom="@+id/textView35"
+        android:layout_toLeftOf="@+id/itemDinner"
+        android:layout_toStartOf="@+id/itemDinner" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="save"
+        android:id="@+id/dinnerSave"
+        android:layout_below="@+id/dinnerTime"
+        android:layout_marginTop="79dp"
+        android:layout_alignRight="@+id/dinnerTime"
+        android:layout_alignEnd="@+id/dinnerTime"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

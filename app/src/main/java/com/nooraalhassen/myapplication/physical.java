@@ -64,7 +64,7 @@ public class physical extends AppCompatActivity {
                 String height = height_edittext.getText().toString();
                 String phys_date = date_edittext.getText().toString();
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
 
                 Date physdate = null;
 
