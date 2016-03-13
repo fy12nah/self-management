@@ -118,17 +118,19 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:ems="10"
-        android:inputType="date" />
+        android:inputType="date"
+        android:layout_toRightOf="@+id/gdDialog"
+        android:layout_toEndOf="@+id/gdDialog" />
 
     <EditText
         android:id="@+id/start_study"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/sdDialog"
-        android:layout_alignLeft="@+id/grad_study"
-        android:layout_alignStart="@+id/grad_study"
         android:ems="10"
-        android:inputType="date" />
+        android:inputType="date"
+        android:layout_toRightOf="@+id/textView9"
+        android:layout_toEndOf="@+id/textView9" />
 
 
     <EditText
@@ -140,7 +142,9 @@
         android:layout_alignParentRight="true"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="Name"
+        android:layout_toRightOf="@+id/bdDialog"
+        android:layout_toEndOf="@+id/bdDialog" />
 
     <EditText
         android:id="@+id/birthD"
@@ -267,10 +271,10 @@
         android:id="@+id/sdDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView14"
-        android:layout_alignLeft="@+id/start_study"
-        android:layout_alignStart="@+id/radioGroupGender"
-        android:src="@android:drawable/ic_menu_month" />
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_alignBottom="@+id/textView13"
+        android:layout_alignRight="@+id/textView14"
+        android:layout_alignEnd="@+id/textView14" />
 
     <ImageView
         android:id="@+id/gdDialog"

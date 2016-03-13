@@ -118,10 +118,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/sleepDur"
-        android:layout_alignBottom="@+id/textView49"
-        android:layout_alignLeft="@+id/sleepEnd"
-        android:layout_alignStart="@+id/sleepEnd"
-        android:layout_below="@+id/sleepEnd"/>
+        android:layout_alignTop="@+id/textView49"
+        android:layout_alignRight="@+id/textView27"
+        android:layout_alignEnd="@+id/textView27" />
 
 
 </RelativeLayout>

@@ -33,6 +33,7 @@ public class SnacksActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // to get current time
+        snacks_time = (EditText) findViewById(R.id.snackTime);
         final Calendar c = Calendar.getInstance();
         final int hour = c.get(Calendar.HOUR_OF_DAY);
         final int minute = c.get(Calendar.MINUTE);
@@ -74,7 +75,7 @@ public class SnacksActivity extends AppCompatActivity {
                 String snack_name = snack.getText().toString();
                 String snack_Time = snacks_time.getText().toString();
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_TimePattern);
 
                 Date TimeSnack = null;
 
