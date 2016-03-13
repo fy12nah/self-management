@@ -11,7 +11,7 @@ public class Profile {
     long id;
     String name;
     Date birthdate, start_Study, grad_Study;
-    char gender, profileCheck, physicalCheck, illnessCheck,  mealsCheck, moodCheck, exerCheck, sleepCheck;
+    char gender;
 
     HashMap<String, Boolean> categories;
 
@@ -59,6 +59,26 @@ public class Profile {
 
     public HashMap<String, Boolean> getCategories() {
         return categories;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public void setStart_Study(Date start_Study) {
+        this.start_Study = start_Study;
+    }
+
+    public void setGrad_Study(Date grad_Study) {
+        this.grad_Study = grad_Study;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
     }
 
     @Override

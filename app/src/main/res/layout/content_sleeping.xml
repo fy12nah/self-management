@@ -84,14 +84,44 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/startSleep_dialog"
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_alignBottom="@+id/sleepStart"
+        android:layout_alignLeft="@+id/textView27"
+        android:layout_alignStart="@+id/textView27" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/endSleep_dialog"
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_alignBottom="@+id/sleepEnd"
+        android:layout_alignLeft="@+id/startSleep_dialog"
+        android:layout_alignStart="@+id/startSleep_dialog" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You Slept ... "
-        android:id="@+id/sleepMsg"
-        android:layout_below="@+id/sleepEnd"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Duration:"
+        android:id="@+id/textView49"
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/textView48"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/sleepDur"
+        android:layout_alignBottom="@+id/textView49"
         android:layout_alignLeft="@+id/sleepEnd"
         android:layout_alignStart="@+id/sleepEnd"
-        android:layout_marginTop="43dp" />
+        android:layout_below="@+id/sleepEnd"/>
+
 
 </RelativeLayout>

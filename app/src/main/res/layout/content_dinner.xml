@@ -10,9 +10,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.nooraalhassen.myapplication.DinnerActivity"
-    tools:showIn="@layout/activity_dinner">
+    tools:showIn="@layout/activity_dinner"
+    android:id="@+id/dinnerLayout">
 
-    <TextView
+
+<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -97,9 +99,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/addDinner"
         android:src="@android:drawable/ic_input_add"
-        android:layout_alignBottom="@+id/textView35"
-        android:layout_toLeftOf="@+id/itemDinner"
-        android:layout_toStartOf="@+id/itemDinner" />
+        android:layout_alignBottom="@+id/itemDinner"
+        android:layout_toRightOf="@+id/textView34"
+        android:layout_toEndOf="@+id/textView34" />
 
     <Button
         android:layout_width="wrap_content"
@@ -112,4 +114,13 @@
         android:layout_alignEnd="@+id/dinnerTime"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dnr_TimeDialog"
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_alignBottom="@+id/dinnerTime"
+        android:layout_toRightOf="@+id/textView34"
+        android:layout_toEndOf="@+id/textView34" />
 </RelativeLayout>

@@ -92,4 +92,13 @@
         android:layout_alignBottom="@+id/textView29"
         android:layout_alignRight="@+id/snackName"
         android:layout_alignEnd="@+id/snackName" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/snack_TimeD"
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_alignBottom="@+id/textView31"
+        android:layout_alignLeft="@+id/textView29"
+        android:layout_alignStart="@+id/textView29" />
 </RelativeLayout>

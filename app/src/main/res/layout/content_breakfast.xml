@@ -10,7 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.nooraalhassen.myapplication.BreakfastActivity"
-    tools:showIn="@layout/activity_breakfast">
+    tools:showIn="@layout/activity_breakfast"
+    android:id="@+id/breakfastLayout">
 
 
     <TextView
@@ -81,7 +82,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/textView39"
-        android:layout_toEndOf="@+id/textView39" />
+        android:layout_toEndOf="@+id/textView39"
+        />
 
     <EditText
         android:layout_width="wrap_content"
@@ -113,5 +115,15 @@
         android:layout_alignBottom="@+id/textView40"
         android:layout_toLeftOf="@+id/textView37"
         android:layout_toStartOf="@+id/textView37" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Bf_timeDialog"
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_alignBottom="@+id/BFTime"
+        android:layout_alignLeft="@+id/addBF"
+        android:layout_alignStart="@+id/addBF" />
+
 
 </RelativeLayout>

@@ -285,7 +285,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
 
-
         // date format
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
         Date bd = null;
@@ -300,6 +299,11 @@ public class ProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        p.setName(name);
+        p.setBirthdate(bd);
+        p.setGender(gender);
+        p.setStart_Study(sd);
+        p.setGrad_Study(gd);
 
         DBmanager manager = new DBmanager(this);
 
