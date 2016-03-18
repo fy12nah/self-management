@@ -23,7 +23,7 @@ import java.util.HashMap;
  */
 public class DBmanager extends SQLiteOpenHelper {
 
-    static int DB_VERSION = 7;
+    static int DB_VERSION = 10;
     static String DB_NAME = "Selfmanaging.db";
 
     public DBmanager(Context context) {
@@ -48,6 +48,8 @@ public class DBmanager extends SQLiteOpenHelper {
         db.execSQL(BreakfastDetailsTable.sql_create);
         db.execSQL(LunchDetailsTable.sql_create);
         db.execSQL(DinnerDetailsTable.sql_create);
+        db.execSQL(UsersShortIllnessTable.sql_create);
+        db.execSQL(STIDetailsTable.sql_create);
 
         populateCategotyTable(db);
     }
@@ -71,7 +73,8 @@ public class DBmanager extends SQLiteOpenHelper {
         db.execSQL(BreakfastDetailsTable.sql_drop);
         db.execSQL(LunchDetailsTable.sql_drop);
         db.execSQL(DinnerDetailsTable.sql_drop);
-
+        db.execSQL(UsersShortIllnessTable.sql_drop);
+        db.execSQL(STIDetailsTable.sql_drop);
 
         onCreate(db);
     }
@@ -277,7 +280,7 @@ public class DBmanager extends SQLiteOpenHelper {
     public static class DinnerDetailsTable implements BaseColumns{
 
         // creating columns
-        public static String table_name = "userLunchItems";
+        public static String table_name = "userDinnerItems";
         public static String Col_dinnerID = "dinnerID";
         public static String Col_dinnerItem = "dinnerItem";
 
@@ -379,6 +382,93 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
+    // creating a UsersExerciseTable in database
+    private static class UsersShortIllnessTable implements BaseColumns {
+
+        // creating columns in UserExerciseTable
+        public static String table_name = "userShortTermIllness";
+        public static String Col_ST_name = "ST_IllnessName";
+        public static String Col_sSTIllnessDate = "ST_IllnessStartDate";
+        public static String Col_eSTIllnessDate = "ST_IllnessEndDate";
+        public static String Col_STmed = "ST_med";
+
+
+        public static String sql_create = "create table "+table_name+ "("+
+                _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_ST_name+ "TEXT not null, "+
+                Col_sSTIllnessDate+ " TEXT not null, "+
+                Col_eSTIllnessDate+ " TEXT not null, "+
+                Col_STmed+ " TEXT not null"+
+                ")";
+
+        public static String sql_drop = "drop table if exists "+table_name;
+    }
+
+
+    // creating a table
+    public static class STIDetailsTable implements BaseColumns{
+
+        // creating columns
+        public static String table_name = "userSTImed";
+        public static String Col_STID = "ST_ID";
+        public static String Col_STmed = "STmed";
+
+
+        public static String sql_create = "create table "+table_name+ "("+
+                _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_STID+ " INTEGER not null, "+
+                Col_STmed+ " TEXT not null"+
+                ")";
+
+        public static String sql_drop = "drop table if exists "+table_name;
+
+    }
+
+
+    // creating table in database
+    private static class UsersLongIllnessTable implements BaseColumns {
+
+        // creating columns in UserExerciseTable
+        public static String table_name = "userLongTermIllness";
+        public static String Col_LT_name = "LT_IllnessName";
+        public static String Col_sLTIllnessDate = "LT_IllnessStartDate";
+        public static String Col_eLTIllnessDate = "LT_IllnessEndDate";
+        public static String Col_LTmed = "LT_med";
+
+
+        public static String sql_create = "create table "+table_name+ "("+
+                _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_LT_name+ "TEXT not null, "+
+                Col_sLTIllnessDate+ " TEXT not null, "+
+                Col_eLTIllnessDate+ " TEXT not null, "+
+                Col_LTmed+ " TEXT not null"+
+                ")";
+
+        public static String sql_drop = "drop table if exists "+table_name;
+    }
+
+
+    // creating a table
+    public static class LTIDetailsTable implements BaseColumns {
+
+        // creating columns
+        public static String table_name = "userSTImed";
+        public static String Col_LTID = "LT_ID";
+        public static String Col_LTmed = "LTmed";
+
+
+        public static String sql_create = "create table " + table_name + "(" +
+                _ID + " INTEGER Primary key AUTOINCREMENT, " +
+                Col_LTID + " INTEGER not null, " +
+                Col_LTmed + " TEXT not null" +
+                ")";
+
+        public static String sql_drop = "drop table if exists " + table_name;
+
+    }
+
+
+
     public long signup (String username, String name, String password, Date birthdate, char gender){
 
         // allow to write into database
@@ -398,9 +488,7 @@ public class DBmanager extends SQLiteOpenHelper {
             vals.put(UsersProfileTable.Col_birthdate, simpleDateFormat.format(birthdate));
             vals.put(UsersProfileTable.Col_gender, Character.toString(gender));
 
-
             long profileId = db.insert(UsersProfileTable.table_name, null, vals);
-
             populateProfileCategories(db, profileId);
 
         }
@@ -630,7 +718,7 @@ public class DBmanager extends SQLiteOpenHelper {
             values = new ContentValues();
             values.put(LunchDetailsTable.Col_lunchID, id);
             values.put(LunchDetailsTable.Col_lunchItem, s);
-            db.insert(BreakfastDetailsTable.table_name, null, values);
+            db.insert(LunchDetailsTable.table_name, null, values);
         }
 
         return true;
@@ -773,6 +861,71 @@ public class DBmanager extends SQLiteOpenHelper {
         if (id == -1){
             return false;
         }
+        return true;
+    }
+
+    public boolean insert_STIllness(String STName, Date startST, Date endST, ArrayList<String> STmed){
+        // allow to write into database
+        SQLiteDatabase db = getWritableDatabase();
+
+        // time form
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+
+        ContentValues values = new ContentValues();
+
+        // input values in col
+        values.put(UsersShortIllnessTable.Col_ST_name, STName);
+        values.put(UsersShortIllnessTable.Col_sSTIllnessDate, simpleDateFormat.format(startST));
+        values.put(UsersShortIllnessTable.Col_eSTIllnessDate, simpleDateFormat.format(endST));
+        long id = db.insert(UsersShortIllnessTable.table_name, null, values);
+
+        // Closing database
+        db.close();
+
+        if (id == -1){
+            return false;
+        }
+
+        for(String s: STmed) {
+            values = new ContentValues();
+            values.put(STIDetailsTable.Col_STID, id);
+            values.put(STIDetailsTable.Col_STmed, s);
+            db.insert(STIDetailsTable.table_name, null, values);
+        }
+
+        return true;
+    }
+
+
+    public boolean insert_LTIllness(String LTName, Date startLT, Date endLT, ArrayList<String> LTmed){
+        // allow to write into database
+        SQLiteDatabase db = getWritableDatabase();
+
+        // date form
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+
+        ContentValues values = new ContentValues();
+
+        // input values in col
+        values.put(UsersLongIllnessTable.Col_LT_name, LTName);
+        values.put(UsersLongIllnessTable.Col_sLTIllnessDate, simpleDateFormat.format(startLT));
+        values.put(UsersLongIllnessTable.Col_eLTIllnessDate, simpleDateFormat.format(endLT));
+        long id = db.insert(UsersShortIllnessTable.table_name, null, values);
+
+        // Closing database
+        db.close();
+
+        if (id == -1){
+            return false;
+        }
+
+        for(String s: LTmed) {
+            values = new ContentValues();
+            values.put(LTIDetailsTable.Col_LTID, id);
+            values.put(LTIDetailsTable.Col_LTmed, s);
+            db.insert(STIDetailsTable.table_name, null, values);
+        }
+
         return true;
     }
 }

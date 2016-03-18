@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.nooraalhassen.myapplication.ShortT_Illness"
+    tools:showIn="@layout/activity_short_t__illness"
+    android:id="@+id/STLayout">
+
+
+<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView51"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Short-Term Illness" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Illness Name:"
+        android:id="@+id/textView52"
+        android:layout_below="@+id/textView51"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="47dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Start Date:"
+        android:id="@+id/textView53"
+        android:layout_marginTop="49dp"
+        android:layout_below="@+id/textView52"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="End Date:"
+        android:id="@+id/textView54"
+        android:layout_below="@+id/textView53"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="47dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medication:"
+        android:id="@+id/textView55"
+        android:layout_below="@+id/textView54"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="58dp" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/shrtIll_name"
+        android:layout_above="@+id/textView53"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textView56"
+        android:layout_alignLeft="@+id/STI_sdate"
+        android:layout_alignStart="@+id/STI_sdate" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/STI_sdate"
+        android:layout_above="@+id/textView54"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/STI_edate"
+        android:layout_alignBottom="@+id/textView54"
+        android:layout_alignLeft="@+id/STI_sdate"
+        android:layout_alignStart="@+id/STI_sdate" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/STI_med"
+        android:layout_alignBottom="@+id/textView55"
+        android:layout_alignLeft="@+id/STI_edate"
+        android:layout_alignStart="@+id/STI_edate"
+        android:layout_alignRight="@+id/STI_edate"
+        android:layout_alignEnd="@+id/STI_edate" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="save"
+        android:id="@+id/STI_save"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/STI_med"
+        android:layout_alignRight="@+id/STI_med"
+        android:layout_alignEnd="@+id/STI_med"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sDate_Dialog"
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_above="@+id/textView54"
+        android:layout_toRightOf="@+id/textView52"
+        android:layout_toEndOf="@+id/textView52" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/eDate_Dialog"
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_alignBottom="@+id/textView54"
+        android:layout_toLeftOf="@+id/STI_edate"
+        android:layout_toStartOf="@+id/STI_edate" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addMed"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_alignBottom="@+id/STI_med"
+        android:layout_toLeftOf="@+id/STI_med"
+        android:layout_toStartOf="@+id/STI_med" />
+</RelativeLayout>

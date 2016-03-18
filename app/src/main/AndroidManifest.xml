@@ -69,6 +69,14 @@
         <activity
             android:name=".SnacksActivity"
             android:label="@string/title_activity_snacks"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ShortT_Illness"
+            android:label="@string/title_activity_short_t__illness"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LongT_Illness"
+            android:label="@string/title_activity_long_t__illness"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
