@@ -9,6 +9,12 @@ public class Constants {
     public static final String display_DatePattern = "dd/MM/yyyy";
     public static final String display_TimePattern = "HH:MM";
 
+    public static final String BF = "Breakfast";
+    public static final String Lunch = "Breakfast";
+    public static final String Dinner = "Breakfast";
+
+
+
     public static String sharedpreferencesId = "SHM";
     public static String userId = "UserId";
 

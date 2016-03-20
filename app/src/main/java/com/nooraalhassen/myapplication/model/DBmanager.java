@@ -23,7 +23,7 @@ import java.util.HashMap;
  */
 public class DBmanager extends SQLiteOpenHelper {
 
-    static int DB_VERSION = 10;
+    static int DB_VERSION = 21;
     static String DB_NAME = "Selfmanaging.db";
 
     public DBmanager(Context context) {
@@ -38,16 +38,9 @@ public class DBmanager extends SQLiteOpenHelper {
         db.execSQL(UsersPhysicalTable.sql_create);
         db.execSQL(CategoryTable.sql_create);
         db.execSQL(ProfileCategoryTable.sql_create);
-        db.execSQL(UsersBreakfastTable.sql_create);
-        db.execSQL(UsersLunchTable.sql_create);
-        db.execSQL(UsersDinnerTable.sql_create);
+        db.execSQL(UsersMealsTable.sql_create);
+        db.execSQL(MealDetailsTable.sql_create);
         db.execSQL(UsersSnacksTable.sql_create);
-        db.execSQL(UsersMoodTable.sql_create);
-        db.execSQL(UsersSleepTable.sql_create);
-        db.execSQL(UsersExerciseTable.sql_create);
-        db.execSQL(BreakfastDetailsTable.sql_create);
-        db.execSQL(LunchDetailsTable.sql_create);
-        db.execSQL(DinnerDetailsTable.sql_create);
         db.execSQL(UsersShortIllnessTable.sql_create);
         db.execSQL(STIDetailsTable.sql_create);
 
@@ -63,16 +56,9 @@ public class DBmanager extends SQLiteOpenHelper {
         db.execSQL(UsersPhysicalTable.sql_drop);
         db.execSQL(CategoryTable.sql_drop);
         db.execSQL(ProfileCategoryTable.sql_drop);
-        db.execSQL(UsersBreakfastTable.sql_drop);
-        db.execSQL(UsersLunchTable.sql_drop);
-        db.execSQL(UsersDinnerTable.sql_drop);
+        db.execSQL(UsersMealsTable.sql_drop);
+        db.execSQL(MealDetailsTable.sql_drop);
         db.execSQL(UsersSnacksTable.sql_drop);
-        db.execSQL(UsersMoodTable.sql_drop);
-        db.execSQL(UsersSleepTable.sql_drop);
-        db.execSQL(UsersExerciseTable.sql_drop);
-        db.execSQL(BreakfastDetailsTable.sql_drop);
-        db.execSQL(LunchDetailsTable.sql_drop);
-        db.execSQL(DinnerDetailsTable.sql_drop);
         db.execSQL(UsersShortIllnessTable.sql_drop);
         db.execSQL(STIDetailsTable.sql_drop);
 
@@ -166,6 +152,7 @@ public class DBmanager extends SQLiteOpenHelper {
 
         // creating columns in UserPhysicalTable
         public static String table_name = "userPhysical";
+        public static String Col_userID = "user_id";
         public static String Col_weight = "weight";
         public static String Col_height = "height";
         public static String Col_date = "date";
@@ -173,6 +160,7 @@ public class DBmanager extends SQLiteOpenHelper {
 
         public static String sql_create = "create table "+table_name+ "("+
                 _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_userID+ " INTEGER not null, "+
                 Col_weight+ " REAL, "+
                 Col_height+ " REAL, "+
                 Col_date+ " TEXT not null"+
@@ -183,117 +171,47 @@ public class DBmanager extends SQLiteOpenHelper {
 
 
     // creating a UsersBreakfastTable in database
-    private static class UsersBreakfastTable implements BaseColumns {
+    private static class UsersMealsTable implements BaseColumns {
 
         // creating columns in UserBreakfastTable
-        public static String table_name = "userBreakfast";
-        public static String Col_BFName = "breakfastName";
-        public static String Col_BFTime = "BFTime";
+        public static String table_name = "userMeals";
+        public static String Col_userId = "userId";
+        public static String Col_mealType = "mealType";
+        public static String Col_mealName = "mealName";
+        public static String Col_mealDate = "mealDate";
+        public static String Col_mealTime = "mealTime";
 
 
         public static String sql_create = "create table "+table_name+ "("+
                 _ID + " INTEGER Primary key AUTOINCREMENT, "+
-                Col_BFName+ " TEXT, "+
-                Col_BFTime+ " TEXT not null"+
+                Col_userId+ " INTEGER not null, "+
+                Col_mealType+" TEXT not null, "+
+                Col_mealName+ " TEXT, "+
+                Col_mealDate+ " TEXT not null, "+
+                Col_mealTime+ " TEXT not null"+
                 ")";
 
         public static String sql_drop = "drop table if exists "+table_name;
     }
 
-    public static class BreakfastDetailsTable implements BaseColumns{
+    public static class MealDetailsTable implements BaseColumns{
 
         // creating columns
-        public static String table_name = "userBreakfastItems";
-        public static String Col_BFID = "breakfastID";
-        public static String Col_BFItem = "breakfastItem";
+        public static String table_name = "userMealItems";
+        public static String Col_mealID = "mealID";
+        public static String Col_mealItem = "mealItem";
 
 
         public static String sql_create = "create table "+table_name+ "("+
                 _ID + " INTEGER Primary key AUTOINCREMENT, "+
-                Col_BFID+ " INTEGER not null, "+
-                Col_BFItem+ " TEXT not null"+
+                Col_mealID+ " INTEGER not null, "+
+                Col_mealItem+ " TEXT not null"+
                 ")";
 
         public static String sql_drop = "drop table if exists "+table_name;
 
     }
 
-
-    // creating a UsersLunchTable in database
-    private static class UsersLunchTable implements BaseColumns {
-
-        // creating columns in UserLunchTable
-        public static String table_name = "userLunch";
-        public static String Col_lunchName = "lunchName";
-        public static String Col_lunchTime = "lunchTime";
-
-
-        public static String sql_create = "create table "+table_name+ "("+
-                _ID + " INTEGER Primary key AUTOINCREMENT, "+
-                Col_lunchName+ " TEXT, "+
-                Col_lunchTime+ " TEXT not null"+
-                ")";
-
-        public static String sql_drop = "drop table if exists "+table_name;
-    }
-
-    // creating a table for lunch items
-    public static class LunchDetailsTable implements BaseColumns{
-
-        // creating columns
-        public static String table_name = "userLunchItems";
-        public static String Col_lunchID = "lunchID";
-        public static String Col_lunchItem = "lunchItem";
-
-
-        public static String sql_create = "create table "+table_name+ "("+
-                _ID + " INTEGER Primary key AUTOINCREMENT, "+
-                Col_lunchID+ " INTEGER not null, "+
-                Col_lunchItem+ " TEXT not null"+
-                ")";
-
-        public static String sql_drop = "drop table if exists "+table_name;
-
-    }
-
-
-    // creating a UsersDinnerTable in database
-    private static class UsersDinnerTable implements BaseColumns {
-
-        // creating columns in UserDinnerTable
-        public static String table_name = "userDinner";
-        public static String Col_dinnerName = "dinnerName";
-        public static String Col_dinnerTime = "dinnerTime";
-
-
-        public static String sql_create = "create table "+table_name+ "("+
-                _ID + " INTEGER Primary key AUTOINCREMENT, "+
-                Col_dinnerName+ " TEXT, "+
-                Col_dinnerTime+ " TEXT not null"+
-                ")";
-
-        public static String sql_drop = "drop table if exists "+table_name;
-    }
-
-
-    // creating a table
-    public static class DinnerDetailsTable implements BaseColumns{
-
-        // creating columns
-        public static String table_name = "userDinnerItems";
-        public static String Col_dinnerID = "dinnerID";
-        public static String Col_dinnerItem = "dinnerItem";
-
-
-        public static String sql_create = "create table "+table_name+ "("+
-                _ID + " INTEGER Primary key AUTOINCREMENT, "+
-                Col_dinnerID+ " INTEGER not null, "+
-                Col_dinnerItem+ " TEXT not null"+
-                ")";
-
-        public static String sql_drop = "drop table if exists "+table_name;
-
-    }
 
 
     // creating a UsersSnacksTable in database
@@ -301,13 +219,17 @@ public class DBmanager extends SQLiteOpenHelper {
 
         // creating columns in UserSnacksTable
         public static String table_name = "userSnacks";
+        public static String Col_userId = "userId";
         public static String Col_snackName = "snackName";
+        public static String Col_snackDate = "snackDate";
         public static String Col_snackTime = "snackTime";
 
 
         public static String sql_create = "create table "+table_name+ "("+
                 _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_userId+ " INTEGER not null, "+
                 Col_snackName+ " TEXT not null, "+
+                Col_snackDate+ " TEXT not null, "+
                 Col_snackTime+ " TEXT not null"+
                 ")";
 
@@ -320,15 +242,19 @@ public class DBmanager extends SQLiteOpenHelper {
 
         // creating columns in UserMoodTable
         public static String table_name = "userMood";
+        public static String Col_userId = "userId";
         public static String Col_moodName = "moodName";
         public static String Col_moodReason = "moodReason";
+        public static String Col_moodDate = "moodDate";
         public static String Col_moodTime = "moodTime";
 
 
         public static String sql_create = "create table "+table_name+ "("+
                 _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_userId+ " INTEGER not null, "+
                 Col_moodName+ " TEXT not null, "+
                 Col_moodReason+ " TEXT not null, "+
+                Col_moodDate+ " TEXT not null, "+
                 Col_moodTime+ " TEXT not null"+
                 ")";
 
@@ -341,6 +267,8 @@ public class DBmanager extends SQLiteOpenHelper {
 
         // creating columns in UserSleepTable
         public static String table_name = "userSleepingHours";
+        public static String Col_userId = "userId";
+        public static String Col_sleepDate = "sleepDate";
         public static String Col_sSleepTime = "sleepStartTime";
         public static String Col_eSleepTime = "sleepEndTime";
         public static String Col_sleepDur = "sleepDuration";
@@ -349,6 +277,8 @@ public class DBmanager extends SQLiteOpenHelper {
 
         public static String sql_create = "create table "+table_name+ "("+
                 _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_userId+" INTEGER not null, "+
+                Col_sleepDate+ " TEXT not null, "+
                 Col_sSleepTime+ " TEXT not null, "+
                 Col_eSleepTime+ " TEXT not null, "+
                 Col_sleepDur+ " TEXT not null"+
@@ -363,7 +293,9 @@ public class DBmanager extends SQLiteOpenHelper {
 
         // creating columns in UserExerciseTable
         public static String table_name = "userExercises";
+        public static String Col_userID = "userId";
         public static String Col_exerType = "exerciseType";
+        public static String Col_exerDate = "exerciseDate";
         public static String Col_sExerTime = "exerciseStartTime";
         public static String Col_eExerTime = "exerciseEndTime";
         public static String Col_exerDur = "exerciseDuration";
@@ -372,7 +304,9 @@ public class DBmanager extends SQLiteOpenHelper {
 
         public static String sql_create = "create table "+table_name+ "("+
                 _ID + " INTEGER Primary key AUTOINCREMENT, "+
-                Col_exerType+ "TEXT not null, "+
+                Col_userID+ " INTEGER not null, "+
+                Col_exerType+ " TEXT not null, "+
+                Col_exerDate+ " TEXT not null, "+
                 Col_sExerTime+ " TEXT not null, "+
                 Col_eExerTime+ " TEXT not null, "+
                 Col_exerDur+ " TEXT not null"+
@@ -387,18 +321,18 @@ public class DBmanager extends SQLiteOpenHelper {
 
         // creating columns in UserExerciseTable
         public static String table_name = "userShortTermIllness";
+        public static String Col_userID = "userId";
         public static String Col_ST_name = "ST_IllnessName";
         public static String Col_sSTIllnessDate = "ST_IllnessStartDate";
         public static String Col_eSTIllnessDate = "ST_IllnessEndDate";
-        public static String Col_STmed = "ST_med";
 
 
         public static String sql_create = "create table "+table_name+ "("+
                 _ID + " INTEGER Primary key AUTOINCREMENT, "+
-                Col_ST_name+ "TEXT not null, "+
-                Col_sSTIllnessDate+ " TEXT not null, "+
-                Col_eSTIllnessDate+ " TEXT not null, "+
-                Col_STmed+ " TEXT not null"+
+                Col_userID+ " INTEGER not null, "+
+                Col_ST_name+ " TEXT not null, "+
+                Col_sSTIllnessDate+ " TEXT, "+
+                Col_eSTIllnessDate+ " TEXT "+
                 ")";
 
         public static String sql_drop = "drop table if exists "+table_name;
@@ -430,6 +364,7 @@ public class DBmanager extends SQLiteOpenHelper {
 
         // creating columns in UserExerciseTable
         public static String table_name = "userLongTermIllness";
+        public static String Col_userId = "userId";
         public static String Col_LT_name = "LT_IllnessName";
         public static String Col_sLTIllnessDate = "LT_IllnessStartDate";
         public static String Col_eLTIllnessDate = "LT_IllnessEndDate";
@@ -438,10 +373,11 @@ public class DBmanager extends SQLiteOpenHelper {
 
         public static String sql_create = "create table "+table_name+ "("+
                 _ID + " INTEGER Primary key AUTOINCREMENT, "+
-                Col_LT_name+ "TEXT not null, "+
+                Col_userId+" INTEGER not null, "+
+                Col_LT_name+ " TEXT not null, "+
                 Col_sLTIllnessDate+ " TEXT not null, "+
-                Col_eLTIllnessDate+ " TEXT not null, "+
-                Col_LTmed+ " TEXT not null"+
+                Col_eLTIllnessDate+ " TEXT, "+
+                Col_LTmed+ " TEXT"+
                 ")";
 
         public static String sql_drop = "drop table if exists "+table_name;
@@ -631,7 +567,7 @@ public class DBmanager extends SQLiteOpenHelper {
 
 
     // insert data into userPhysicalTable
-    public boolean insert_physical (String weight, String height, Date physicaldate){
+    public boolean insert_physical (long userId, String weight, String height, Date physicaldate){
 
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
@@ -642,6 +578,7 @@ public class DBmanager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         // input values in col
+        values.put(UsersPhysicalTable.Col_userID, userId);
         values.put(UsersPhysicalTable.Col_weight, weight);
         values.put(UsersPhysicalTable.Col_height, height);
         values.put(UsersPhysicalTable.Col_date, simpleDateFormat.format(physicaldate));
@@ -656,8 +593,9 @@ public class DBmanager extends SQLiteOpenHelper {
         return true;
     }
 
+
     // insert data into usersBreakfastTable
-    public boolean insert_breakfast(String bfname, Date bftime, ArrayList<String> items){
+    public boolean insert_meal(long user_id, String mealType, String mealname, Date mealdate, Date mealtime, ArrayList<String> items){
 
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
@@ -668,12 +606,13 @@ public class DBmanager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         // input values in col
-        values.put(UsersBreakfastTable.Col_BFName, bfname);
-        values.put(UsersBreakfastTable.Col_BFTime, simpleDateFormat.format(bftime));
-        long id = db.insert(UsersBreakfastTable.table_name, null, values);
+        values.put(UsersMealsTable.Col_userId, user_id);
+        values.put(UsersMealsTable.Col_mealType, mealType);
+        values.put(UsersMealsTable.Col_mealName, mealname);
+        values.put(UsersMealsTable.Col_mealDate, simpleDateFormat.format(mealdate));
+        values.put(UsersMealsTable.Col_mealTime, simpleDateFormat.format(mealtime));
+        long id = db.insert(UsersMealsTable.table_name, null, values);
 
-        // Closing database
-        db.close();
 
         if (id == -1){
             return false;
@@ -681,85 +620,22 @@ public class DBmanager extends SQLiteOpenHelper {
 
         for(String s: items) {
             values = new ContentValues();
-            values.put(BreakfastDetailsTable.Col_BFID, id);
-            values.put(BreakfastDetailsTable.Col_BFItem, s);
-            db.insert(BreakfastDetailsTable.table_name, null, values);
+            values.put(MealDetailsTable.Col_mealID, id);
+            values.put(MealDetailsTable.Col_mealItem, s);
+            db.insert(MealDetailsTable.table_name, null, values);
 
         }
-
-        return true;
-    }
-
-
-    // insert data into usersLunchTable
-    public boolean insert_lunch(String lunchname, Date lunchtime, ArrayList<String> items){
-
-        // allow to write into database
-        SQLiteDatabase db = getWritableDatabase();
-
-        // time form
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
-
-        ContentValues values = new ContentValues();
-
-        // input values in col
-        values.put(UsersLunchTable.Col_lunchName, lunchname);
-        values.put(UsersLunchTable.Col_lunchTime, simpleDateFormat.format(lunchtime));
-        long id = db.insert(UsersLunchTable.table_name, null, values);
 
         // Closing database
         db.close();
-
-        if (id == -1){
-            return false;
-        }
-
-        for(String s: items) {
-            values = new ContentValues();
-            values.put(LunchDetailsTable.Col_lunchID, id);
-            values.put(LunchDetailsTable.Col_lunchItem, s);
-            db.insert(LunchDetailsTable.table_name, null, values);
-        }
-
         return true;
     }
 
 
-    // insert data into usersDinnerTable
-    public boolean insert_dinner(String dinnername, Date dinnertime, ArrayList<String> items){
 
-        // allow to write into database
-        SQLiteDatabase db = getWritableDatabase();
-
-        // time form
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
-
-        ContentValues values = new ContentValues();
-
-        // input values in col
-        values.put(UsersDinnerTable.Col_dinnerName, dinnername);
-        values.put(UsersDinnerTable.Col_dinnerTime, simpleDateFormat.format(dinnertime));
-        long id = db.insert(UsersDinnerTable.table_name, null, values);
-
-        // Closing database
-        db.close();
-
-        if (id == -1){
-            return false;
-        }
-
-        for(String s: items) {
-            values = new ContentValues();
-            values.put(DinnerDetailsTable.Col_dinnerID, id);
-            values.put(DinnerDetailsTable.Col_dinnerItem, s);
-            db.insert(DinnerDetailsTable.table_name, null, values);
-        }
-
-        return true;
-    }
 
     // insert data into usersSnackTable
-    public boolean insert_snack(String snackname, Date snacktime){
+    public boolean insert_snack(long user_id, String snackname, Date snackdate, Date snacktime){
 
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
@@ -770,7 +646,9 @@ public class DBmanager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         // input values in col
+        values.put(UsersSnacksTable.Col_userId, user_id);
         values.put(UsersSnacksTable.Col_snackName, snackname);
+        values.put(UsersSnacksTable.Col_snackDate, simpleDateFormat.format(snackdate));
         values.put(UsersSnacksTable.Col_snackTime, simpleDateFormat.format(snacktime));
         long id = db.insert(UsersSnacksTable.table_name, null, values);
 
@@ -780,12 +658,13 @@ public class DBmanager extends SQLiteOpenHelper {
         if (id == -1){
             return false;
         }
+
         return true;
     }
 
 
     // insert data into usersMoodTable
-    public boolean insert_mood(String moodname, String moodreason, Date moodtime){
+    public boolean insert_mood(long user_id, String moodname, String moodreason, Date moodDate, Date moodtime){
 
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
@@ -796,8 +675,10 @@ public class DBmanager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         // input values in col
+        values.put(UsersMoodTable.Col_userId, user_id);
         values.put(UsersMoodTable.Col_moodName, moodname);
         values.put(UsersMoodTable.Col_moodReason, moodreason);
+        values.put(UsersMoodTable.Col_moodDate, simpleDateFormat.format(moodDate));
         values.put(UsersMoodTable.Col_moodTime, simpleDateFormat.format(moodtime));
         long id = db.insert(UsersMoodTable.table_name, null, values);
 
@@ -807,11 +688,12 @@ public class DBmanager extends SQLiteOpenHelper {
         if (id == -1){
             return false;
         }
+
         return true;
     }
 
 
-    public boolean insert_sleep(Date startSleep, Date endSleep, String sleepDur){
+    public boolean insert_sleep(long user_id, Date slpDate, Date startSleep, Date endSleep, String sleepDur){
 
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
@@ -822,6 +704,8 @@ public class DBmanager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         // input values in col
+        values.put(UsersSleepTable.Col_userId, user_id);
+        values.put(UsersSleepTable.Col_sleepDate, simpleDateFormat.format(slpDate));
         values.put(UsersSleepTable.Col_sSleepTime, simpleDateFormat.format(startSleep));
         values.put(UsersSleepTable.Col_eSleepTime, simpleDateFormat.format(endSleep));
         values.put(UsersSleepTable.Col_sleepDur, sleepDur);
@@ -833,38 +717,43 @@ public class DBmanager extends SQLiteOpenHelper {
         if (id == -1){
             return false;
         }
+
         return true;
     }
 
 
 
-    public boolean insert_exer(String exerType, Date startExer, Date endExer, String exerDur){
+    public boolean insert_exer(long user_id, String exerType, Date exerDate, Date startExer, Date endExer, String exerDur){
 
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
 
-        // time form
+        // date and time form
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
 
         ContentValues values = new ContentValues();
 
         // input values in col
+        values.put(UsersExerciseTable.Col_userID, user_id);
         values.put(UsersExerciseTable.Col_exerType, exerType);
+        values.put(UsersExerciseTable.Col_exerDate, simpleDateFormat.format(exerDate));
         values.put(UsersExerciseTable.Col_sExerTime, simpleDateFormat.format(startExer));
         values.put(UsersExerciseTable.Col_eExerTime, simpleDateFormat.format(endExer));
         values.put(UsersExerciseTable.Col_exerDur, exerDur);
         long id = db.insert(UsersExerciseTable.table_name, null, values);
 
+
         // Closing database
         db.close();
 
         if (id == -1){
             return false;
         }
+
         return true;
     }
 
-    public boolean insert_STIllness(String STName, Date startST, Date endST, ArrayList<String> STmed){
+    public boolean insert_STIllness(long user_id, String STName, Date startST, Date endST, ArrayList<String> STmed){
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
 
@@ -874,17 +763,17 @@ public class DBmanager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         // input values in col
+        values.put(UsersShortIllnessTable.Col_userID, user_id);
         values.put(UsersShortIllnessTable.Col_ST_name, STName);
         values.put(UsersShortIllnessTable.Col_sSTIllnessDate, simpleDateFormat.format(startST));
         values.put(UsersShortIllnessTable.Col_eSTIllnessDate, simpleDateFormat.format(endST));
         long id = db.insert(UsersShortIllnessTable.table_name, null, values);
 
-        // Closing database
-        db.close();
 
         if (id == -1){
             return false;
         }
+
 
         for(String s: STmed) {
             values = new ContentValues();
@@ -893,11 +782,13 @@ public class DBmanager extends SQLiteOpenHelper {
             db.insert(STIDetailsTable.table_name, null, values);
         }
 
+        // Closing database
+        db.close();
         return true;
     }
 
 
-    public boolean insert_LTIllness(String LTName, Date startLT, Date endLT, ArrayList<String> LTmed){
+    public boolean insert_LTIllness(long user_id, String LTName, Date startLT, Date endLT, ArrayList<String> LTmed){
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
 
@@ -907,13 +798,12 @@ public class DBmanager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         // input values in col
+        values.put(UsersLongIllnessTable.Col_userId, user_id);
         values.put(UsersLongIllnessTable.Col_LT_name, LTName);
         values.put(UsersLongIllnessTable.Col_sLTIllnessDate, simpleDateFormat.format(startLT));
         values.put(UsersLongIllnessTable.Col_eLTIllnessDate, simpleDateFormat.format(endLT));
         long id = db.insert(UsersShortIllnessTable.table_name, null, values);
 
-        // Closing database
-        db.close();
 
         if (id == -1){
             return false;
@@ -925,6 +815,9 @@ public class DBmanager extends SQLiteOpenHelper {
             values.put(LTIDetailsTable.Col_LTmed, s);
             db.insert(STIDetailsTable.table_name, null, values);
         }
+
+        // Closing database
+        db.close();
 
         return true;
     }

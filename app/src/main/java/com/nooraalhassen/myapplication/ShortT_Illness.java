@@ -2,11 +2,13 @@ package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,6 +27,7 @@ import java.util.Date;
 
 public class ShortT_Illness extends AppCompatActivity {
 
+    long user_id;
     EditText ST_sdate, ST_edate;
     RelativeLayout layout;
     ArrayList<EditText> edittexts = new ArrayList<>();
@@ -65,6 +68,9 @@ public class ShortT_Illness extends AppCompatActivity {
                 datePick.show();
             }
         });
+
+        SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+        user_id = preferences.getLong(Constants.userId, -1);
 
 
         final EditText ST_name = (EditText) findViewById(R.id.shrtIll_name);
@@ -122,11 +128,12 @@ public class ShortT_Illness extends AppCompatActivity {
 
                 ArrayList<String> STmeds = new ArrayList<String>();
                 for (EditText et: edittexts){
+                    Log.d("noora", et.getText().toString());
                     STmeds.add(et.getText().toString());
                 }
 
 
-                boolean saved = mgr.insert_STIllness(SillnessName, startDate, endDate, STmeds);
+                boolean saved = mgr.insert_STIllness(user_id, SillnessName, startDate, endDate, STmeds);
                 if (saved == true){
                     Toast.makeText(ShortT_Illness.this, "Short-term Illness entries saved", Toast.LENGTH_LONG).show();
 

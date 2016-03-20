@@ -125,7 +125,6 @@ public class ProfileActivity extends AppCompatActivity {
         long user_id = preferences.getLong(Constants.userId, -1);
 
 
-
         if (user_id != -1){
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
 

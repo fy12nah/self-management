@@ -3,6 +3,7 @@ package com.nooraalhassen.myapplication;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,6 +27,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class BreakfastActivity extends AppCompatActivity {
+
+    long user_id;
+    EditText bf_Date;
     EditText bf_Time;
     RelativeLayout layout;
     EditText bf_item;
@@ -39,14 +43,22 @@ public class BreakfastActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+        user_id = preferences.getLong(Constants.userId, -1);
+
+        bf_Date = (EditText) findViewById(R.id.bf_date);
         bf_Time = (EditText) findViewById(R.id.BFTime);
         final Calendar c = Calendar.getInstance();
+        final int year = c.get(Calendar.YEAR);
+        final int month = c.get(Calendar.MONTH);
+        final int day = c.get(Calendar.DAY_OF_MONTH);
         final int hour = c.get(Calendar.HOUR_OF_DAY);
         final int minute = c.get(Calendar.MINUTE);
 
 
         // defining widgets for use
         final EditText breakfast = (EditText) findViewById(R.id.BFName);
+        final EditText date_edittext = (EditText) findViewById(R.id.bf_date);
         final EditText time_edittext = (EditText) findViewById(R.id.BFTime);
 
         final Button save_bf = (Button) findViewById(R.id.BFSave);
@@ -55,6 +67,16 @@ public class BreakfastActivity extends AppCompatActivity {
         layout = (RelativeLayout) findViewById(R.id.breakfastLayout);
         bf_item = (EditText) findViewById(R.id.itemBF);
         edittexts.add(bf_item);
+
+
+        ImageView dateDialog = (ImageView) findViewById(R.id.bfDD);
+        dateDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePick = new DatePickerDialog(BreakfastActivity.this, new dateDailogListener(), year, month, day);
+                datePick.show();
+            }
+        });
 
 
         // date calander dialog
@@ -98,13 +120,17 @@ public class BreakfastActivity extends AppCompatActivity {
 
                 // getting edittext values
                 String bf_name = breakfast.getText().toString();
+                String bfDate = date_edittext.getText().toString();
                 String bfTime = time_edittext.getText().toString();
 
+                SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_TimePattern);
 
+                Date DateBF = null;
                 Date TimeBF = null;
 
                 try {
+                    DateBF = simpleDateFormatD.parse(bfDate);
                     TimeBF = simpleDateFormat.parse(bfTime);
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -116,12 +142,12 @@ public class BreakfastActivity extends AppCompatActivity {
                     items.add(et.getText().toString());
                 }
 
-                boolean saved = mgr.insert_breakfast(bf_name, TimeBF, items);
+                boolean saved = mgr.insert_meal(user_id, Constants.BF, bf_name, DateBF, TimeBF, items);
                 if (saved == true){
                     Toast.makeText(BreakfastActivity.this, "Breakfast entries are saved", Toast.LENGTH_LONG).show();
 
                     // go to another view - Meals view
-                    Intent intent = new Intent(BreakfastActivity.this, Meals.class);
+                    Intent intent = new Intent(BreakfastActivity.this, LandingView.class);
                     startActivity(intent);
                 }
                 else {
@@ -130,6 +156,15 @@ public class BreakfastActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    private class dateDailogListener implements DatePickerDialog.OnDateSetListener{
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            bf_Date.setText(dayOfMonth + "/" + monthOfYear + "/" + year);
+        }
+    }
+
 
     private class TimeDialogList implements TimePickerDialog.OnTimeSetListener{
 

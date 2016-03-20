@@ -2,6 +2,7 @@ package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,7 @@ import java.util.Date;
 
 public class LongT_Illness extends AppCompatActivity {
 
+    long user_id;
     EditText LT_sdate, LT_edate;
     RelativeLayout layout;
     ArrayList<EditText> edittexts = new ArrayList<>();
@@ -35,6 +37,9 @@ public class LongT_Illness extends AppCompatActivity {
         setContentView(R.layout.activity_long_t__illness);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+        user_id = preferences.getLong(Constants.userId, -1);
 
         // to get current date
         LT_sdate = (EditText) findViewById(R.id.LTI_sdate);
@@ -127,7 +132,7 @@ public class LongT_Illness extends AppCompatActivity {
                 }
 
 
-                boolean saved = mgr.insert_STIllness(SillnessName, startDate, endDate, LTmeds);
+                boolean saved = mgr.insert_LTIllness(user_id, SillnessName, startDate, endDate, LTmeds);
                 if (saved == true){
                     Toast.makeText(LongT_Illness.this, "Long-term Illness entries saved", Toast.LENGTH_LONG).show();
 

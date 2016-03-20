@@ -2,6 +2,7 @@ package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,7 @@ import java.util.Date;
 public class physical extends AppCompatActivity {
 
     EditText phys_date;
+    long user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,9 @@ public class physical extends AppCompatActivity {
         setContentView(R.layout.activity_physical);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+        user_id = preferences.getLong(Constants.userId, -1);
 
         phys_date = (EditText) findViewById(R.id.phys_date);
         final Calendar c = Calendar.getInstance();
@@ -75,7 +80,7 @@ public class physical extends AppCompatActivity {
                 }
 
 
-                boolean saved = mgr.insert_physical (weight, height, physdate);
+                boolean saved = mgr.insert_physical (user_id, weight, height, physdate);
                 if (saved == true){
                     Toast.makeText(physical.this, "physical entries saved", Toast.LENGTH_LONG).show();
 

@@ -82,10 +82,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Time:"
         android:id="@+id/sleepMsg"
-        android:layout_below="@+id/textView48"
+        android:layout_above="@+id/saveMood"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="53dp" />
+        android:layout_marginBottom="47dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -102,19 +102,40 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addMood"
-        android:src="@android:drawable/ic_input_add"
-        android:layout_above="@+id/textView47"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/mood_timeD"
         android:src="@android:drawable/ic_menu_month"
         android:layout_alignBottom="@+id/mdTime"
         android:layout_alignRight="@+id/textView47"
         android:layout_alignEnd="@+id/textView47" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Date:"
+        android:id="@+id/textView65"
+        android:layout_above="@+id/mdTime"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="32dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/moodDate"
+        android:layout_alignBottom="@+id/textView65"
+        android:layout_alignRight="@+id/saveMood"
+        android:layout_alignEnd="@+id/saveMood" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/moodDD"
+        android:layout_alignTop="@+id/moodDate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@android:drawable/ic_menu_month"/>
 
 </RelativeLayout>
