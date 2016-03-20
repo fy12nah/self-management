@@ -23,7 +23,7 @@ import java.util.HashMap;
  */
 public class DBmanager extends SQLiteOpenHelper {
 
-    static int DB_VERSION = 21;
+    static int DB_VERSION = 22;
     static String DB_NAME = "Selfmanaging.db";
 
     public DBmanager(Context context) {
@@ -35,14 +35,19 @@ public class DBmanager extends SQLiteOpenHelper {
         // creating tables
         db.execSQL(UsersTable.sql_create);
         db.execSQL(UsersProfileTable.sql_create);
-        db.execSQL(UsersPhysicalTable.sql_create);
         db.execSQL(CategoryTable.sql_create);
         db.execSQL(ProfileCategoryTable.sql_create);
+        db.execSQL(UsersPhysicalTable.sql_create);
         db.execSQL(UsersMealsTable.sql_create);
         db.execSQL(MealDetailsTable.sql_create);
         db.execSQL(UsersSnacksTable.sql_create);
+        db.execSQL(UsersSleepTable.sql_create);
+        db.execSQL(UsersExerciseTable.sql_create);
+        db.execSQL(UsersMoodTable.sql_create);
         db.execSQL(UsersShortIllnessTable.sql_create);
         db.execSQL(STIDetailsTable.sql_create);
+        db.execSQL(UsersLongIllnessTable.sql_create);
+        db.execSQL(LTIDetailsTable.sql_create);
 
         populateCategotyTable(db);
     }
@@ -53,14 +58,19 @@ public class DBmanager extends SQLiteOpenHelper {
         // dropping tables
         db.execSQL(UsersTable.sql_drop);
         db.execSQL(UsersProfileTable.sql_drop);
-        db.execSQL(UsersPhysicalTable.sql_drop);
         db.execSQL(CategoryTable.sql_drop);
         db.execSQL(ProfileCategoryTable.sql_drop);
+        db.execSQL(UsersPhysicalTable.sql_drop);
         db.execSQL(UsersMealsTable.sql_drop);
         db.execSQL(MealDetailsTable.sql_drop);
         db.execSQL(UsersSnacksTable.sql_drop);
+        db.execSQL(UsersSleepTable.sql_drop);
+        db.execSQL(UsersExerciseTable.sql_drop);
+        db.execSQL(UsersMoodTable.sql_drop);
         db.execSQL(UsersShortIllnessTable.sql_drop);
         db.execSQL(STIDetailsTable.sql_drop);
+        db.execSQL(UsersLongIllnessTable.sql_drop);
+        db.execSQL(LTIDetailsTable.sql_drop);
 
         onCreate(db);
     }
@@ -170,7 +180,7 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
-    // creating a UsersBreakfastTable in database
+    // creating a UsersMealTable in database
     private static class UsersMealsTable implements BaseColumns {
 
         // creating columns in UserBreakfastTable
@@ -194,6 +204,7 @@ public class DBmanager extends SQLiteOpenHelper {
         public static String sql_drop = "drop table if exists "+table_name;
     }
 
+    // MealDetailsTable for meals' items
     public static class MealDetailsTable implements BaseColumns{
 
         // creating columns
@@ -211,7 +222,6 @@ public class DBmanager extends SQLiteOpenHelper {
         public static String sql_drop = "drop table if exists "+table_name;
 
     }
-
 
 
     // creating a UsersSnacksTable in database
@@ -493,10 +503,10 @@ public class DBmanager extends SQLiteOpenHelper {
 
         for (HashMap.Entry<String, Boolean> s: profile.getCategories().entrySet()){
             values = new ContentValues();
-            values.put(ProfileCategoryTable.Col_showInLanding, s.getValue()?1:0);
-            db.update(ProfileCategoryTable.table_name, values, ProfileCategoryTable.Col_profileId+" = ? and "
-                    +ProfileCategoryTable.Col_categoryId+" = (select "+CategoryTable._ID+" from "+CategoryTable.table_name+
-                    " where "+CategoryTable.Col_categoryname+" = ?)", new String[]{String.valueOf(profile.getId()), s.getKey()});
+            values.put(ProfileCategoryTable.Col_showInLanding, s.getValue() ? 1 : 0);
+            db.update(ProfileCategoryTable.table_name, values, ProfileCategoryTable.Col_profileId + " = ? and "
+                    + ProfileCategoryTable.Col_categoryId + " = (select " + CategoryTable._ID + " from " + CategoryTable.table_name +
+                    " where " + CategoryTable.Col_categoryname + " = ?)", new String[]{String.valueOf(profile.getId()), s.getKey()});
         }
 
         // Closing database
@@ -633,7 +643,6 @@ public class DBmanager extends SQLiteOpenHelper {
 
 
 
-
     // insert data into usersSnackTable
     public boolean insert_snack(long user_id, String snackname, Date snackdate, Date snacktime){
 
@@ -693,6 +702,7 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
+    // insert users' entries into UsersSleepTable
     public boolean insert_sleep(long user_id, Date slpDate, Date startSleep, Date endSleep, String sleepDur){
 
         // allow to write into database
@@ -722,7 +732,7 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
-
+    // insert entries into UsersExercisesTable
     public boolean insert_exer(long user_id, String exerType, Date exerDate, Date startExer, Date endExer, String exerDur){
 
         // allow to write into database
@@ -753,6 +763,7 @@ public class DBmanager extends SQLiteOpenHelper {
         return true;
     }
 
+    // insert entries into UsersShortIllnessTable
     public boolean insert_STIllness(long user_id, String STName, Date startST, Date endST, ArrayList<String> STmed){
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
@@ -788,6 +799,7 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
+    // insert entries into UsersLongIllnessTable
     public boolean insert_LTIllness(long user_id, String LTName, Date startLT, Date endLT, ArrayList<String> LTmed){
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
