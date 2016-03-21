@@ -23,7 +23,7 @@ import java.util.HashMap;
  */
 public class DBmanager extends SQLiteOpenHelper {
 
-    static int DB_VERSION = 22;
+    static int DB_VERSION = 23;
     static String DB_NAME = "Selfmanaging.db";
 
     public DBmanager(Context context) {
@@ -44,10 +44,13 @@ public class DBmanager extends SQLiteOpenHelper {
         db.execSQL(UsersSleepTable.sql_create);
         db.execSQL(UsersExerciseTable.sql_create);
         db.execSQL(UsersMoodTable.sql_create);
-        db.execSQL(UsersShortIllnessTable.sql_create);
+        db.execSQL(UsersIllnessTable.sql_create);
+        db.execSQL(IllnessDetailsTable.sql_create);
+
+/*        db.execSQL(UsersShortIllnessTable.sql_create);
         db.execSQL(STIDetailsTable.sql_create);
         db.execSQL(UsersLongIllnessTable.sql_create);
-        db.execSQL(LTIDetailsTable.sql_create);
+        db.execSQL(LTIDetailsTable.sql_create);*/
 
         populateCategotyTable(db);
     }
@@ -67,10 +70,13 @@ public class DBmanager extends SQLiteOpenHelper {
         db.execSQL(UsersSleepTable.sql_drop);
         db.execSQL(UsersExerciseTable.sql_drop);
         db.execSQL(UsersMoodTable.sql_drop);
-        db.execSQL(UsersShortIllnessTable.sql_drop);
+        db.execSQL(UsersIllnessTable.sql_drop);
+        db.execSQL(IllnessDetailsTable.sql_drop);
+
+/*        db.execSQL(UsersShortIllnessTable.sql_drop);
         db.execSQL(STIDetailsTable.sql_drop);
         db.execSQL(UsersLongIllnessTable.sql_drop);
-        db.execSQL(LTIDetailsTable.sql_drop);
+        db.execSQL(LTIDetailsTable.sql_drop);*/
 
         onCreate(db);
     }
@@ -324,6 +330,55 @@ public class DBmanager extends SQLiteOpenHelper {
 
         public static String sql_drop = "drop table if exists "+table_name;
     }
+
+
+
+    // creating a UsersIllnessTable in database
+    private static class UsersIllnessTable implements BaseColumns {
+
+        // creating columns in UserExerciseTable
+        public static String table_name = "userShortTermIllness";
+        public static String Col_userID = "userId";
+        public static String Col_illnessType = "illnessType";
+        public static String Col_illnessName = "illnessName";
+        public static String Col_sIllnessDate = "illnessStartDate";
+        public static String Col_eIllnessDate = "illnessEndDate";
+
+
+        public static String sql_create = "create table "+table_name+ "("+
+                _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_userID+ " INTEGER not null, "+
+                Col_illnessType+ " TEXT not null, "+
+                Col_illnessName+ " TEXT not null, "+
+                Col_sIllnessDate+ " TEXT, "+
+                Col_eIllnessDate+ " TEXT "+
+                ")";
+
+        public static String sql_drop = "drop table if exists "+table_name;
+    }
+
+
+    // creating a table
+    public static class IllnessDetailsTable implements BaseColumns{
+
+        // creating columns
+        public static String table_name = "userIllnessMed";
+        public static String Col_illnessID = "illnessID";
+        public static String Col_illnessMed = "illnessMed";
+
+
+        public static String sql_create = "create table "+table_name+ "("+
+                _ID + " INTEGER Primary key AUTOINCREMENT, "+
+                Col_illnessID+ " INTEGER not null, "+
+                Col_illnessMed+ " TEXT not null"+
+                ")";
+
+        public static String sql_drop = "drop table if exists "+table_name;
+
+    }
+
+
+
 
 
     // creating a UsersExerciseTable in database
@@ -764,7 +819,8 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
     // insert entries into UsersShortIllnessTable
-    public boolean insert_STIllness(long user_id, String STName, Date startST, Date endST, ArrayList<String> STmed){
+    public boolean insert_illness(long user_id, String illnessType, String illnessName, Date startillness, Date endillness,
+                                  ArrayList<String> illnessMed){
         // allow to write into database
         SQLiteDatabase db = getWritableDatabase();
 
@@ -774,11 +830,12 @@ public class DBmanager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         // input values in col
-        values.put(UsersShortIllnessTable.Col_userID, user_id);
-        values.put(UsersShortIllnessTable.Col_ST_name, STName);
-        values.put(UsersShortIllnessTable.Col_sSTIllnessDate, simpleDateFormat.format(startST));
-        values.put(UsersShortIllnessTable.Col_eSTIllnessDate, simpleDateFormat.format(endST));
-        long id = db.insert(UsersShortIllnessTable.table_name, null, values);
+        values.put(UsersIllnessTable.Col_userID, user_id);
+        values.put(UsersIllnessTable.Col_illnessType, illnessType);
+        values.put(UsersIllnessTable.Col_illnessName, illnessName);
+        values.put(UsersIllnessTable.Col_sIllnessDate, simpleDateFormat.format(startillness));
+        values.put(UsersIllnessTable.Col_eIllnessDate, simpleDateFormat.format(endillness));
+        long id = db.insert(UsersIllnessTable.table_name, null, values);
 
 
         if (id == -1){
@@ -786,10 +843,10 @@ public class DBmanager extends SQLiteOpenHelper {
         }
 
 
-        for(String s: STmed) {
+        for(String s: illnessMed) {
             values = new ContentValues();
-            values.put(STIDetailsTable.Col_STID, id);
-            values.put(STIDetailsTable.Col_STmed, s);
+            values.put(IllnessDetailsTable.Col_illnessID, id);
+            values.put(IllnessDetailsTable.Col_illnessMed, s);
             db.insert(STIDetailsTable.table_name, null, values);
         }
 
@@ -798,40 +855,5 @@ public class DBmanager extends SQLiteOpenHelper {
         return true;
     }
 
-
-    // insert entries into UsersLongIllnessTable
-    public boolean insert_LTIllness(long user_id, String LTName, Date startLT, Date endLT, ArrayList<String> LTmed){
-        // allow to write into database
-        SQLiteDatabase db = getWritableDatabase();
-
-        // date form
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
-
-        ContentValues values = new ContentValues();
-
-        // input values in col
-        values.put(UsersLongIllnessTable.Col_userId, user_id);
-        values.put(UsersLongIllnessTable.Col_LT_name, LTName);
-        values.put(UsersLongIllnessTable.Col_sLTIllnessDate, simpleDateFormat.format(startLT));
-        values.put(UsersLongIllnessTable.Col_eLTIllnessDate, simpleDateFormat.format(endLT));
-        long id = db.insert(UsersShortIllnessTable.table_name, null, values);
-
-
-        if (id == -1){
-            return false;
-        }
-
-        for(String s: LTmed) {
-            values = new ContentValues();
-            values.put(LTIDetailsTable.Col_LTID, id);
-            values.put(LTIDetailsTable.Col_LTmed, s);
-            db.insert(STIDetailsTable.table_name, null, values);
-        }
-
-        // Closing database
-        db.close();
-
-        return true;
-    }
 }
 

@@ -132,7 +132,7 @@ public class LongT_Illness extends AppCompatActivity {
                 }
 
 
-                boolean saved = mgr.insert_LTIllness(user_id, SillnessName, startDate, endDate, LTmeds);
+                boolean saved = mgr.insert_illness(user_id, Constants.LongT, SillnessName, startDate, endDate, LTmeds);
                 if (saved == true){
                     Toast.makeText(LongT_Illness.this, "Long-term Illness entries saved", Toast.LENGTH_LONG).show();
 
@@ -145,9 +145,6 @@ public class LongT_Illness extends AppCompatActivity {
                 }
             }
         });
-
-
-
 
     }
 

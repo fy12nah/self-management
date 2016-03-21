@@ -13,6 +13,9 @@ public class Constants {
     public static final String Lunch = "Breakfast";
     public static final String Dinner = "Breakfast";
 
+    public static final String ShortT = "Short-Term Illness";
+    public static final String LongT = "Long-Term Illness";
+
 
 
     public static String sharedpreferencesId = "SHM";

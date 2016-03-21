@@ -133,7 +133,7 @@ public class ShortT_Illness extends AppCompatActivity {
                 }
 
 
-                boolean saved = mgr.insert_STIllness(user_id, SillnessName, startDate, endDate, STmeds);
+                boolean saved = mgr.insert_illness(user_id, Constants.LongT, SillnessName, startDate, endDate, STmeds);
                 if (saved == true){
                     Toast.makeText(ShortT_Illness.this, "Short-term Illness entries saved", Toast.LENGTH_LONG).show();
 
