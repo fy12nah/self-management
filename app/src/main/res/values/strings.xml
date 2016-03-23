@@ -18,4 +18,6 @@
     <string name="title_activity_snacks">SnacksActivity</string>
     <string name="title_activity_short_t__illness">ShortT_Illness</string>
     <string name="title_activity_long_t__illness">LongT_Illness</string>
+    <string name="title_activity_inspection">InspectionActivity</string>
+    <string name="title_activity_display_insp">displayInspActivity</string>
 </resources>

@@ -77,6 +77,14 @@
         <activity
             android:name=".LongT_Illness"
             android:label="@string/title_activity_long_t__illness"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InspectionActivity"
+            android:label="@string/title_activity_inspection"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".displayInspActivity"
+            android:label="@string/title_activity_display_insp"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

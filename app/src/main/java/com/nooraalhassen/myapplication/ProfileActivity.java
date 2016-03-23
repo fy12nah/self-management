@@ -132,7 +132,6 @@ public class ProfileActivity extends AppCompatActivity {
             // or autofill data after signing up
             p = manager.getProfile(user_id);
 
-            Log.d("Noora", p.toString());
             nameText.setText(p.getName());
 
             if (p.getBirthdate() != null)

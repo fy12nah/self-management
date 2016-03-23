@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.nooraalhassen.myapplication.InspectionActivity"
+    tools:showIn="@layout/activity_inspection">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Inspection"
+        android:id="@+id/textView69"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Choose your Dates:"
+        android:id="@+id/textView70"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/textView69"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="From date:"
+        android:id="@+id/textView71"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/textView70"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="To date:"
+        android:id="@+id/textView72"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/textView71"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView72"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="66dp"
+        android:id="@+id/relativeLayout">
+
+        <CheckBox
+            android:id="@+id/inspPhys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:checked="false"
+            android:text="Physical" />
+
+        <CheckBox
+            android:id="@+id/inspMeals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_toRightOf="@+id/inspPhys"
+            android:checked="false"
+            android:text="Meals" />
+
+        <CheckBox
+            android:id="@+id/inspIllness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inspPhys"
+            android:checked="false"
+            android:text="Illness" />
+
+        <CheckBox
+            android:id="@+id/inspMood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/inspMeals"
+            android:layout_below="@+id/inspMeals"
+            android:layout_toRightOf="@+id/inspIllness"
+            android:checked="false"
+            android:text="Mood status" />
+
+        <CheckBox
+            android:id="@+id/inspSleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inspIllness"
+            android:checked="false"
+            android:text="Sleeping Hours" />
+
+        <CheckBox
+            android:id="@+id/inspExer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/inspMeals"
+            android:layout_below="@+id/inspMood"
+            android:layout_toRightOf="@+id/inspSleep"
+            android:checked="false"
+            android:text="Exercises" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/fromD"
+        android:layout_above="@+id/textView72"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/toD"
+        android:layout_alignBottom="@+id/textView72"
+        android:layout_alignRight="@+id/fromD"
+        android:layout_alignEnd="@+id/fromD" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="show"
+        android:id="@+id/showB"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/toD"
+        android:layout_alignEnd="@+id/toD" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Choose:"
+        android:id="@+id/textView73"
+        android:layout_below="@+id/textView72"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fromDialog"
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_alignBottom="@+id/fromD"
+        android:layout_toLeftOf="@+id/fromD"
+        android:layout_toStartOf="@+id/fromD" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/toDialog"
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_above="@+id/textView73"
+        android:layout_toLeftOf="@+id/toD"
+        android:layout_toStartOf="@+id/toD" />
+
+</RelativeLayout>
