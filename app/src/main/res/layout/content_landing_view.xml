@@ -116,4 +116,13 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/inspect"
+        android:src="@android:drawable/ic_input_get"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btnLogout"
+        android:layout_toStartOf="@+id/btnLogout" />
+
 </RelativeLayout>

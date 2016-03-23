@@ -41,7 +41,7 @@ public class InspectionActivity extends AppCompatActivity {
         final int day = c.get(Calendar.DAY_OF_MONTH);
 
 
-        // start date calendar dialog
+        // from date calendar dialog
         ImageView fromDialog = (ImageView) findViewById(R.id.fromDialog);
         fromDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +52,7 @@ public class InspectionActivity extends AppCompatActivity {
         });
 
 
-        // end date calendar dialog
+        // to date calendar dialog
         ImageView toDialog = (ImageView) findViewById(R.id.toDialog);
         toDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +69,7 @@ public class InspectionActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(InspectionActivity.this, displayInspActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -76,7 +77,7 @@ public class InspectionActivity extends AppCompatActivity {
     }
 
 
-    // creating a calander dialog illness start date
+    // creating a calander dialog from date
     private class fromDateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
 import com.nooraalhassen.myapplication.model.Profile;
@@ -156,6 +157,17 @@ public class LandingView extends AppCompatActivity {
 
                 Intent intent = new Intent(LandingView.this, SleepingActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        ImageView insp = (ImageView) findViewById(R.id.inspect);
+        insp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LandingView.this, InspectionActivity.class);
+                startActivity(intent);
+
             }
         });
     }
