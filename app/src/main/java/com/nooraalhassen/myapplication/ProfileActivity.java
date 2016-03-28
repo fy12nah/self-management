@@ -31,6 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private EditText nameText;
 
+    private EditText uniText;
     private EditText birthDText ;
     private EditText startDText;
     private EditText gradDText;
@@ -55,6 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // declaring widgets
         nameText = (EditText) findViewById(R.id.name);
+        uniText = (EditText) findViewById(R.id.uni_name);
         birthDText = (EditText) findViewById(R.id.birthD);
         startDText = (EditText) findViewById(R.id.start_study);
         gradDText = (EditText) findViewById(R.id.grad_study);
@@ -133,6 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
             p = manager.getProfile(user_id);
 
             nameText.setText(p.getName());
+            uniText.setText(p.getUniname());
 
             if (p.getBirthdate() != null)
             birthDText.setText(simpleDateFormat.format(p.getBirthdate()));

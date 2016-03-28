@@ -20,4 +20,6 @@
     <string name="title_activity_long_t__illness">LongT_Illness</string>
     <string name="title_activity_inspection">InspectionActivity</string>
     <string name="title_activity_display_insp">displayInspActivity</string>
+    <string name="title_activity_daily_display">DailyDisplayActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

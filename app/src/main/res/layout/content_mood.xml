@@ -127,15 +127,17 @@
         android:id="@+id/moodDate"
         android:layout_alignBottom="@+id/textView65"
         android:layout_alignRight="@+id/saveMood"
-        android:layout_alignEnd="@+id/saveMood" />
+        android:layout_alignEnd="@+id/saveMood"
+        android:layout_toRightOf="@+id/moodDD"
+        android:layout_toEndOf="@+id/moodDD" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/moodDD"
-        android:layout_alignTop="@+id/moodDate"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@android:drawable/ic_menu_month"/>
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_alignBottom="@+id/moodDate"
+        android:layout_toLeftOf="@+id/mdTime"
+        android:layout_toStartOf="@+id/mdTime" />
 
 </RelativeLayout>

@@ -90,12 +90,12 @@
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView8"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="35dp"
         android:text="Start Date:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/textView8"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/textView14"
@@ -293,4 +293,24 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:src="@android:drawable/ic_menu_save" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="University Name:"
+        android:id="@+id/textView74"
+        android:layout_below="@+id/textView8"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/uni_name"
+        android:layout_alignBottom="@+id/textView74"
+        android:layout_alignRight="@+id/start_study"
+        android:layout_alignEnd="@+id/start_study"
+        android:layout_alignLeft="@+id/start_study"
+        android:layout_alignStart="@+id/start_study" />
 </RelativeLayout>

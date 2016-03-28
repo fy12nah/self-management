@@ -85,6 +85,10 @@
         <activity
             android:name=".displayInspActivity"
             android:label="@string/title_activity_display_insp"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DailyDisplayActivity"
+            android:label="@string/title_activity_daily_display"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

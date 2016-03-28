@@ -8,7 +8,9 @@ public class Constants {
     // simpleDateFormat form
     public static final String SQLite_DatePattern = "yyyy-MM-dd HH:mm:ss";
     public static final String display_DatePattern = "dd/MM/yyyy";
+    public static final String tabs_DatePattern = "MMM, dd";
     public static final String display_TimePattern = "HH:MM";
+
 
     // meal type
     public static final String BF = "Breakfast";

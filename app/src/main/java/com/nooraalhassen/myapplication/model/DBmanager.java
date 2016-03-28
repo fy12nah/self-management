@@ -23,7 +23,7 @@ import java.util.HashMap;
  */
 public class DBmanager extends SQLiteOpenHelper {
 
-    static int DB_VERSION = 23;
+    static int DB_VERSION = 24;
     static String DB_NAME = "Selfmanaging.db";
 
     public DBmanager(Context context) {
@@ -47,11 +47,6 @@ public class DBmanager extends SQLiteOpenHelper {
         db.execSQL(UsersIllnessTable.sql_create);
         db.execSQL(IllnessDetailsTable.sql_create);
 
-/*        db.execSQL(UsersShortIllnessTable.sql_create);
-        db.execSQL(STIDetailsTable.sql_create);
-        db.execSQL(UsersLongIllnessTable.sql_create);
-        db.execSQL(LTIDetailsTable.sql_create);*/
-
         populateCategotyTable(db);
     }
 
@@ -72,11 +67,6 @@ public class DBmanager extends SQLiteOpenHelper {
         db.execSQL(UsersMoodTable.sql_drop);
         db.execSQL(UsersIllnessTable.sql_drop);
         db.execSQL(IllnessDetailsTable.sql_drop);
-
-/*        db.execSQL(UsersShortIllnessTable.sql_drop);
-        db.execSQL(STIDetailsTable.sql_drop);
-        db.execSQL(UsersLongIllnessTable.sql_drop);
-        db.execSQL(LTIDetailsTable.sql_drop);*/
 
         onCreate(db);
     }
@@ -109,6 +99,7 @@ public class DBmanager extends SQLiteOpenHelper {
         public static String Col_name = "name";
         public static String Col_birthdate = "birthdate";
         public static String Col_gender = "gender";
+        public static String Col_uniName = "uniName";
         public static String Col_startStudy = "startStudy";
         public static String Col_gradStudy = "gradStudy";
 
@@ -120,6 +111,7 @@ public class DBmanager extends SQLiteOpenHelper {
                 Col_birthdate+ " TEXT not null, "+
                 Col_gender+ " TEXT not null, "+
                 Col_startStudy+ " TEXT, "+
+                Col_uniName+" TEXT, "+
                 Col_gradStudy+ " TEXT "+
                 ")";
 
@@ -379,97 +371,6 @@ public class DBmanager extends SQLiteOpenHelper {
 
 
 
-
-
-    // creating a UsersExerciseTable in database
-    private static class UsersShortIllnessTable implements BaseColumns {
-
-        // creating columns in UserExerciseTable
-        public static String table_name = "userShortTermIllness";
-        public static String Col_userID = "userId";
-        public static String Col_ST_name = "ST_IllnessName";
-        public static String Col_sSTIllnessDate = "ST_IllnessStartDate";
-        public static String Col_eSTIllnessDate = "ST_IllnessEndDate";
-
-
-        public static String sql_create = "create table "+table_name+ "("+
-                _ID + " INTEGER Primary key AUTOINCREMENT, "+
-                Col_userID+ " INTEGER not null, "+
-                Col_ST_name+ " TEXT not null, "+
-                Col_sSTIllnessDate+ " TEXT, "+
-                Col_eSTIllnessDate+ " TEXT "+
-                ")";
-
-        public static String sql_drop = "drop table if exists "+table_name;
-    }
-
-
-    // creating a table
-    public static class STIDetailsTable implements BaseColumns{
-
-        // creating columns
-        public static String table_name = "userSTImed";
-        public static String Col_STID = "ST_ID";
-        public static String Col_STmed = "STmed";
-
-
-        public static String sql_create = "create table "+table_name+ "("+
-                _ID + " INTEGER Primary key AUTOINCREMENT, "+
-                Col_STID+ " INTEGER not null, "+
-                Col_STmed+ " TEXT not null"+
-                ")";
-
-        public static String sql_drop = "drop table if exists "+table_name;
-
-    }
-
-
-    // creating table in database
-    private static class UsersLongIllnessTable implements BaseColumns {
-
-        // creating columns in UserExerciseTable
-        public static String table_name = "userLongTermIllness";
-        public static String Col_userId = "userId";
-        public static String Col_LT_name = "LT_IllnessName";
-        public static String Col_sLTIllnessDate = "LT_IllnessStartDate";
-        public static String Col_eLTIllnessDate = "LT_IllnessEndDate";
-        public static String Col_LTmed = "LT_med";
-
-
-        public static String sql_create = "create table "+table_name+ "("+
-                _ID + " INTEGER Primary key AUTOINCREMENT, "+
-                Col_userId+" INTEGER not null, "+
-                Col_LT_name+ " TEXT not null, "+
-                Col_sLTIllnessDate+ " TEXT not null, "+
-                Col_eLTIllnessDate+ " TEXT, "+
-                Col_LTmed+ " TEXT"+
-                ")";
-
-        public static String sql_drop = "drop table if exists "+table_name;
-    }
-
-
-    // creating a table
-    public static class LTIDetailsTable implements BaseColumns {
-
-        // creating columns
-        public static String table_name = "userSTImed";
-        public static String Col_LTID = "LT_ID";
-        public static String Col_LTmed = "LTmed";
-
-
-        public static String sql_create = "create table " + table_name + "(" +
-                _ID + " INTEGER Primary key AUTOINCREMENT, " +
-                Col_LTID + " INTEGER not null, " +
-                Col_LTmed + " TEXT not null" +
-                ")";
-
-        public static String sql_drop = "drop table if exists " + table_name;
-
-    }
-
-
-
     public long signup (String username, String name, String password, Date birthdate, char gender){
 
         // allow to write into database
@@ -585,8 +486,9 @@ public class DBmanager extends SQLiteOpenHelper {
 
             try {
                 long id = c.getLong(c.getColumnIndex(UsersProfileTable._ID));
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
-            String name = c.getString(c.getColumnIndex(UsersProfileTable.Col_name));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+                String name = c.getString(c.getColumnIndex(UsersProfileTable.Col_name));
+                String uniName = c.getString(c.getColumnIndex(UsersProfileTable.Col_uniName));
 
                 Date birthdate = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersProfileTable.Col_birthdate)));
                 String temp = c.getString(c.getColumnIndex(UsersProfileTable.Col_startStudy));
@@ -603,7 +505,7 @@ public class DBmanager extends SQLiteOpenHelper {
                 }
 
                 char gender = c.getString(c.getColumnIndex(UsersProfileTable.Col_gender)).charAt(0);
-                p = new Profile(id,name, birthdate, start_Study, grad_Study, gender);
+                p = new Profile(id,name, birthdate, uniName, start_Study, grad_Study, gender);
 
                 c.close();
 
@@ -847,7 +749,7 @@ public class DBmanager extends SQLiteOpenHelper {
             values = new ContentValues();
             values.put(IllnessDetailsTable.Col_illnessID, id);
             values.put(IllnessDetailsTable.Col_illnessMed, s);
-            db.insert(STIDetailsTable.table_name, null, values);
+            db.insert(IllnessDetailsTable.table_name, null, values);
         }
 
         // Closing database

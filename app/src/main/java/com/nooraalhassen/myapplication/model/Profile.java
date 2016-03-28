@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class Profile {
     long id;
-    String name;
+    String name, uniname;
     Date birthdate, start_Study, grad_Study;
     char gender;
 
@@ -23,27 +23,26 @@ public class Profile {
     }
 
 
-    public Profile(long id, String name, Date birthdate, Date start_Study, Date grad_Study, char gender) {
+    public Profile(long id, String name, Date birthdate, String uniname, Date start_Study, Date grad_Study, char gender) {
         this.id = id;
         this.name = name;
         this.birthdate = birthdate;
+        this.uniname = uniname;
         this.start_Study = start_Study;
         this.grad_Study = grad_Study;
         this.gender = gender;
         categories = new HashMap<>();
     }
 
-    public long getId() {
-        return id;
-    }
+    public long getId() { return id; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     public Date getBirthdate() {
         return birthdate;
     }
+
+    public String getUniname() { return uniname; }
 
     public Date getStart_Study() {
         return start_Study;
