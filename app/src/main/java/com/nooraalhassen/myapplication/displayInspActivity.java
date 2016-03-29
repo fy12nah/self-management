@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class DisplayInspActivity extends AppCompatActivity {
+public class displayInspActivity extends AppCompatActivity {
 
 
 
