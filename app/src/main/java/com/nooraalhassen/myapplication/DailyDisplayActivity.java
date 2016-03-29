@@ -75,7 +75,6 @@ public class DailyDisplayActivity extends AppCompatActivity {
         chkMood = (CheckBox) findViewById(R.id.inspMood);
         chkIllness = (CheckBox) findViewById(R.id.inspIllness);
 
-        if (chkPhys.isChecked())
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -88,17 +87,6 @@ public class DailyDisplayActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
 
 
     }
