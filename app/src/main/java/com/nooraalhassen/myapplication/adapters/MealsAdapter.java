@@ -18,13 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by nooraalhassen on 3/31/16.
+ * Created by nooraalhassen
  */
 public class MealsAdapter extends ArrayAdapter<Meal> {
+
     ArrayList<Meal> list;
-
     SimpleDateFormat simpleDateFormatT = new SimpleDateFormat(Constants.display_TimePattern);
-
 
     public MealsAdapter(Context context, List<Meal> items) {
 
@@ -41,16 +40,11 @@ public class MealsAdapter extends ArrayAdapter<Meal> {
         }
 
         TextView type = (TextView) convertView.findViewById(R.id.tvMealType);
-       /* TextView tv1 = (TextView) convertView.findViewById(R.id.tvMealName);
-        TextView tv2 = (TextView) convertView.findViewById(R.id.tvMealItem);*/
+        TextView tv = (TextView) convertView.findViewById(R.id.tvMealItem);
 
         TextView mealName = (TextView) convertView.findViewById(R.id.mealName);
         ListView mealItemList = (ListView) convertView.findViewById(R.id.mealItem);
         TextView mealtime = (TextView) convertView.findViewById(R.id.mealTime);
-
-
-
-
 
 
         Meal m = list.get(position);
@@ -58,14 +52,17 @@ public class MealsAdapter extends ArrayAdapter<Meal> {
             mealName.setText(String.valueOf(m.getMealName()));
 
             mealtime.setText(simpleDateFormatT.format(m.getMealTime()));
+
+        if (!m.getMealType().equals(Constants.snack)) {
             MealItemsAdapter adapter = new MealItemsAdapter(getContext(),
                     m.getMealItems());
             mealItemList.setAdapter(adapter);
-
-
-
-
-
+            tv.setVisibility(View.VISIBLE);
+        }
+        else {
+            tv.setVisibility(View.GONE);
+            mealItemList.setVisibility(View.GONE);
+        }
 
         return convertView;
     }
