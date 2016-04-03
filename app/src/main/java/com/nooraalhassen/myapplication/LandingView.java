@@ -170,6 +170,26 @@ public class LandingView extends AppCompatActivity {
 
             }
         });
+
+        ImageView logout = (ImageView) findViewById(R.id.btnLogout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.remove(Constants.userId);
+                editor.commit();
+
+                // go to another view - landing view
+                Intent intent = new Intent(LandingView.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+
+
     }
 
 }

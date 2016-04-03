@@ -126,7 +126,7 @@ public class MoodActivity extends AppCompatActivity {
     private class dateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mood_date.setText(dayOfMonth + "/" + monthOfYear + "/" + year);
+            mood_date.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
         }
     }
 

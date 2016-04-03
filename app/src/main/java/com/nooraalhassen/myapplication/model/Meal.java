@@ -1,37 +1,30 @@
 package com.nooraalhassen.myapplication.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by nooraalhassen on 3/30/16.
  */
-public class Meals {
+public class Meal {
 
     private long id;
-    private String name;
     private long userId;
     private String mealType;
     private String mealName;
     private Date mealDate;
-    private Date Col_mealTime;
+    private Date mealTime;
+    private ArrayList<MealItem> mealItems = new ArrayList<>();
 
-    public Meals(long id, String name, long userId, String mealType, Date col_mealTime, Date mealDate, String mealName) {
+    public Meal(long id, long userId, String mealType, String mealName, Date mealDate, Date mealTime) {
         this.id = id;
-        this.name = name;
         this.userId = userId;
         this.mealType = mealType;
-        Col_mealTime = col_mealTime;
+        this.mealTime = mealTime;
         this.mealDate = mealDate;
         this.mealName = mealName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public long getId() {
         return id;
@@ -73,11 +66,21 @@ public class Meals {
         this.mealDate = mealDate;
     }
 
-    public Date getCol_mealTime() {
-        return Col_mealTime;
+
+    public Date getMealTime() {
+        return mealTime;
     }
 
-    public void setCol_mealTime(Date col_mealTime) {
-        Col_mealTime = col_mealTime;
+    public void setMealTime(Date mealTime) {
+        this.mealTime = mealTime;
     }
+
+    public ArrayList<MealItem> getMealItems() {
+        return mealItems;
+    }
+
+    public void add(MealItem item){
+        mealItems.add(item);
+    }
+
 }

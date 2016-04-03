@@ -152,7 +152,7 @@ public class LongT_Illness extends AppCompatActivity {
     private class StartDateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            LT_sdate.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
+            LT_sdate.setText(dayOfMonth+"/"+ (monthOfYear+1) +"/"+year);
         }
     }
 

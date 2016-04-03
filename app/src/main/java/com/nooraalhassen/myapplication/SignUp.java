@@ -112,7 +112,7 @@ public class SignUp extends AppCompatActivity {
     private class BirthDateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            birthdate_edittext.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
+            birthdate_edittext.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
         }
     }
 

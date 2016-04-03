@@ -9,7 +9,7 @@ public class IllnessMed {
     private Illness illness;
     private String illnessMed;
 
-    public IllnessMed(Illness illness, long id, String illnessMed) {
+    public IllnessMed(long id, Illness illness, String illnessMed) {
         this.illness = illness;
         this.id = id;
         this.illnessMed = illnessMed;

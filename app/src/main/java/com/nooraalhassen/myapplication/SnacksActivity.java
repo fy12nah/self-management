@@ -105,7 +105,7 @@ public class SnacksActivity extends AppCompatActivity {
                 }
 
 
-                boolean saved = mgr.insert_snack(user_id, snack_name, DateSnack, TimeSnack);
+                boolean saved = mgr.insert_meal(user_id, Constants.snack, snack_name, DateSnack, TimeSnack, null);
                 if (saved == true) {
                     Toast.makeText(SnacksActivity.this, "Snacks entries are saved", Toast.LENGTH_LONG).show();
 
@@ -124,7 +124,7 @@ public class SnacksActivity extends AppCompatActivity {
     private class dateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            snacks_date.setText(dayOfMonth + "/" + monthOfYear + "/" + year);
+            snacks_date.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
         }
     }
 

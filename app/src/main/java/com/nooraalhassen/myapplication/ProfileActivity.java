@@ -154,32 +154,37 @@ public class ProfileActivity extends AppCompatActivity {
 
             for (HashMap.Entry<String, Boolean> s: p.getCategories().entrySet()){
                 switch (s.getKey()){
-                    case "Profile":
+                    case Constants.pro:
                         if (s.getValue())
                         chkProfile.setChecked(true);
                         break;
 
-                    case "Physical":
+                    case Constants.phys:
                         if (s.getValue())
                         chkPhys.setChecked(true);
                         break;
-                    case "Illness":
+
+                    case Constants.ill:
                         if (s.getValue())
                         chkIllness.setChecked(true);
                         break;
-                    case "Meals":
+
+                    case Constants.meal:
                         if (s.getValue())
                         chkMeals.setChecked(true);
                         break;
-                    case "Mood Status":
+
+                    case Constants.mood_s:
                         if (s.getValue())
                         chkMood.setChecked(true);
                         break;
-                    case "Exercises":
+
+                    case Constants.exer:
                         if (s.getValue())
                         chkExer.setChecked(true);
                         break;
-                    case "Sleeping Hours":
+
+                    case Constants.sleep:
                         if (s.getValue())
                         chkSleep.setChecked(true);
                         break;
@@ -233,7 +238,6 @@ public class ProfileActivity extends AppCompatActivity {
                 // move to landing view
                 Intent intent = new Intent(ProfileActivity.this, LandingView.class);
                 startActivity(intent);
-
             }
         });
 

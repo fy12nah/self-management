@@ -30,54 +30,66 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // buttons declaration
-        btnlogin = (Button) findViewById(R.id.buttonLog);
-        btnSignup = (Button) findViewById(R.id.buttonSign);
+        SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+        long user_id = preferences.getLong(Constants.userId, -1);
 
-        // login button action
-        btnlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                EditText username = (EditText) findViewById(R.id.signName);
-                EditText pass = (EditText) findViewById(R.id.signPass);
-
-                String checkUser = username.getText().toString();
-                String checkPass = pass.getText().toString();
+        if (user_id == -1) {
 
 
-                DBmanager manager = new DBmanager(MainActivity.this);
+            // buttons declaration
+            btnlogin = (Button) findViewById(R.id.buttonLog);
+            btnSignup = (Button) findViewById(R.id.buttonSign);
 
-                // if username and password do match in database, then user is a member
-                long id = manager.authenticate(checkUser, checkPass);
-                if (id != -1){
+            // login button action
+            btnlogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                    // save user id in shared preferences for multi user environment
-                    SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putLong(Constants.userId, id);
-                    editor.commit();
+                    EditText username = (EditText) findViewById(R.id.signName);
+                    EditText pass = (EditText) findViewById(R.id.signPass);
 
-                    // go to another view - landing view
-                    Intent intent = new Intent(MainActivity.this, LandingView.class);
+                    String checkUser = username.getText().toString();
+                    String checkPass = pass.getText().toString();
+
+
+                    DBmanager manager = new DBmanager(MainActivity.this);
+
+                    // if username and password do match in database, then user is a member
+                    long id = manager.authenticate(checkUser, checkPass);
+                    if (id != -1) {
+
+                        // save user id in shared preferences for multi user environment
+                        SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putLong(Constants.userId, id);
+                        editor.commit();
+
+                        // go to another view - landing view
+                        Intent intent = new Intent(MainActivity.this, LandingView.class);
+                        startActivity(intent);
+                        finish();
+                    } else
+                        Toast.makeText(MainActivity.this, "Login Failed!", Toast.LENGTH_LONG).show();
+
+                }
+            });
+
+            // signup button action
+            btnSignup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // go to another view - signup
+                    Intent intent = new Intent(MainActivity.this, SignUp.class);
                     startActivity(intent);
                 }
-                else Toast.makeText(MainActivity.this, "Login Failed!", Toast.LENGTH_LONG).show();
-
-            }
-        });
-
-        // signup button action
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // go to another view - signup
-                Intent intent = new Intent(MainActivity.this, SignUp.class);
-                startActivity(intent);
-            }
-        });
+            });
+        }
+        else{
+            Intent intent = new Intent(MainActivity.this, LandingView.class);
+            startActivity(intent);
+            finish();
+        }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

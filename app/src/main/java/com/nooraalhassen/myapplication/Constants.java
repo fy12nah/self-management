@@ -14,12 +14,24 @@ public class Constants {
 
     // meal type
     public static final String BF = "Breakfast";
-    public static final String Lunch = "Breakfast";
-    public static final String Dinner = "Breakfast";
+    public static final String Lunch = "Lunch";
+    public static final String Dinner = "Dinner";
+    public static String snack = "Snack";
+
 
     // illness type
     public static final String ShortT = "Short-Term Illness";
     public static final String LongT = "Long-Term Illness";
+
+    public static final String pro = "Profile";
+    public static final String phys = "Physical";
+    public static final String ill = "Illness";
+    public static final String meal = "Meals";
+    public static final String sleep = "Sleeping Hours";
+    public static final String mood_s = "Mood Status";
+    public static final String exer = "Exercises";
+
+
 
     // shared preference
     public static String sharedpreferencesId = "SHM";

@@ -2,9 +2,8 @@ package com.nooraalhassen.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -13,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,22 +20,34 @@ import android.view.ViewGroup;
 
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nooraalhassen.myapplication.adapters.ExerciseAdapter;
+import com.nooraalhassen.myapplication.adapters.IllnessAdapter;
+import com.nooraalhassen.myapplication.adapters.MealsAdapter;
+import com.nooraalhassen.myapplication.adapters.MoodAdapter;
+import com.nooraalhassen.myapplication.adapters.SleepAdapter;
+import com.nooraalhassen.myapplication.model.DBmanager;
+import com.nooraalhassen.myapplication.model.Exercise;
+import com.nooraalhassen.myapplication.model.Illness;
+import com.nooraalhassen.myapplication.model.Meal;
+import com.nooraalhassen.myapplication.model.Mood;
+import com.nooraalhassen.myapplication.model.Physical;
+import com.nooraalhassen.myapplication.model.Sleeping;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DailyDisplayActivity extends AppCompatActivity {
 
-    ArrayList<String> dateList;
-    ArrayList<String> contentList;
+    static ArrayList<String> dateList;
+    static ArrayList<String> contentList;
 
-    CheckBox chkPhys;
-    CheckBox chkMeals;
-    CheckBox chkExer;
-    CheckBox chkSleep;
-    CheckBox chkMood;
-    CheckBox chkIllness;
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -67,14 +77,6 @@ public class DailyDisplayActivity extends AppCompatActivity {
 
         dateList = intent.getStringArrayListExtra("Dates");
         contentList = intent.getStringArrayListExtra("Contents");
-
-        chkPhys = (CheckBox) findViewById(R.id.inspPhys);
-        chkMeals = (CheckBox) findViewById(R.id.inspMeals);
-        chkExer = (CheckBox) findViewById(R.id.inspExer);
-        chkSleep = (CheckBox) findViewById(R.id.inspSleep);
-        chkMood = (CheckBox) findViewById(R.id.inspMood);
-        chkIllness = (CheckBox) findViewById(R.id.inspIllness);
-
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -124,6 +126,15 @@ public class DailyDisplayActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        CheckBox chkPhys;
+        CheckBox chkMeals;
+        CheckBox chkExer;
+        CheckBox chkSleep;
+        CheckBox chkMood;
+        CheckBox chkIllness;
+
+
+
         public PlaceholderFragment() {
         }
 
@@ -144,34 +155,197 @@ public class DailyDisplayActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_daily_display, container, false);
 
+            try {
 
-            RelativeLayout physLay = (RelativeLayout) rootView.findViewById(R.id.phyLayout);
-            //if (chkPhys.isChecked()) physLay.setVisibility(View.VISIBLE);
-            //else physLay.setVisibility(View.INVISIBLE);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
+                Date d = simpleDateFormat.parse(dateList.get(getArguments().getInt(ARG_SECTION_NUMBER)));
 
-            RelativeLayout illnessLay = (RelativeLayout) rootView.findViewById(R.id.illnessLayout);
-            //if (chkillness.isChecked()) illnessLay.setVisibility(View.VISIBLE);
-            //else illnessLay.setVisibility(View.INVISIBLE);
+                DBmanager db = new DBmanager(getActivity());
+                SharedPreferences preferences = getActivity().getSharedPreferences(Constants.sharedpreferencesId, 0);
+                long user_id = preferences.getLong(Constants.userId, -1);
 
-            RelativeLayout mealsLay = (RelativeLayout) rootView.findViewById(R.id.mealsLayout);
-            //if (chkMeals.isChecked()) mealsLay.setVisibility(View.VISIBLE);
-            //else mealsLay.setVisibility(View.INVISIBLE);
+                RelativeLayout physLay = (RelativeLayout) rootView.findViewById(R.id.phyLayout);
 
-            RelativeLayout SlpLay = (RelativeLayout) rootView.findViewById(R.id.SleepLayout);
-            //if (chkSleep.isChecked()) physLay.setVisibility(View.VISIBLE);
-            //else physLay.setVisibility(View.INVISIBLE);
+                if (contentList.contains(Constants.phys)) {
 
-            RelativeLayout exerLay = (RelativeLayout) rootView.findViewById(R.id.exercisesLayout);
-            //if (chkExer.isChecked()) exerLay.setVisibility(View.VISIBLE);
-            //else exerLay.setVisibility(View.INVISIBLE);
+                    Physical p = db.getPhysicalAtDate(d, user_id);
 
-            RelativeLayout moodLay = (RelativeLayout) rootView.findViewById(R.id.moodLayout);
-            //if (chkMood.isChecked()) moodLay.setVisibility(View.VISIBLE);
-            //else moodLay.setVisibility(View.INVISIBLE);
+                    TextView tv1 = (TextView) rootView.findViewById(R.id.tvHeight);
+                    TextView tv2 = (TextView) rootView.findViewById(R.id.tvWeight);
+
+                    TextView weightText = (TextView) rootView.findViewById(R.id.weight);
+                    TextView heightText = (TextView) rootView.findViewById(R.id.height);
+                    TextView msg = (TextView) rootView.findViewById(R.id.msgPhysT);
+                    TextView title = (TextView) rootView.findViewById(R.id.illTitle);
 
 
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+                    if (p == null){
+                        title.setText(title.getText().toString()+" - No Data Entered");
+                        tv1.setVisibility(View.GONE);
+                        tv2.setVisibility(View.GONE);
+                        weightText.setVisibility(View.GONE);
+                        heightText.setVisibility(View.GONE);
+                        msg.setVisibility(View.GONE);
+                    }
+
+                    else{
+
+                        if (p.getWeight() == -1){
+                            weightText.setText("No Data");
+                            msg.setVisibility(View.GONE);
+                        }
+                        else weightText.setText(String.valueOf(p.getWeight()));
+
+                        if (p.getHeight() == -1){
+                            heightText.setText("No Data");
+                            msg.setVisibility(View.GONE);
+                        }
+                        else heightText.setText(String.valueOf(p.getHeight()));
+
+
+                        if (p.getHeight() != -1 && p.getWeight() != -1){
+
+                            float bmi = p.getWeight() / (p.getHeight() * p.getHeight());
+                            if (bmi <= 18.5 )
+                            {
+                                msg.setText("You are underweight! Need to gain weight");
+                            }
+                            else if (bmi > 18.5 && bmi <= 24.99){
+                                msg.setText("You have normal weight");
+                            }
+                            else if (bmi > 24.99 && bmi <= 29.99){
+                                msg.setText("You are overweight! Be Careful");
+                            }
+                            else if (bmi > 29.99){
+                                msg.setText("You have reached Obesity!!");
+                            }
+                        }
+
+                    }
+
+                    physLay.setVisibility(View.VISIBLE);
+                }
+                else physLay.setVisibility(View.GONE);
+
+
+
+                LinearLayout illnessLay = (LinearLayout) rootView.findViewById(R.id.illnessLayout);
+                if (contentList.contains(Constants.ill)) {
+
+                    ArrayList<Illness> p = db.getIllnessAtDate(d, user_id);
+
+                    TextView title = (TextView) rootView.findViewById(R.id.illnessTitle);
+                    ListView listview = (ListView) rootView.findViewById(R.id.listIllness);
+
+                    if (p == null){
+                        title.setText(title.getText().toString() + " - No Data Entered");
+                    }
+
+                    else{
+                        title.setVisibility(View.GONE);
+                        IllnessAdapter adapter = new IllnessAdapter(getActivity(), p);
+                        listview.setAdapter(adapter);
+                    }
+                    illnessLay.setVisibility(View.VISIBLE);
+                }
+                else illnessLay.setVisibility(View.GONE);
+
+
+                LinearLayout mealsLay = (LinearLayout) rootView.findViewById(R.id.mealsLayout);
+                if (contentList.contains(Constants.meal)) {
+                    ArrayList<Meal> p = db.getMealAtDate(d, user_id);
+                    TextView title = (TextView) rootView.findViewById(R.id.mealTitle1);
+                    ListView listview = (ListView) rootView.findViewById(R.id.listMeals);
+
+                    if (p.isEmpty()){
+                        title.setText(title.getText().toString() + " - No Data Entered");
+                    }
+
+                    else{
+                        title.setVisibility(View.GONE);
+                        MealsAdapter adapter = new MealsAdapter(getActivity(), p);
+                        listview.setAdapter(adapter);
+                    }
+                    mealsLay.setVisibility(View.VISIBLE);
+                }
+                else mealsLay.setVisibility(View.GONE);
+
+
+                LinearLayout SlpLay = (LinearLayout) rootView.findViewById(R.id.slpLayout);
+                if (contentList.contains(Constants.sleep)) {
+                    ArrayList<Sleeping> p = db.getSleepingAtDate(d, user_id);
+
+                    TextView title = (TextView) rootView.findViewById(R.id.sleepTitle1);
+                    ListView listview = (ListView) rootView.findViewById(R.id.listSleep);
+
+                    if (p == null){
+                        title.setText(title.getText().toString() + " - No Data Entered");
+                    }
+
+                    else{
+                        title.setVisibility(View.GONE);
+                        SleepAdapter adapter = new SleepAdapter(getActivity(), p);
+                        listview.setAdapter(adapter);
+                    }
+                    SlpLay.setVisibility(View.VISIBLE);
+                }
+                else SlpLay.setVisibility(View.GONE);
+
+
+                LinearLayout exerLay = (LinearLayout) rootView.findViewById(R.id.exerciseLayout);
+                if (contentList.contains(Constants.exer)) {
+
+                    ArrayList<Exercise> p = db.getExerciseAtDate(d, user_id);
+
+                    ListView listview = (ListView) rootView.findViewById(R.id.listExer);
+                    TextView title = (TextView) rootView.findViewById(R.id.exerTitle);
+
+
+                    if (p == null){
+                        title.setText(title.getText().toString() + " - No Data Entered");
+                    }
+
+                    else{
+                        title.setVisibility(View.GONE);
+                        ExerciseAdapter adapter = new ExerciseAdapter(getActivity(), p);
+                        listview.setAdapter(adapter);
+                    }
+                    exerLay.setVisibility(View.VISIBLE);
+                }
+                else exerLay.setVisibility(View.GONE);
+
+
+                LinearLayout moodLay = (LinearLayout) rootView.findViewById(R.id.moodLay);
+                if (contentList.contains(Constants.mood_s)) {
+                    Mood p = db.getMoodAtDate(d, user_id);
+
+                    TextView title = (TextView) rootView.findViewById(R.id.moodTitle);
+                    ListView listview = (ListView) rootView.findViewById(R.id.listMood);
+
+
+                    if (p == null){
+                        title.setText(title.getText().toString() + " - No Data Entered");
+                    }
+
+                    else{
+
+                        title.setVisibility(View.GONE);
+                        MoodAdapter adapter = new MoodAdapter(getActivity(), p);
+                        listview.setAdapter(adapter);
+
+                    }
+                    moodLay.setVisibility(View.VISIBLE);
+                }
+                else moodLay.setVisibility(View.GONE);
+
+
+                TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+                textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            }
+            catch(ParseException e){
+
+            }
             return rootView;
         }
     }
@@ -190,7 +364,7 @@ public class DailyDisplayActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return PlaceholderFragment.newInstance(position );
         }
 
         @Override
@@ -202,8 +376,8 @@ public class DailyDisplayActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
 
-            //Log.d("Noora", dateList.get(position));
-            return dateList.get(position);
+            String s = dateList.get(position);
+            return s.substring(0,s.length() - 5);
         }
     }
 

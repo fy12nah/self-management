@@ -67,8 +67,8 @@ public class InspectionActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                contentList.add("Physical");
-                else contentList.remove("Physical");
+                contentList.add(Constants.phys);
+                else contentList.remove(Constants.phys);
             }
         });
 
@@ -76,40 +76,40 @@ public class InspectionActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                    contentList.add("Illness");
-                else contentList.remove("Illness");            }
+                    contentList.add(Constants.ill);
+                else contentList.remove(Constants.ill);            }
         });
 
         chkMeals.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                    contentList.add("Meals");
-                else contentList.remove("Meals");            }
+                    contentList.add(Constants.meal);
+                else contentList.remove(Constants.meal);            }
         });
 
         chkMood.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                    contentList.add("Mood Status");
-                else contentList.remove("Mood Status");            }
+                    contentList.add(Constants.mood_s);
+                else contentList.remove(Constants.mood_s);            }
         });
 
         chkExer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                    contentList.add("Exercises");
-                else contentList.remove("Exercises");            }
+                    contentList.add(Constants.exer);
+                else contentList.remove(Constants.exer);            }
         });
 
         chkSleep.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                    contentList.add("Sleeping Hours");
-                else contentList.remove("Sleeping Hours");            }
+                    contentList.add(Constants.sleep);
+                else contentList.remove(Constants.sleep);            }
         });
 
 
@@ -138,7 +138,7 @@ public class InspectionActivity extends AppCompatActivity {
         showbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.tabs_DatePattern);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
 
                 ArrayList<String> dateList = new ArrayList<String>();
                 if (fromDate != null && toDate != null){
@@ -156,7 +156,7 @@ public class InspectionActivity extends AppCompatActivity {
 
                 }
 
-                if (contentList.isEmpty()) Toast.makeText(InspectionActivity.this, "You should choose at least one category",Toast.LENGTH_LONG).show();
+                if (contentList.isEmpty()) Toast.makeText(InspectionActivity.this, "You should choose at least one option",Toast.LENGTH_LONG).show();
                 else {
                     Intent intent = DailyDisplayActivity.createIntent(InspectionActivity.this, dateList, contentList);
                     startActivity(intent);
@@ -173,7 +173,7 @@ public class InspectionActivity extends AppCompatActivity {
     private class fromDateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            fromD.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
+            fromD.setText(dayOfMonth+"/"+ (monthOfYear+1) +"/"+year);
             Calendar c = Calendar.getInstance();
             c.set(year, monthOfYear, dayOfMonth);
             fromDate = c.getTime();
@@ -184,7 +184,7 @@ public class InspectionActivity extends AppCompatActivity {
     private class toDateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            toD.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
+            toD.setText(dayOfMonth+"/"+ (monthOfYear+1) +"/"+year);
             Calendar c = Calendar.getInstance();
             c.set(year, monthOfYear, dayOfMonth);
             toDate = c.getTime();

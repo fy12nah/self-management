@@ -119,11 +119,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="cm"
+        android:text="m"
         android:id="@+id/textView23"
-        android:layout_alignBottom="@+id/height"
-        android:layout_alignRight="@+id/phys_date"
-        android:layout_alignEnd="@+id/phys_date" />
+        android:layout_alignTop="@+id/textView20"
+        android:layout_toRightOf="@+id/height"
+        android:layout_toEndOf="@+id/height" />
 
 
 </RelativeLayout>

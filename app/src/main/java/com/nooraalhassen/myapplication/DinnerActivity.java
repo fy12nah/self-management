@@ -159,7 +159,7 @@ public class DinnerActivity extends AppCompatActivity {
     private class dateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            dinner_date.setText(dayOfMonth + "/" + monthOfYear + "/" + year);
+            dinner_date.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
         }
     }
 

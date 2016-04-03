@@ -133,7 +133,7 @@ public class ShortT_Illness extends AppCompatActivity {
                 }
 
 
-                boolean saved = mgr.insert_illness(user_id, Constants.LongT, SillnessName, startDate, endDate, STmeds);
+                boolean saved = mgr.insert_illness(user_id, Constants.ShortT, SillnessName, startDate, endDate, STmeds);
                 if (saved == true){
                     Toast.makeText(ShortT_Illness.this, "Short-term Illness entries saved", Toast.LENGTH_LONG).show();
 
@@ -155,7 +155,7 @@ public class ShortT_Illness extends AppCompatActivity {
     private class StartDateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            ST_sdate.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
+            ST_sdate.setText(dayOfMonth+"/"+ (monthOfYear+1) +"/"+year);
         }
     }
 
@@ -163,7 +163,7 @@ public class ShortT_Illness extends AppCompatActivity {
     private class EndDateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            ST_edate.setText(dayOfMonth+"/"+monthOfYear+"/"+year);
+            ST_edate.setText(dayOfMonth+"/"+ (monthOfYear+1) +"/"+year);
         }
     }
 

@@ -171,7 +171,7 @@ public class SleepingActivity extends AppCompatActivity {
     private class dateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            sleep_date.setText(dayOfMonth + "/" + monthOfYear + "/" + year);
+            sleep_date.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
         }
     }
 
