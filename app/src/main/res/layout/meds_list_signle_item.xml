@@ -69,32 +69,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:text="illness name"
         android:id="@+id/illName"
-        android:layout_above="@+id/msgSleep"
+        android:layout_above="@+id/illSDate"
+        android:layout_toRightOf="@+id/tvillName"
+        android:layout_marginLeft="65dp"
+        android:layout_marginStart="65dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@id/tvillName"/>
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:text="start date"
         android:id="@+id/illSDate"
         android:layout_alignBottom="@id/tvillSDate"
         android:layout_alignLeft="@+id/illName"
-        android:layout_alignStart="@+id/illName" />
+        android:layout_alignStart="@+id/illName"
+        android:layout_alignRight="@+id/illName"
+        android:layout_alignEnd="@+id/illName" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:text="end date"
         android:id="@+id/illEDate"
         android:layout_alignBottom="@id/tvillEDate"
         android:layout_alignLeft="@+id/illName"
-        android:layout_alignStart="@+id/illName" />
+        android:layout_alignStart="@+id/illName"
+        android:layout_alignRight="@+id/illSDate"
+        android:layout_alignEnd="@+id/illSDate" />
 
     <TextView
         android:layout_width="wrap_content"
