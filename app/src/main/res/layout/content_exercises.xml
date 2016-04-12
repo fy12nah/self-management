@@ -30,7 +30,8 @@
         android:layout_below="@+id/textView26"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="47dp" />
+        android:layout_marginTop="47dp"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,8 +39,8 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Start Time:"
         android:id="@+id/textView48"
-        android:layout_marginTop="113dp"
-        android:layout_below="@+id/textView47"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/exdateDialog"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -79,12 +80,12 @@
         android:layout_height="wrap_content"
         android:text="save"
         android:id="@+id/exerSave"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="35dp"
         android:layout_below="@+id/exerDur"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/exer_end"
+        android:layout_alignEnd="@+id/exer_end" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -101,11 +102,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/exerType"
-        android:layout_above="@+id/textView48"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignLeft="@+id/exer_start"
-        android:layout_alignStart="@+id/exer_start" />
+        android:layout_alignBottom="@+id/textView47"
+        android:layout_alignRight="@+id/exerSave"
+        android:layout_alignEnd="@+id/exerSave"
+        android:layout_alignLeft="@+id/exer_date"
+        android:layout_alignStart="@+id/exer_date" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -140,10 +141,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Date:"
         android:id="@+id/textView63"
-        android:layout_above="@+id/exer_start"
+        android:layout_below="@+id/textView47"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="29dp" />
+        android:layout_marginTop="30dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -151,9 +152,9 @@
         android:inputType="date"
         android:ems="10"
         android:id="@+id/exer_date"
-        android:layout_alignBottom="@+id/textView63"
-        android:layout_alignRight="@+id/exerType"
-        android:layout_alignEnd="@+id/exerType" />
+        android:layout_above="@+id/textView48"
+        android:layout_alignLeft="@+id/exer_start"
+        android:layout_alignStart="@+id/exer_start" />
 
     <ImageView
         android:layout_width="wrap_content"

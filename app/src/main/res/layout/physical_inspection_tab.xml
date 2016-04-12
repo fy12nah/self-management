@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Physical"
-        android:id="@+id/illTitle"
+        android:id="@+id/physicalTitle"
         android:layout_below="@+id/section_label"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -32,7 +32,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Weight:"
         android:id="@+id/tvWeight"
-        android:layout_below="@+id/illTitle"
+        android:layout_below="@+id/physicalTitle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

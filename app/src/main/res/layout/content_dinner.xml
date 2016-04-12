@@ -38,10 +38,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Dinner Name:"
         android:id="@+id/textView34"
-        android:layout_below="@+id/textView33"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/dnr_TimeDialog"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="47dp" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
         android:layout_below="@+id/textView34"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="41dp" />
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,10 +60,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Time:"
         android:id="@+id/textView36"
-        android:layout_below="@+id/itemDinner"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/textView68"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="117dp" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -109,10 +109,10 @@
         android:layout_height="wrap_content"
         android:text="save"
         android:id="@+id/dinnerSave"
-        android:layout_below="@+id/dinnerTime"
-        android:layout_marginTop="79dp"
-        android:layout_alignRight="@+id/dinnerTime"
-        android:layout_alignEnd="@+id/dinnerTime"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="95dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -122,8 +122,8 @@
         android:id="@+id/dnr_TimeDialog"
         android:src="@android:drawable/ic_menu_month"
         android:layout_alignBottom="@+id/dinnerTime"
-        android:layout_toRightOf="@+id/textView34"
-        android:layout_toEndOf="@+id/textView34" />
+        android:layout_alignLeft="@+id/dinnerDD"
+        android:layout_alignStart="@+id/dinnerDD" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -131,7 +131,8 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Date:"
         android:id="@+id/textView68"
-        android:layout_above="@+id/dinnerTime"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/textView33"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -142,8 +143,8 @@
         android:ems="10"
         android:id="@+id/dinner_date"
         android:layout_alignBottom="@+id/textView68"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignRight="@+id/dinnerName"
+        android:layout_alignEnd="@+id/dinnerName" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -151,6 +152,6 @@
         android:id="@+id/dinnerDD"
         android:src="@android:drawable/ic_menu_month"
         android:layout_alignBottom="@+id/dinner_date"
-        android:layout_toLeftOf="@+id/dinner_date"
-        android:layout_toStartOf="@+id/dinner_date" />
+        android:layout_alignLeft="@+id/textView33"
+        android:layout_alignStart="@+id/textView33" />
 </RelativeLayout>

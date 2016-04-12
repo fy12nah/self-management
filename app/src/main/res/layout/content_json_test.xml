@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.nooraalhassen.myapplication.JsonTestActivity"
+    tools:showIn="@layout/activity_json_test">
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download"
+        android:id="@+id/button"
+        android:layout_marginBottom="98dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/toD"
+        android:layout_alignEnd="@+id/toD"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="From date:"
+        android:id="@+id/from"
+        android:layout_below="@+id/textView76"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="To Date:"
+        android:id="@+id/to"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/from"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/fromD"
+        android:layout_alignBottom="@+id/from"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/toD"
+        android:layout_alignBottom="@+id/to"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fromDia"
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_alignBottom="@+id/fromD"
+        android:layout_toLeftOf="@+id/fromD"
+        android:layout_toStartOf="@+id/fromD" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/toDia"
+        android:src="@android:drawable/ic_menu_month"
+        android:layout_alignBottom="@+id/toD"
+        android:layout_toLeftOf="@+id/toD"
+        android:layout_toStartOf="@+id/toD" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/relativeLayout2">
+
+        <CheckBox
+            android:id="@+id/downProf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:checked="false"
+            android:text="Profile" />
+
+        <CheckBox
+            android:id="@+id/downMeals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_toRightOf="@+id/downProf"
+            android:checked="false"
+            android:text="Meals" />
+
+        <CheckBox
+            android:id="@+id/downPhys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/downProf"
+            android:checked="false"
+            android:text="Physical" />
+
+        <CheckBox
+            android:id="@+id/downMood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/downMeals"
+            android:layout_below="@+id/downMeals"
+            android:layout_toRightOf="@+id/downPhys"
+            android:checked="false"
+            android:text="Mood status" />
+
+        <CheckBox
+            android:id="@+id/downIllness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/downPhys"
+            android:checked="false"
+            android:text="Illness" />
+
+        <CheckBox
+            android:id="@+id/downExer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/downMeals"
+            android:layout_below="@+id/downMood"
+            android:layout_toRightOf="@+id/downIllness"
+            android:checked="false"
+            android:text="Exercises" />
+
+        <CheckBox
+            android:id="@+id/downSleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/downMeals"
+            android:layout_below="@+id/downExer"
+            android:checked="false"
+            android:text="Sleeping Hours" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="What do you want to download?"
+        android:id="@+id/textView75"
+        android:layout_above="@+id/relativeLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Choose your Dates:"
+        android:id="@+id/textView76"
+        android:layout_marginTop="33dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
+

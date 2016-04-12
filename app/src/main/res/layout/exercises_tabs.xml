@@ -8,11 +8,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/exerTitle"
+            android:id="@+id/exerTitle1"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="Exercises"
-            android:textAppearance="?android:attr/textAppearanceMedium">
+            android:textAppearance="?android:attr/textAppearanceLarge">
         </TextView>
 
         <ListView

@@ -89,17 +89,13 @@ public class SnacksActivity extends AppCompatActivity {
                 // getting edittext values
                 String snack_name = snack.getText().toString();
                 String snack_Date = snacks_date.getText().toString();
-                String snack_Time = snacks_time.getText().toString();
+                String TimeSnack = snacks_time.getText().toString();
 
                 SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_TimePattern);
-
                 Date DateSnack = null;
-                Date TimeSnack = null;
 
                 try {
                     DateSnack = simpleDateFormatD.parse(snack_Date);
-                    TimeSnack = simpleDateFormat.parse(snack_Time);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -133,7 +129,6 @@ public class SnacksActivity extends AppCompatActivity {
 
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
             snacks_time.setText(hourOfDay + ":" + minute);
         }
     }

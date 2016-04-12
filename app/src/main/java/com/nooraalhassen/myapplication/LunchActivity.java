@@ -116,17 +116,15 @@ public class LunchActivity extends AppCompatActivity {
                 // getting edittext values
                 String lunch_name = lunch.getText().toString();
                 String lunch_Date = lunch_date.getText().toString();
-                String lunch_Time = lnch_time.getText().toString();
+                String TimeLunch = lnch_time.getText().toString();
 
                 SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_TimePattern);
 
                 Date DateLunch = null;
-                Date TimeLunch = null;
 
                 try {
                     DateLunch = simpleDateFormatD.parse(lunch_Date);
-                    TimeLunch = simpleDateFormat.parse(lunch_Time);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

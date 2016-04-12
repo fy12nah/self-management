@@ -9,9 +9,7 @@ import android.widget.TextView;
 
 import com.nooraalhassen.myapplication.Constants;
 import com.nooraalhassen.myapplication.R;
-import com.nooraalhassen.myapplication.model.Exercise;
 import com.nooraalhassen.myapplication.model.Mood;
-import com.nooraalhassen.myapplication.model.Sleeping;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ public class MoodAdapter extends ArrayAdapter<Mood> {
     ArrayList<Mood> list;
     SimpleDateFormat simpleDateFormatT = new SimpleDateFormat(Constants.display_TimePattern);
 
-    public MoodAdapter(Context context, ArrayList<Mood> items) {
+    public MoodAdapter(Context context, List<Mood> items) {
 
         super(context, R.layout.mood_list_signle_item, items);
         list = (ArrayList<Mood>) items;
@@ -39,9 +37,9 @@ public class MoodAdapter extends ArrayAdapter<Mood> {
             convertView = inflater.inflate(R.layout.mood_list_signle_item, parent, false);
         }
 
-        TextView moodName = (TextView) convertView.findViewById(R.id.moodName);
+        TextView moodName = (TextView) convertView.findViewById(R.id.mood_Name);
         TextView moodReason = (TextView) convertView.findViewById(R.id.moodR);
-        TextView moodTime = (TextView) convertView.findViewById(R.id.moodTime);
+        TextView moodTime = (TextView) convertView.findViewById(R.id.mood_Time);
 
         Mood m = list.get(position);
         moodName.setText(String.valueOf(m.getMoodName()));

@@ -176,7 +176,7 @@ public class DailyDisplayActivity extends AppCompatActivity {
                     TextView weightText = (TextView) rootView.findViewById(R.id.weight);
                     TextView heightText = (TextView) rootView.findViewById(R.id.height);
                     TextView msg = (TextView) rootView.findViewById(R.id.msgPhysT);
-                    TextView title = (TextView) rootView.findViewById(R.id.illTitle);
+                    TextView title = (TextView) rootView.findViewById(R.id.physicalTitle);
 
 
                     if (p == null){
@@ -254,6 +254,7 @@ public class DailyDisplayActivity extends AppCompatActivity {
                 LinearLayout mealsLay = (LinearLayout) rootView.findViewById(R.id.mealsLayout);
                 if (contentList.contains(Constants.meal)) {
                     ArrayList<Meal> p = db.getMealAtDate(d, user_id);
+
                     TextView title = (TextView) rootView.findViewById(R.id.mealTitle1);
                     ListView listview = (ListView) rootView.findViewById(R.id.listMeals);
 
@@ -298,7 +299,7 @@ public class DailyDisplayActivity extends AppCompatActivity {
                     ArrayList<Exercise> p = db.getExerciseAtDate(d, user_id);
 
                     ListView listview = (ListView) rootView.findViewById(R.id.listExer);
-                    TextView title = (TextView) rootView.findViewById(R.id.exerTitle);
+                    TextView title = (TextView) rootView.findViewById(R.id.exerTitle1);
 
 
                     if (p == null){
@@ -317,9 +318,9 @@ public class DailyDisplayActivity extends AppCompatActivity {
 
                 LinearLayout moodLay = (LinearLayout) rootView.findViewById(R.id.moodLay);
                 if (contentList.contains(Constants.mood_s)) {
-                    Mood p = db.getMoodAtDate(d, user_id);
+                    ArrayList<Mood> p = db.getMoodAtDate(d, user_id);
 
-                    TextView title = (TextView) rootView.findViewById(R.id.moodTitle);
+                    TextView title = (TextView) rootView.findViewById(R.id.moodTitle1);
                     ListView listview = (ListView) rootView.findViewById(R.id.listMood);
 
 
@@ -328,7 +329,6 @@ public class DailyDisplayActivity extends AppCompatActivity {
                     }
 
                     else{
-
                         title.setVisibility(View.GONE);
                         MoodAdapter adapter = new MoodAdapter(getActivity(), p);
                         listview.setAdapter(adapter);

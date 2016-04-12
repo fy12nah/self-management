@@ -108,22 +108,16 @@ public class SleepingActivity extends AppCompatActivity {
                 String durSlp = sleep_dur.getText().toString();
 
                 SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_TimePattern);
-
                 Date DateSlp = null;
-                Date EndSlp = null;
-                Date StartSlp = null;
 
                 try {
                     DateSlp = simpleDateFormatD.parse(sleepDate);
-                    StartSlp = simpleDateFormat.parse(sleepStart);
-                    EndSlp = simpleDateFormat.parse(sleepEnd);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
 
-                boolean saved = mgr.insert_sleep(user_id, DateSlp, StartSlp, EndSlp, durSlp);
+                boolean saved = mgr.insert_sleep(user_id, DateSlp, sleepStart, sleepEnd, durSlp);
                 if (saved == true){
                     Toast.makeText(SleepingActivity.this, "Sleeping Hours entries are saved", Toast.LENGTH_LONG).show();
 

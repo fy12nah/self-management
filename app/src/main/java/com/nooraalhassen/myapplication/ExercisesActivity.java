@@ -106,25 +106,18 @@ public class ExercisesActivity extends AppCompatActivity {
                 // getting edittext values
                 String exerType = exer_type.getText().toString();
                 String exerDate = exer_date.getText().toString();
-                String start_Exer = exer_start.getText().toString();
-                String end_Exer = exer_end.getText().toString();
+                String StartExer = exer_start.getText().toString();
+                String EndExer = exer_end.getText().toString();
                 String durExer = exer_dur.getText().toString();
 
                 SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_TimePattern);
 
                 Date DateExer = null;
-                Date EndExer = null;
-                Date StartExer = null;
-
                 try {
                     DateExer = simpleDateFormatD.parse(exerDate);
-                    StartExer = simpleDateFormat.parse(start_Exer);
-                    EndExer = simpleDateFormat.parse(end_Exer);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
 
                 boolean saved = mgr.insert_exer(user_id, exerType, DateExer, StartExer, EndExer, durExer);
                 if (saved == true) {
@@ -136,8 +129,6 @@ public class ExercisesActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(ExercisesActivity.this, "Failed to save Exercises entries", Toast.LENGTH_LONG).show();
                 }
-
-
             }
         });
     }
@@ -154,8 +145,6 @@ public class ExercisesActivity extends AppCompatActivity {
 
             int time1 = h*60+m;
 
-
-
             String ed = exer_end.getText().toString();
             parts = ed.split(":");
             h = Integer.parseInt(parts[0]);
@@ -163,7 +152,7 @@ public class ExercisesActivity extends AppCompatActivity {
 
             int time2 = h*60+m;
 
-            int minutes = time2-time1;
+            int minutes = time2 - time1;
 
             int Hours = (int) (minutes / 60);
             int Mins = (int) (minutes % 60);
@@ -174,14 +163,12 @@ public class ExercisesActivity extends AppCompatActivity {
     }
 
 
-
     private class dateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             exer_date.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
         }
     }
-
 
     private class startTimeDialogList implements TimePickerDialog.OnTimeSetListener {
         @Override

@@ -18,9 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by nooraalhassen on 4/3/16.
+ * Created by nooraalhassen
  */
 public class SleepAdapter extends ArrayAdapter<Sleeping> {
+
     ArrayList<Sleeping> list;
     SimpleDateFormat simpleDateFormatT = new SimpleDateFormat(Constants.display_TimePattern);
 
@@ -44,11 +45,10 @@ public class SleepAdapter extends ArrayAdapter<Sleeping> {
         TextView slpMsg = (TextView) convertView.findViewById(R.id.sleepMsg);
 
         Sleeping m = list.get(position);
+
         sTimeText.setText(simpleDateFormatT.format(m.getsSleepTime()));
         eTimeText.setText(simpleDateFormatT.format(m.geteSleepTime()));
-
         slpMsg.setText("You Slept for " + m.getSleepDur());
-
 
         return convertView;
     }

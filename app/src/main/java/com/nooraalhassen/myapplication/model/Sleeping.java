@@ -11,11 +11,11 @@ public class Sleeping extends ArrayList<Sleeping> {
     private long id;
     private long userId;
     private Date sleepDate;
-    private Date sSleepTime;
-    private Date eSleepTime;
-    private int sleepDur;
+    private String sSleepTime;
+    private String eSleepTime;
+    private String sleepDur;
 
-    public Sleeping(long id, long userId, Date sleepDate, Date eSleepTime, Date sSleepTime, int sleepDur) {
+    public Sleeping(long id, long userId, Date sleepDate, String eSleepTime, String sSleepTime, String sleepDur) {
         this.id = id;
         this.sleepDur = sleepDur;
         this.eSleepTime = eSleepTime;
@@ -48,27 +48,27 @@ public class Sleeping extends ArrayList<Sleeping> {
         this.sleepDate = sleepDate;
     }
 
-    public Date getsSleepTime() {
+    public String getsSleepTime() {
         return sSleepTime;
     }
 
-    public void setsSleepTime(Date sSleepTime) {
+    public void setsSleepTime(String sSleepTime) {
         this.sSleepTime = sSleepTime;
     }
 
-    public Date geteSleepTime() {
+    public String geteSleepTime() {
         return eSleepTime;
     }
 
-    public void seteSleepTime(Date eSleepTime) {
+    public void seteSleepTime(String eSleepTime) {
         this.eSleepTime = eSleepTime;
     }
 
-    public float getSleepDur() {
+    public String getSleepDur() {
         return sleepDur;
     }
 
-    public void setSleepDur(int sleepDur) {
+    public void setSleepDur(String sleepDur) {
         this.sleepDur = sleepDur;
     }
 }

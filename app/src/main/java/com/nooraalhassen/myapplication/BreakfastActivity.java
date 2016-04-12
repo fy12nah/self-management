@@ -121,17 +121,13 @@ public class BreakfastActivity extends AppCompatActivity {
                 // getting edittext values
                 String bf_name = breakfast.getText().toString();
                 String bfDate = date_edittext.getText().toString();
-                String bfTime = time_edittext.getText().toString();
+                String TimeBF = time_edittext.getText().toString();
 
                 SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_TimePattern);
-
                 Date DateBF = null;
-                Date TimeBF = null;
 
                 try {
                     DateBF = simpleDateFormatD.parse(bfDate);
-                    TimeBF = simpleDateFormat.parse(bfTime);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -170,7 +166,6 @@ public class BreakfastActivity extends AppCompatActivity {
 
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
             bf_Time.setText(hourOfDay + ":" + minute);
         }
     }

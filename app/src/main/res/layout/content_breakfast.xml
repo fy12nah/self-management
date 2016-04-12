@@ -38,10 +38,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Breakfast Name:"
         android:id="@+id/textView39"
+        android:layout_marginTop="115dp"
         android:layout_below="@+id/textView38"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="43dp" />
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -52,7 +53,7 @@
         android:layout_below="@+id/textView39"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="43dp" />
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,10 +61,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Time:"
         android:id="@+id/textView41"
-        android:layout_below="@+id/textView40"
+        android:layout_above="@+id/BFName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="112dp" />
+        android:layout_marginTop="30dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -72,8 +73,9 @@
         android:layout_alignBottom="@+id/textView39"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/textView37"
-        android:layout_toEndOf="@+id/textView37" />
+        android:layout_toEndOf="@+id/textView37"
+        android:layout_alignLeft="@+id/bf_date"
+        android:layout_alignStart="@+id/bf_date" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -101,12 +103,12 @@
         android:layout_height="wrap_content"
         android:text="save"
         android:id="@+id/BFSave"
-        android:layout_below="@+id/BFTime"
-        android:layout_marginTop="78dp"
-        android:layout_alignRight="@+id/BFTime"
-        android:layout_alignEnd="@+id/BFTime"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="114dp"
+        android:layout_alignRight="@+id/itemBF"
+        android:layout_alignEnd="@+id/itemBF" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -132,7 +134,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Date:"
         android:id="@+id/textView66"
-        android:layout_above="@+id/BFTime"
+        android:layout_alignBottom="@+id/bf_date"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -142,16 +144,16 @@
         android:inputType="date"
         android:ems="10"
         android:id="@+id/bf_date"
-        android:layout_above="@+id/BFTime"
-        android:layout_alignRight="@+id/itemBF"
-        android:layout_alignEnd="@+id/itemBF" />
+        android:layout_below="@+id/textView38"
+        android:layout_alignRight="@+id/BFTime"
+        android:layout_alignEnd="@+id/BFTime" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/bfDD"
         android:src="@android:drawable/ic_menu_month"
-        android:layout_above="@+id/BFTime"
+        android:layout_alignBottom="@+id/bf_date"
         android:layout_alignLeft="@+id/Bf_timeDialog"
         android:layout_alignStart="@+id/Bf_timeDialog" />
 

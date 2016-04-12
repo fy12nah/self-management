@@ -13,10 +13,10 @@ public class Meal {
     private String mealType;
     private String mealName;
     private Date mealDate;
-    private Date mealTime;
+    private String mealTime;
     private ArrayList<MealItem> mealItems = new ArrayList<>();
 
-    public Meal(long id, long userId, String mealType, String mealName, Date mealDate, Date mealTime) {
+    public Meal(long id, long userId, String mealType, String mealName, Date mealDate, String mealTime) {
         this.id = id;
         this.userId = userId;
         this.mealType = mealType;
@@ -67,11 +67,11 @@ public class Meal {
     }
 
 
-    public Date getMealTime() {
+    public String getMealTime() {
         return mealTime;
     }
 
-    public void setMealTime(Date mealTime) {
+    public void setMealTime(String mealTime) {
         this.mealTime = mealTime;
     }
 

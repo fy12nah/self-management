@@ -38,10 +38,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Lunch Name:"
         android:id="@+id/textView44"
-        android:layout_below="@+id/textView43"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/textView46"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="45dp" />
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,7 +50,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Items:"
         android:id="@+id/textView45"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/textView44"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -60,10 +61,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Time:"
         android:id="@+id/textView46"
-        android:layout_below="@+id/textView45"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="119dp" />
+        android:layout_below="@+id/textView67"
+        android:layout_marginTop="30dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -93,19 +94,22 @@
         android:id="@+id/lunchTime"
         android:layout_alignBottom="@+id/textView46"
         android:layout_alignRight="@+id/itemLunch"
-        android:layout_alignEnd="@+id/itemLunch" />
+        android:layout_alignEnd="@+id/itemLunch"
+        android:layout_toEndOf="@+id/lunchDD"
+        android:layout_alignLeft="@+id/lunch_date"
+        android:layout_alignStart="@+id/lunch_date" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="save"
         android:id="@+id/lunchSave"
-        android:layout_below="@+id/lunchTime"
-        android:layout_marginTop="85dp"
-        android:layout_alignRight="@+id/itemLunch"
-        android:layout_alignEnd="@+id/itemLunch"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="76dp"
+        android:layout_alignRight="@+id/itemLunch"
+        android:layout_alignEnd="@+id/itemLunch" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -131,9 +135,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Date:"
         android:id="@+id/textView67"
-        android:layout_above="@+id/lunchTime"
+        android:layout_below="@+id/textView43"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="41dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -141,16 +146,18 @@
         android:inputType="date"
         android:ems="10"
         android:id="@+id/lunch_date"
-        android:layout_above="@+id/lunchTime"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignBottom="@+id/textView67"
+        android:layout_alignRight="@+id/lunchName"
+        android:layout_alignEnd="@+id/lunchName"
+        android:layout_alignLeft="@+id/lunchName"
+        android:layout_alignStart="@+id/lunchName" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lunchDD"
         android:src="@android:drawable/ic_menu_month"
-        android:layout_above="@+id/lunchTime"
+        android:layout_above="@+id/textView46"
         android:layout_alignLeft="@+id/lnch_TimeDialog"
         android:layout_alignStart="@+id/lnch_TimeDialog" />
 

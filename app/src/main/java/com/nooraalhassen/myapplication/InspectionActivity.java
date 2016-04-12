@@ -146,7 +146,6 @@ public class InspectionActivity extends AppCompatActivity {
                     c.setTime(fromDate);
 
                     for(Date d = fromDate; d.before(toDate); ){
-                        //Log.d("Noora", d.toString());
                         dateList.add(simpleDateFormat.format(d));
                         c.add(Calendar.DAY_OF_MONTH , 1);
                         d = c.getTime();
@@ -161,7 +160,6 @@ public class InspectionActivity extends AppCompatActivity {
                     Intent intent = DailyDisplayActivity.createIntent(InspectionActivity.this, dateList, contentList);
                     startActivity(intent);
                 }
-
             }
         });
 

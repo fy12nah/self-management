@@ -54,8 +54,8 @@ public class MoodActivity extends AppCompatActivity {
         // defining widgets for use
         final EditText mood = (EditText) findViewById(R.id.moodName);
         final EditText mood_reason = (EditText) findViewById(R.id.mdReason);
-        final EditText mood_date = (EditText) findViewById(R.id.moodDate);
-        final EditText mood_Time = (EditText) findViewById(R.id.mdTime);
+        /*final EditText mood_date = (EditText) findViewById(R.id.moodDate);
+        final EditText mood_Time = (EditText) findViewById(R.id.mdTime);*/
         final Button save_mood = (Button) findViewById(R.id.saveMood);
 
 
@@ -97,17 +97,17 @@ public class MoodActivity extends AppCompatActivity {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_TimePattern);
 
                 Date DateMood = null;
-                Date TimeMood = null;
+
 
                 try {
                     DateMood = simpleDateFormatD.parse(moodDate);
-                    TimeMood = simpleDateFormat.parse(moodTime);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
 
-                boolean saved = mgr.insert_mood(user_id, mood_name, moodReason, DateMood, TimeMood);
+                boolean saved = mgr.insert_mood(user_id, mood_name, moodReason, DateMood, moodTime);
                 if (saved == true){
                     Toast.makeText(MoodActivity.this, "Mood entries are saved", Toast.LENGTH_LONG).show();
 

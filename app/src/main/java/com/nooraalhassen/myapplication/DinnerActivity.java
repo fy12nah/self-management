@@ -120,17 +120,14 @@ public class DinnerActivity extends AppCompatActivity {
                 // getting edittext values
                 String dinner_name = dinner.getText().toString();
                 String dinner_Date = dinner_date.getText().toString();
-                String dinner_Time = dinner_time.getText().toString();
+                String TimeDinner = dinner_time.getText().toString();
 
                 SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_TimePattern);
 
                 Date DateDinner = null;
-                Date TimeDinner = null;
 
                 try {
                     DateDinner = simpleDateFormatD.parse(dinner_Date);
-                    TimeDinner = simpleDateFormat.parse(dinner_Time);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -167,7 +164,6 @@ public class DinnerActivity extends AppCompatActivity {
     private class TimeDialogList implements TimePickerDialog.OnTimeSetListener{
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
             dinner_time.setText(hourOfDay + ":" + minute);
         }
     }

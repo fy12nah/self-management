@@ -13,9 +13,9 @@ public class Mood extends ArrayList<Mood> {
     private String moodName;
     private String moodReason;
     private Date moodDate;
-    private Date moodTime;
+    private String moodTime;
 
-    public Mood(long id, long userId, String moodName, String moodReason, Date moodDate, Date moodTime) {
+    public Mood(long id, long userId, String moodName, String moodReason, Date moodDate, String moodTime) {
         this.id = id;
         this.userId = userId;
         this.moodName = moodName;
@@ -65,11 +65,11 @@ public class Mood extends ArrayList<Mood> {
         this.moodDate = moodDate;
     }
 
-    public Date getMoodTime() {
+    public String getMoodTime() {
         return moodTime;
     }
 
-    public void setMoodTime(Date moodTime) {
+    public void setMoodTime(String moodTime) {
         this.moodTime = moodTime;
     }
 }

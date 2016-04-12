@@ -11,11 +11,11 @@ public class Exercise {
     private long userId;
     private String exerType;
     private Date exerDate;
-    private Date sExerTime;
-    private Date eExerTime;
-    private float exerDur;
+    private String sExerTime;
+    private String eExerTime;
+    private String exerDur;
 
-    public Exercise(long id, long userId, String exerType, Date exerDate, Date sExerTime, int exerDur, Date eExerTime) {
+    public Exercise(long id, long userId, String exerType, Date exerDate, String sExerTime, String eExerTime, String exerDur) {
         this.id = id;
         this.userId = userId;
         this.exerType = exerType;
@@ -57,27 +57,27 @@ public class Exercise {
         this.exerDate = exerDate;
     }
 
-    public Date getsExerTime() {
+    public String getsExerTime() {
         return sExerTime;
     }
 
-    public void setsExerTime(Date sExerTime) {
+    public void setsExerTime(String sExerTime) {
         this.sExerTime = sExerTime;
     }
 
-    public Date geteExerTime() {
+    public String geteExerTime() {
         return eExerTime;
     }
 
-    public void seteExerTime(Date eExerTime) {
+    public void seteExerTime(String eExerTime) {
         this.eExerTime = eExerTime;
     }
 
-    public float getExerDur() {
+    public String getExerDur() {
         return exerDur;
     }
 
-    public void setExerDur(float exerDur) {
+    public void setExerDur(String exerDur) {
         this.exerDur = exerDur;
     }
 }

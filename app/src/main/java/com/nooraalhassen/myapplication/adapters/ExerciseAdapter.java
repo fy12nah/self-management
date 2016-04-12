@@ -37,15 +37,15 @@ public class ExerciseAdapter extends ArrayAdapter<Exercise> {
             convertView = inflater.inflate(R.layout.exercises_list_signle_item, parent, false);
         }
 
-        TextView type = (TextView) convertView.findViewById(R.id.exerType);
+        TextView type = (TextView) convertView.findViewById(R.id.exer_Type);
         TextView exerSTime = (TextView) convertView.findViewById(R.id.exerSTime);
         TextView exerETime = (TextView) convertView.findViewById(R.id.exerETime);
         TextView durMsg = (TextView) convertView.findViewById(R.id.exerMsg);
 
 
         Exercise m = list.get(position);
-        type.setText(String.valueOf(m.getExerType()));
 
+        type.setText(String.valueOf(m.getExerType()));
         exerSTime.setText(simpleDateFormatT.format(m.getsExerTime()));
         exerETime.setText(simpleDateFormatT.format(m.geteExerTime()));
         durMsg.setText("This Exercise Last for "+ m.getExerDur());

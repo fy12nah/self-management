@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -67,7 +66,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/exerType"
+            android:id="@+id/exer_Type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="exercise type"
@@ -80,8 +79,8 @@
             android:id="@+id/exerSTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/exerType"
-            android:layout_alignStart="@+id/exerType"
+            android:layout_alignLeft="@+id/exer_Type"
+            android:layout_alignStart="@+id/exer_Type"
             android:layout_below="@+id/tvExerType"
             android:text="start time"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -101,5 +100,3 @@
             android:layout_alignEnd="@+id/exerSTime" />
 
     </RelativeLayout>
-
-</merge>
