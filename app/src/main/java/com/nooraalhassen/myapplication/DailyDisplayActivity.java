@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -177,6 +178,7 @@ public class DailyDisplayActivity extends AppCompatActivity {
                     TextView heightText = (TextView) rootView.findViewById(R.id.height);
                     TextView msg = (TextView) rootView.findViewById(R.id.msgPhysT);
                     TextView title = (TextView) rootView.findViewById(R.id.physicalTitle);
+                    Button editbtn = (Button) rootView.findViewById(R.id.physEdit);
 
 
                     if (p == null){
@@ -186,6 +188,7 @@ public class DailyDisplayActivity extends AppCompatActivity {
                         weightText.setVisibility(View.GONE);
                         heightText.setVisibility(View.GONE);
                         msg.setVisibility(View.GONE);
+                        editbtn.setVisibility(View.GONE);
                     }
 
                     else{
@@ -201,7 +204,6 @@ public class DailyDisplayActivity extends AppCompatActivity {
                             msg.setVisibility(View.GONE);
                         }
                         else heightText.setText(String.valueOf(p.getHeight()));
-
 
                         if (p.getHeight() != -1 && p.getWeight() != -1){
 
@@ -220,13 +222,10 @@ public class DailyDisplayActivity extends AppCompatActivity {
                                 msg.setText("You have reached Obesity!!");
                             }
                         }
-
                     }
-
                     physLay.setVisibility(View.VISIBLE);
                 }
                 else physLay.setVisibility(View.GONE);
-
 
 
                 LinearLayout illnessLay = (LinearLayout) rootView.findViewById(R.id.illnessLayout);

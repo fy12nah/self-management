@@ -114,7 +114,7 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:id="@+id/meds"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -122,5 +122,16 @@
         android:layout_alignLeft="@+id/illEDate"
         android:layout_alignStart="@+id/illEDate"
         android:choiceMode="none" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/illnessEdit"
+        android:layout_below="@+id/meds"
+        android:layout_alignRight="@+id/meds"
+        android:layout_alignEnd="@+id/meds"
+        android:layout_toRightOf="@+id/section_label"
+        android:layout_toEndOf="@+id/section_label" />
 
 </RelativeLayout>

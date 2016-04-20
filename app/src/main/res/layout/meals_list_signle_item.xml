@@ -81,13 +81,23 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="150dp"
         android:id="@+id/mealItem"
         android:layout_below="@+id/mealName"
         android:layout_alignLeft="@+id/mealName"
         android:layout_alignStart="@+id/mealName"
-        android:layout_alignParentBottom="true"
-        android:choiceMode="none"
-        android:minHeight="100dp" />
+        android:choiceMode="none" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/mealEdit"
+        android:layout_marginBottom="57dp"
+        android:layout_below="@+id/mealItem"
+        android:layout_alignRight="@+id/mealItem"
+        android:layout_alignEnd="@+id/mealItem"
+        android:layout_toRightOf="@+id/section_label"
+        android:layout_toEndOf="@+id/section_label" />
 
 </RelativeLayout>

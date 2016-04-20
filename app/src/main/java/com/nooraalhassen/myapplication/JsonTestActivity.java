@@ -2,6 +2,7 @@ package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -16,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nooraalhassen.myapplication.model.DBmanager;
@@ -96,19 +98,26 @@ public class JsonTestActivity extends AppCompatActivity {
         chkIllness = (CheckBox) findViewById(R.id.downIllness);
 
 
+
         Button btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Task().execute();
+
+                if (fromD == null || toD == null) Toast.makeText(JsonTestActivity.this, "You must choose your date range", Toast.LENGTH_LONG).show();
+                /*else if (!chkProf.isChecked() && !chkPhys.isChecked() && !chkMeals.isChecked() && !chkMood.isChecked()
+                        && !chkSleep.isChecked() && !chkIllness.isChecked() && chkExer.isChecked()) {
+                    Toast.makeText(JsonTestActivity.this, "You must choose at least one category", Toast.LENGTH_LONG).show();
+                }*/
+                else new Task().execute();
             }
         });
 
     }
 
 
-    private class Task extends AsyncTask<Void,Void,Void>
-    {
+    private class Task extends AsyncTask<Void,Void,Void> {
+
         boolean prof = false;
         boolean phys = false;
         boolean ill = false;

@@ -450,6 +450,7 @@ public class DBmanager extends SQLiteOpenHelper {
         return true;
     }
 
+
     public Profile getProfile(long userid){
         SQLiteDatabase db = getReadableDatabase();
 
@@ -505,6 +506,226 @@ public class DBmanager extends SQLiteOpenHelper {
         }
         return p;
     }
+
+
+    // method to allow users to update their physical attributes
+    public boolean updatePhysical(Physical phys){
+        SQLiteDatabase db = getWritableDatabase();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+        ContentValues values = new ContentValues();
+        values.put(UsersPhysicalTable.Col_weight, phys.getWeight());
+        values.put(UsersPhysicalTable.Col_height, phys.getHeight());
+        values.put(UsersPhysicalTable.Col_date, simpleDateFormat.format(phys.getDate()));
+
+        long id = db.update(UsersPhysicalTable.table_name, values, UsersPhysicalTable._ID+" = "+phys.getId(), null);
+
+        // Closing database
+        db.close();
+
+        if (id == -1){
+            return false;
+        }
+        return true;
+    }
+
+
+    public Physical getPhysical(long userid){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor c = db.query(UsersPhysicalTable.table_name, null, UsersPhysicalTable.Col_userID + " = ? ",
+                new String[]{String.valueOf(userid)}, null, null, null);
+
+        Physical p = null;
+        if (c.moveToFirst()){
+
+            try {
+                long id = c.getLong(c.getColumnIndex(UsersPhysicalTable._ID));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+                float weight = c.getFloat(c.getColumnIndex(UsersPhysicalTable.Col_weight));
+                float height = c.getFloat(c.getColumnIndex(UsersPhysicalTable.Col_height));
+
+                Date date = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersPhysicalTable.Col_date)));
+
+                p = new Physical(id, userid, weight, height, date);
+
+                c.close();
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return p;
+    }
+
+
+    // method to allow users to update their profiles
+    public boolean updateExercise(Exercise exercise){
+        SQLiteDatabase db = getWritableDatabase();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+        ContentValues values = new ContentValues();
+        values.put(UsersExerciseTable.Col_exerType, exercise.getExerType());
+        values.put(UsersExerciseTable.Col_exerDate, simpleDateFormat.format(exercise.getExerDate()));
+        values.put(UsersExerciseTable.Col_sExerTime, exercise.getsExerTime());
+        values.put(UsersExerciseTable.Col_eExerTime, exercise.geteExerTime());
+        values.put(UsersExerciseTable.Col_exerDur, exercise.getExerDur());
+
+        long id = db.update(UsersExerciseTable.table_name, values, UsersExerciseTable._ID+" = "+exercise.getId(), null);
+
+        // Closing database
+        db.close();
+
+        if (id == -1){
+            return false;
+        }
+        return true;
+    }
+
+
+    public Exercise getExercise(long userid){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor c = db.query(UsersExerciseTable.table_name, null, UsersExerciseTable.Col_userID + " = ? ",
+                new String[]{String.valueOf(userid)}, null, null, null);
+
+        Exercise p = null;
+        if (c.moveToFirst()){
+
+            try {
+                long id = c.getLong(c.getColumnIndex(UsersExerciseTable._ID));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+                String type = c.getString(c.getColumnIndex(UsersExerciseTable.Col_exerType));
+                String dur = c.getString(c.getColumnIndex(UsersExerciseTable.Col_exerDur));
+
+                Date date = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersExerciseTable.Col_exerDate)));
+                String start_exer = c.getString(c.getColumnIndex(UsersExerciseTable.Col_sExerTime));
+                String end_exer = c.getString(c.getColumnIndex(UsersExerciseTable.Col_eExerTime));
+
+
+                p = new Exercise(id, userid, type, date, start_exer, end_exer, dur);
+
+                c.close();
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return p;
+    }
+
+
+    public boolean updateSleeping(Sleeping slp){
+        SQLiteDatabase db = getWritableDatabase();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+        ContentValues values = new ContentValues();
+        values.put(UsersSleepTable.Col_sSleepTime, slp.getsSleepTime());
+        values.put(UsersSleepTable.Col_eSleepTime, slp.geteSleepTime());
+        values.put(UsersSleepTable.Col_sleepDate, simpleDateFormat.format(slp.getSleepDate()));
+        values.put(UsersSleepTable.Col_sleepDur, slp.getSleepDur());
+
+        long id = db.update(UsersSleepTable.table_name, values, UsersSleepTable._ID+" = "+slp.getId(), null);
+
+        // Closing database
+        db.close();
+
+        if (id == -1){
+            return false;
+        }
+        return true;
+    }
+
+
+    public Sleeping getSleeping(long userid){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor c = db.query(UsersSleepTable.table_name, null, UsersSleepTable.Col_userId + " = ? ",
+                new String[]{String.valueOf(userid)}, null, null, null);
+
+        Sleeping p = null;
+        if (c.moveToFirst()){
+
+            try {
+                long id = c.getLong(c.getColumnIndex(UsersSleepTable._ID));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+                String strt = c.getString(c.getColumnIndex(UsersSleepTable.Col_sSleepTime));
+                String end = c.getString(c.getColumnIndex(UsersSleepTable.Col_eSleepTime));
+                String dur = c.getString(c.getColumnIndex(UsersSleepTable.Col_sleepDur));
+
+                Date date = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersSleepTable.Col_sleepDate)));
+
+                p = new Sleeping(id, userid, date, strt, end, dur);
+
+                c.close();
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return p;
+    }
+
+
+    public boolean updateMood(Mood mood){
+        SQLiteDatabase db = getWritableDatabase();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+        ContentValues values = new ContentValues();
+        values.put(UsersMoodTable.Col_moodName, mood.getMoodName());
+        values.put(UsersMoodTable.Col_moodReason, mood.getMoodName());
+        values.put(UsersMoodTable.Col_moodDate, simpleDateFormat.format(mood.getMoodDate()));
+        values.put(UsersMoodTable.Col_moodTime, mood.getMoodTime());
+
+        long id = db.update(UsersMoodTable.table_name, values, UsersMoodTable._ID+" = "+mood.getId(), null);
+
+        // Closing database
+        db.close();
+
+        if (id == -1){
+            return false;
+        }
+        return true;
+    }
+
+
+    public Mood getMood(long userid){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor c = db.query(UsersMoodTable.table_name, null, UsersMoodTable.Col_userId + " = ? ",
+                new String[]{String.valueOf(userid)}, null, null, null);
+
+        Mood p = null;
+        if (c.moveToFirst()){
+
+            try {
+                long id = c.getLong(c.getColumnIndex(UsersMoodTable._ID));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+                String name = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodName));
+                String reason = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodReason));
+
+                Date date = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersMoodTable.Col_moodDate)));
+                String time = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodTime));
+
+                p = new Mood(id, userid, name, reason, date, time);
+
+                c.close();
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return p;
+    }
+
+
 
 
     // insert data into userPhysicalTable
@@ -1220,7 +1441,7 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
-    // getting Illness entries
+    // getting Illness entries for download
     public List<Illness> getIllnessInDateRange(Date from, Date to, long user_id){
 
         ArrayList<Illness> list = new ArrayList<>();

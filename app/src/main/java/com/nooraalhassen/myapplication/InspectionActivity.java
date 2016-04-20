@@ -109,7 +109,8 @@ public class InspectionActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
                     contentList.add(Constants.sleep);
-                else contentList.remove(Constants.sleep);            }
+                else contentList.remove(Constants.sleep);
+            }
         });
 
 
@@ -155,7 +156,8 @@ public class InspectionActivity extends AppCompatActivity {
 
                 }
 
-                if (contentList.isEmpty()) Toast.makeText(InspectionActivity.this, "You should choose at least one option",Toast.LENGTH_LONG).show();
+                if (fromDate == null || toDate == null) Toast.makeText(InspectionActivity.this, "You must choose your date range",Toast.LENGTH_LONG).show();
+                else if  (contentList.isEmpty()) Toast.makeText(InspectionActivity.this, "You should choose at least one option",Toast.LENGTH_LONG).show();
                 else {
                     Intent intent = DailyDisplayActivity.createIntent(InspectionActivity.this, dateList, contentList);
                     startActivity(intent);

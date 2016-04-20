@@ -44,7 +44,7 @@ public class MoodAdapter extends ArrayAdapter<Mood> {
         Mood m = list.get(position);
         moodName.setText(String.valueOf(m.getMoodName()));
         moodReason.setText(String.valueOf(m.getMoodReason()));
-        moodTime.setText(simpleDateFormatT.format(m.getMoodTime()));
+        moodTime.setText(m.getMoodTime());
 
         return convertView;
     }

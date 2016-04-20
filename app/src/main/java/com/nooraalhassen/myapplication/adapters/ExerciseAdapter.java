@@ -42,12 +42,11 @@ public class ExerciseAdapter extends ArrayAdapter<Exercise> {
         TextView exerETime = (TextView) convertView.findViewById(R.id.exerETime);
         TextView durMsg = (TextView) convertView.findViewById(R.id.exerMsg);
 
-
         Exercise m = list.get(position);
 
         type.setText(String.valueOf(m.getExerType()));
-        exerSTime.setText(simpleDateFormatT.format(m.getsExerTime()));
-        exerETime.setText(simpleDateFormatT.format(m.geteExerTime()));
+        exerSTime.setText(m.getsExerTime());
+        exerETime.setText(m.geteExerTime());
         durMsg.setText("This Exercise Last for "+ m.getExerDur());
 
         return convertView;

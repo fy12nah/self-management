@@ -42,12 +42,12 @@ public class SleepAdapter extends ArrayAdapter<Sleeping> {
 
         TextView sTimeText = (TextView) convertView.findViewById(R.id.sleepStrtTime);
         TextView eTimeText = (TextView) convertView.findViewById(R.id.slpEndTime);
-        TextView slpMsg = (TextView) convertView.findViewById(R.id.sleepMsg);
+        TextView slpMsg = (TextView) convertView.findViewById(R.id.msgSleep);
 
         Sleeping m = list.get(position);
 
-        sTimeText.setText(simpleDateFormatT.format(m.getsSleepTime()));
-        eTimeText.setText(simpleDateFormatT.format(m.geteSleepTime()));
+        sTimeText.setText(m.getsSleepTime());
+        eTimeText.setText(m.geteSleepTime());
         slpMsg.setText("You Slept for " + m.getSleepDur());
 
         return convertView;

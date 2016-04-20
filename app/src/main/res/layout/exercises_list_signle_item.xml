@@ -99,4 +99,15 @@
             android:layout_alignRight="@+id/exerSTime"
             android:layout_alignEnd="@+id/exerSTime" />
 
-    </RelativeLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/exerEdit"
+        android:layout_below="@+id/exerMsg"
+        android:layout_alignRight="@+id/exerETime"
+        android:layout_alignEnd="@+id/exerETime"
+        android:layout_toRightOf="@+id/section_label"
+        android:layout_toEndOf="@+id/section_label" />
+
+</RelativeLayout>

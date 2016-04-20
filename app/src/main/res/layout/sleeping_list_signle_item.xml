@@ -72,10 +72,22 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="start time"
             android:id="@+id/sleepStrtTime"
-            android:layout_centerVertical="true"
-            android:layout_alignRight="@+id/slpEndTime"
-            android:layout_alignEnd="@+id/slpEndTime"
+            android:layout_above="@+id/slpEndTime"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignLeft="@+id/slpEndTime"
             android:layout_alignStart="@+id/slpEndTime" />
 
-    </RelativeLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/slpEdit"
+        android:layout_below="@+id/msgSleep"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+</RelativeLayout>

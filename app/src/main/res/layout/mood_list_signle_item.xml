@@ -91,4 +91,15 @@
             android:layout_alignRight="@+id/mood_Name"
             android:layout_alignEnd="@+id/mood_Name" />
 
-    </RelativeLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/moodEdit"
+        android:layout_below="@+id/mood_Time"
+        android:layout_alignRight="@+id/mood_Time"
+        android:layout_alignEnd="@+id/mood_Time"
+        android:layout_toRightOf="@+id/section_label"
+        android:layout_toEndOf="@+id/section_label" />
+
+</RelativeLayout>

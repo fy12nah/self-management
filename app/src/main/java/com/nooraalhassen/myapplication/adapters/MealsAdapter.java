@@ -51,7 +51,7 @@ public class MealsAdapter extends ArrayAdapter<Meal> {
             type.setText(String.valueOf(m.getMealType()));
             mealName.setText(String.valueOf(m.getMealName()));
 
-            mealtime.setText(simpleDateFormatT.format(m.getMealTime()));
+            mealtime.setText(m.getMealTime());
 
         if (!m.getMealType().equals(Constants.snack)) {
             MealItemsAdapter adapter = new MealItemsAdapter(getContext(),
