@@ -1,6 +1,7 @@
 package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,14 +15,16 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
+import com.nooraalhassen.myapplication.model.Physical;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class physical extends AppCompatActivity {
+public class PhysicalActivity extends AppCompatActivity {
 
+    String activityMode;
     EditText phys_date;
     long user_id;
 
@@ -34,6 +37,8 @@ public class physical extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
         user_id = preferences.getLong(Constants.userId, -1);
+        Intent intent = getIntent();
+
 
         phys_date = (EditText) findViewById(R.id.phys_date);
         final Calendar c = Calendar.getInstance();
@@ -46,7 +51,7 @@ public class physical extends AppCompatActivity {
         physd_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePick = new DatePickerDialog(physical.this, new PhysdDailogListener(), year, month, day);
+                DatePickerDialog datePick = new DatePickerDialog(PhysicalActivity.this, new PhysdDailogListener(), year, month, day);
                 datePick.show();
             }
         });
@@ -56,20 +61,22 @@ public class physical extends AppCompatActivity {
         final EditText height_edittext= (EditText) findViewById(R.id.height);
         final EditText date_edittext= (EditText) findViewById(R.id.phys_date);
 
+
+        final long id = intent.getLongExtra(Constants.sleepingID, -1);
+        final DBmanager mgr = new DBmanager(PhysicalActivity.this);
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
+
         // button action
         Button btn = (Button) findViewById(R.id.physical_save);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                DBmanager mgr = new DBmanager(physical.this);
-
                 // getting edittext values
                 String weight = weight_edittext.getText().toString();
                 String height = height_edittext.getText().toString();
                 String phys_date = date_edittext.getText().toString();
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
 
                 Date physdate = null;
 
@@ -80,21 +87,56 @@ public class physical extends AppCompatActivity {
                 }
 
 
-                boolean saved = mgr.insert_physical (user_id, weight, height, physdate);
-                if (saved == true){
-                    Toast.makeText(physical.this, "physical entries saved", Toast.LENGTH_LONG).show();
+                if (activityMode.equals(Constants.addMode)) {
+                    boolean saved = mgr.insert_physical(user_id, weight, height, physdate);
+                    if (saved == true) {
+                        Toast.makeText(PhysicalActivity.this, "physical entries saved", Toast.LENGTH_LONG).show();
 
-                    // go to another view - landing view
-                    Intent intent = new Intent(physical.this, LandingView.class);
-                    startActivity(intent);
+                        // go to another view - landing view
+                        Intent intent = new Intent(PhysicalActivity.this, LandingView.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(PhysicalActivity.this, "Failed to save physical entries", Toast.LENGTH_LONG).show();
+                    }
                 }
-                else {
-                    Toast.makeText(physical.this, "Failed to save physical entries", Toast.LENGTH_LONG).show();
+                else if (activityMode.equals(Constants.EditMode)){
+                    boolean updated = mgr.updatePhysical(id, weight, height, physdate);
+                    if (updated == true) {
+                        Toast.makeText(PhysicalActivity.this, "Physical entries are updated", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        Toast.makeText(PhysicalActivity.this, "Failed to update Physical entries", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
+
+        if (id != -1){
+            activityMode = Constants.EditMode;
+            Physical s = mgr.getPhysicalByID(id, user_id);
+
+            if (s != null){
+                date_edittext.setText(simpleDateFormat.format(s.getDate()));
+                weight_edittext.setText((int) s.getWeight());
+                height_edittext.setText((int) s.getHeight());
+            }
+            else {
+                Toast.makeText(PhysicalActivity.this, "Invalid Sleeping ID", Toast.LENGTH_LONG).show();
+            }
+        }
+        else activityMode = Constants.addMode;
     }
 
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, PhysicalActivity.class);
+    }
+
+    public static Intent createIntentForEdit(Context context, long id) {
+        Intent intent = new Intent(context, PhysicalActivity.class);
+        intent.putExtra(Constants.physicalId, id);
+        return intent;
+    }
 
     // creating a calander dialog for physical date
     private class PhysdDailogListener implements DatePickerDialog.OnDateSetListener{
