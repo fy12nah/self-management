@@ -18,10 +18,16 @@
 
         <ListView
             android:id="@+id/listExer"
-            android:layout_height="446dp"
+            android:layout_height="240dp"
             android:layout_width="wrap_content">
-
         </ListView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:id="@+id/exerAdd"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 </merge>

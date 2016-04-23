@@ -1,6 +1,7 @@
 package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
+import com.nooraalhassen.myapplication.model.Exercise;
+import com.nooraalhassen.myapplication.model.Illness;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,6 +30,7 @@ import java.util.Date;
 
 public class ShortT_Illness extends AppCompatActivity {
 
+    String activityMode;
     long user_id;
     EditText ST_sdate, ST_edate;
     RelativeLayout layout;
@@ -71,6 +75,7 @@ public class ShortT_Illness extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
         user_id = preferences.getLong(Constants.userId, -1);
+        Intent intent = getIntent();
 
 
         final EditText ST_name = (EditText) findViewById(R.id.shrtIll_name);
@@ -100,20 +105,25 @@ public class ShortT_Illness extends AppCompatActivity {
             }
         });
 
+        final DBmanager mgr = new DBmanager(ShortT_Illness.this);
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
+        final long id = intent.getLongExtra(Constants.shortIllness_Id, -1);
+        final String dateString = intent.getStringExtra(Constants.exerciseDate);
+        if (dateString != null){
+            sdate_edt.setText(dateString);
+        }
+
 
         Button saveB = (Button) findViewById(R.id.STI_save);
         saveB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                DBmanager mgr = new DBmanager(ShortT_Illness.this);
-
                 // getting edittext values
                 String SillnessName = ST_name.getText().toString();
                 String sIlldate = sdate_edt.getText().toString();
                 String eIlldate = edate_edt.getText().toString();
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
 
                 Date startDate = null;
                 Date endDate = null;
@@ -133,23 +143,59 @@ public class ShortT_Illness extends AppCompatActivity {
                 }
 
 
-                boolean saved = mgr.insert_illness(user_id, Constants.ShortT, SillnessName, startDate, endDate, STmeds);
-                if (saved == true){
-                    Toast.makeText(ShortT_Illness.this, "Short-term Illness entries saved", Toast.LENGTH_LONG).show();
+                if (activityMode.equals(Constants.addMode)) {
+                    boolean saved = mgr.insert_illness(user_id, Constants.ShortT, SillnessName, startDate, endDate, STmeds);
+                    if (saved == true) {
+                        Toast.makeText(ShortT_Illness.this, "Short-term Illness entries saved", Toast.LENGTH_LONG).show();
 
-                    // go to another view - landing view
-                    Intent intent = new Intent(ShortT_Illness.this, LandingView.class);
-                    startActivity(intent);
+                        // go to another view - landing view
+                        Intent intent = new Intent(ShortT_Illness.this, LandingView.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(ShortT_Illness.this, "Failed to save short-term Illness entries", Toast.LENGTH_LONG).show();
+                    }
                 }
-                else {
-                    Toast.makeText(ShortT_Illness.this, "Failed to save short-term Illness entries", Toast.LENGTH_LONG).show();
+                else if (activityMode.equals(Constants.EditMode)){
+                    boolean updated = mgr.updateIllness(user_id, Constants.ShortT, SillnessName, startDate, endDate, STmeds);
+                    if (updated == true) {
+                        Toast.makeText(ShortT_Illness.this, "Short-term Illness entries are updated", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        Toast.makeText(ShortT_Illness.this, "Failed to update Short-term Illness entries", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
 
+        if (id != -1){
+            activityMode = Constants.EditMode;
+            Illness s = mgr.getIllnessByID(id, user_id);
 
+            if (s != null){
+                ST_sdate.setText(simpleDateFormat.format(s.getsIllnessDate()));
+                ST_edate.setText(simpleDateFormat.format(s.geteIllnessDate()));
+                ST_name.setText(s.getIllnessName());
+                //ST_med.setText((CharSequence) s.getMedsList());
+            }
+            else {
+                Toast.makeText(ShortT_Illness.this, "Invalid Short-Term Illness ID", Toast.LENGTH_LONG).show();
+            }
+        }
+        else activityMode = Constants.addMode;
 
     }
+
+    public static Intent createIntentForEdit(Context context, long id) {
+        Intent intent = new Intent(context, ShortT_Illness.class);
+        intent.putExtra(Constants.shortIllness_Id, id);
+        return intent;
+    }
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, ShortT_Illness.class);
+    }
+
+
 
     // creating a calander dialog illness start date
     private class StartDateDailogListener implements DatePickerDialog.OnDateSetListener{

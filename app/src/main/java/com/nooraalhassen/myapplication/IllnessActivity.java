@@ -22,7 +22,7 @@ public class IllnessActivity extends AppCompatActivity {
         shortT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IllnessActivity.this, ShortT_Illness.class);
+                Intent intent = ShortT_Illness.createIntent(IllnessActivity.this);
                 startActivity(intent);
             }
         });
@@ -32,7 +32,7 @@ public class IllnessActivity extends AppCompatActivity {
         LongT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IllnessActivity.this, LongT_Illness.class);
+                Intent intent = LongT_Illness.createIntent(IllnessActivity.this);
                 startActivity(intent);
             }
         });

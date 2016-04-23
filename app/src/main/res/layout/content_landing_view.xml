@@ -104,7 +104,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Self-Health Manager"
         android:id="@+id/textView15"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/inspect"
         android:layout_centerHorizontal="true" />
 
     <ImageView
@@ -124,5 +124,14 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/btnLogout"
         android:layout_toStartOf="@+id/btnLogout" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/LVdownload"
+        android:src="@android:drawable/stat_sys_download_done"
+        android:layout_above="@+id/landing_profile"
+        android:layout_toLeftOf="@+id/inspect"
+        android:layout_toStartOf="@+id/inspect" />
 
 </RelativeLayout>

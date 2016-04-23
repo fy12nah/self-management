@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by nooraalhassen on 3/30/16.
+ * Created by nooraalhassen
  */
 public class Sleeping extends ArrayList<Sleeping> {
 
@@ -15,7 +15,7 @@ public class Sleeping extends ArrayList<Sleeping> {
     private String eSleepTime;
     private String sleepDur;
 
-    public Sleeping(long id, long userId, Date sleepDate, String eSleepTime, String sSleepTime, String sleepDur) {
+    public Sleeping(long id, long userId, Date sleepDate, String sSleepTime, String eSleepTime, String sleepDur) {
         this.id = id;
         this.sleepDur = sleepDur;
         this.eSleepTime = eSleepTime;

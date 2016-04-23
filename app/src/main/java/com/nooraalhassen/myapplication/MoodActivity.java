@@ -2,6 +2,7 @@ package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
+import com.nooraalhassen.myapplication.model.Mood;
+import com.nooraalhassen.myapplication.model.Sleeping;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +29,7 @@ import java.util.Date;
 
 public class MoodActivity extends AppCompatActivity {
 
+    String activityMode;
     long user_id;
     EditText mood_date;
     EditText mood_Time;
@@ -39,6 +43,8 @@ public class MoodActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
         user_id = preferences.getLong(Constants.userId, -1);
+        Intent intent = getIntent();
+
 
         // getting current time
         mood_date = (EditText) findViewById(R.id.moodDate);
@@ -50,14 +56,10 @@ public class MoodActivity extends AppCompatActivity {
         final int hour = c.get(Calendar.HOUR_OF_DAY);
         final int minute = c.get(Calendar.MINUTE);
 
-
         // defining widgets for use
         final EditText mood = (EditText) findViewById(R.id.moodName);
         final EditText mood_reason = (EditText) findViewById(R.id.mdReason);
-        /*final EditText mood_date = (EditText) findViewById(R.id.moodDate);
-        final EditText mood_Time = (EditText) findViewById(R.id.mdTime);*/
         final Button save_mood = (Button) findViewById(R.id.saveMood);
-
 
         ImageView dateDialog = (ImageView) findViewById(R.id.moodDD);
         dateDialog.setOnClickListener(new View.OnClickListener() {
@@ -80,12 +82,18 @@ public class MoodActivity extends AppCompatActivity {
         });
 
 
+        final long id = intent.getLongExtra(Constants.moodID, -1);
+        final String dateString = intent.getStringExtra(Constants.moodDate);
+        if (dateString != null){
+            mood_date.setText(dateString);
+        }
+        final DBmanager mgr = new DBmanager(MoodActivity.this);
+        final SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
+
 
         save_mood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                DBmanager mgr = new DBmanager(MoodActivity.this);
 
                 // getting edittext values
                 String mood_name = mood.getText().toString();
@@ -93,12 +101,8 @@ public class MoodActivity extends AppCompatActivity {
                 String moodDate = mood_date.getText().toString();
                 String moodTime = mood_Time.getText().toString();
 
-                SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_TimePattern);
 
                 Date DateMood = null;
-
-
                 try {
                     DateMood = simpleDateFormatD.parse(moodDate);
 
@@ -106,20 +110,63 @@ public class MoodActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                if (activityMode.equals(Constants.addMode)) {
+                    boolean saved = mgr.insert_mood(user_id, mood_name, moodReason, DateMood, moodTime);
+                    if (saved == true) {
+                        Toast.makeText(MoodActivity.this, "Mood entries are saved", Toast.LENGTH_LONG).show();
 
-                boolean saved = mgr.insert_mood(user_id, mood_name, moodReason, DateMood, moodTime);
-                if (saved == true){
-                    Toast.makeText(MoodActivity.this, "Mood entries are saved", Toast.LENGTH_LONG).show();
-
-                    // go to another view - Landing view
-                    Intent intent = new Intent(MoodActivity.this, LandingView.class);
-                    startActivity(intent);
+                        // go to another view - Landing view
+                        Intent intent = new Intent(MoodActivity.this, LandingView.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(MoodActivity.this, "Failed to save Mood entries", Toast.LENGTH_LONG).show();
+                    }
                 }
-                else {
-                    Toast.makeText(MoodActivity.this, "Failed to save Mood entries", Toast.LENGTH_LONG).show();
+                else if (activityMode.equals(Constants.EditMode)){
+                    boolean updated = mgr.updateMood(id, mood_name, moodReason, DateMood, moodTime);
+                    if (updated == true) {
+                        Toast.makeText(MoodActivity.this, "Mood Status entries are updated", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        Toast.makeText(MoodActivity.this, "Failed to update Mood Status entries", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
+
+        if (id != -1){
+            activityMode = Constants.EditMode;
+            Mood s = mgr.getMoodByID(id, user_id);
+
+            if (s != null){
+                mood_date.setText(simpleDateFormatD.format(s.getMoodDate()));
+                mood_reason.setText(s.getMoodReason());
+                mood.setText(s.getMoodName());
+                mood_Time.setText(s.getMoodTime());
+            }
+            else {
+                Toast.makeText(MoodActivity.this, "Invalid Mood ID", Toast.LENGTH_LONG).show();
+            }
+        }
+        else activityMode = Constants.addMode;
+    }
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, MoodActivity.class);
+    }
+
+
+    public static Intent createIntentForEdit(Context context, long id) {
+        Intent intent = new Intent(context, MoodActivity.class);
+        intent.putExtra(Constants.moodID, id);
+        return intent;
+    }
+
+    public static Intent createIntent(Context context, Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
+        Intent intent = new Intent(context, MoodActivity.class);
+        intent.putExtra(Constants.moodDate, simpleDateFormat.format(date));
+        return intent;
     }
 
 
@@ -139,5 +186,4 @@ public class MoodActivity extends AppCompatActivity {
             mood_Time.setText(hourOfDay + ":" + minute);
         }
     }
-
 }

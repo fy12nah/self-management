@@ -2,6 +2,7 @@ package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -19,6 +21,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
+import com.nooraalhassen.myapplication.model.Sleeping;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,6 +30,7 @@ import java.util.Date;
 
 public class SleepingActivity extends AppCompatActivity {
 
+    String activityMode;
     long user_id;
     TextView sleep_dur;
     EditText sleep_date;
@@ -42,10 +46,12 @@ public class SleepingActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
         user_id = preferences.getLong(Constants.userId, -1);
+        Intent intent = getIntent();
 
         sleep_date = (EditText) findViewById(R.id.slpDate);
         sleep_start = (EditText) findViewById(R.id.sleepStart);
         sleep_end = (EditText) findViewById(R.id.sleepEnd);
+
         final Calendar c = Calendar.getInstance();
         final int year = c.get(Calendar.YEAR);
         final int month = c.get(Calendar.MONTH);
@@ -55,9 +61,6 @@ public class SleepingActivity extends AppCompatActivity {
 
 
         // defining widgets for use
-        final EditText slpDate = (EditText) findViewById(R.id.slpDate);
-        final EditText sTime = (EditText) findViewById(R.id.sleepStart);
-        final EditText eTime = (EditText) findViewById(R.id.sleepEnd);
         final Button save_sleep = (Button) findViewById(R.id.sleepSave);
         sleep_dur = (TextView) findViewById(R.id.sleepDur);
 
@@ -93,21 +96,24 @@ public class SleepingActivity extends AppCompatActivity {
             }
         });
 
-
+        final long id = intent.getLongExtra(Constants.sleepingID, -1);
+        final DBmanager mgr = new DBmanager(SleepingActivity.this);
+        final SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
+        final String dateString = intent.getStringExtra(Constants.sleepDate);
+        if (dateString != null){
+            sleep_date.setText(dateString);
+        }
 
         save_sleep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                DBmanager mgr = new DBmanager(SleepingActivity.this);
-
                 // getting edittext values
-                String sleepDate = slpDate.getText().toString();
-                String sleepStart = sTime.getText().toString();
-                String sleepEnd = eTime.getText().toString();
+                String sleepDate = sleep_date.getText().toString();
+                String sleepStart = sleep_start.getText().toString();
+                String sleepEnd = sleep_end.getText().toString();
                 String durSlp = sleep_dur.getText().toString();
 
-                SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
                 Date DateSlp = null;
 
                 try {
@@ -117,20 +123,45 @@ public class SleepingActivity extends AppCompatActivity {
                 }
 
 
-                boolean saved = mgr.insert_sleep(user_id, DateSlp, sleepStart, sleepEnd, durSlp);
-                if (saved == true){
-                    Toast.makeText(SleepingActivity.this, "Sleeping Hours entries are saved", Toast.LENGTH_LONG).show();
+                if (activityMode.equals(Constants.addMode)) {
 
-                    // go to another view - Landing view
-                    Intent intent = new Intent(SleepingActivity.this, LandingView.class);
-                    startActivity(intent);
+                    boolean saved = mgr.insert_sleep(user_id, DateSlp, sleepStart, sleepEnd, durSlp);
+                    if (saved == true) {
+                        Toast.makeText(SleepingActivity.this, "Sleeping Hours entries are saved", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        Toast.makeText(SleepingActivity.this, "Failed to save Sleeping Hours entries", Toast.LENGTH_LONG).show();
+                    }
                 }
-                else {
-                    Toast.makeText(SleepingActivity.this, "Failed to save Sleeping Hours entries", Toast.LENGTH_LONG).show();
+                else if (activityMode.equals(Constants.EditMode)){
+                    boolean updated = mgr.updateSleeping(id, DateSlp, sleepStart, sleepEnd, durSlp);
+                    if (updated == true) {
+                        Toast.makeText(SleepingActivity.this, "Sleeping Hours entries are updated", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        Toast.makeText(SleepingActivity.this, "Failed to update Sleeping Hours entries", Toast.LENGTH_LONG).show();
+                    }
                 }
-
             }
         });
+
+
+
+        if (id != -1){
+            activityMode = Constants.EditMode;
+            Sleeping s = mgr.getSleepingByID(id, user_id);
+
+            if (s != null){
+                sleep_date.setText(simpleDateFormatD.format(s.getSleepDate()));
+                sleep_start.setText(s.getsSleepTime());
+                sleep_end.setText(s.geteSleepTime());
+                sleep_dur.setText(s.getSleepDur());
+            }
+            else {
+                Toast.makeText(SleepingActivity.this, "Invalid Sleeping ID", Toast.LENGTH_LONG).show();
+            }
+        }
+        else activityMode = Constants.addMode;
     }
 
 
@@ -158,6 +189,24 @@ public class SleepingActivity extends AppCompatActivity {
             String diff = Hours + ":" + Mins; // updated value every1 second
             sleep_dur.setText(diff);
         }
+    }
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, SleepingActivity.class);
+    }
+
+    public static Intent createIntentForEdit(Context context, long id) {
+        Intent intent = new Intent(context, SleepingActivity.class);
+        intent.putExtra(Constants.sleepingID, id);
+        return intent;
+    }
+
+
+    public static Intent createIntent(Context context, Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
+        Intent intent = new Intent(context, SleepingActivity.class);
+        intent.putExtra(Constants.sleepDate, simpleDateFormat.format(date));
+        return intent;
     }
 
 

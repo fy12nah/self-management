@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -159,7 +160,7 @@ public class DailyDisplayActivity extends AppCompatActivity {
             try {
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
-                Date d = simpleDateFormat.parse(dateList.get(getArguments().getInt(ARG_SECTION_NUMBER)));
+                final Date d = simpleDateFormat.parse(dateList.get(getArguments().getInt(ARG_SECTION_NUMBER)));
 
                 DBmanager db = new DBmanager(getActivity());
                 SharedPreferences preferences = getActivity().getSharedPreferences(Constants.sharedpreferencesId, 0);
@@ -179,19 +180,35 @@ public class DailyDisplayActivity extends AppCompatActivity {
                     TextView msg = (TextView) rootView.findViewById(R.id.msgPhysT);
                     TextView title = (TextView) rootView.findViewById(R.id.physicalTitle);
                     Button editbtn = (Button) rootView.findViewById(R.id.physEdit);
+                    Button addbtn = (Button) rootView.findViewById(R.id.physAdd);
 
 
                     if (p == null){
-                        title.setText(title.getText().toString()+" - No Data Entered");
+                        title.append(" - No Data Entered");
                         tv1.setVisibility(View.GONE);
                         tv2.setVisibility(View.GONE);
                         weightText.setVisibility(View.GONE);
                         heightText.setVisibility(View.GONE);
                         msg.setVisibility(View.GONE);
                         editbtn.setVisibility(View.GONE);
+                        addbtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = PhysicalActivity.createIntent(getContext(), d);
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                     else{
+                        addbtn.setVisibility(View.GONE);
+                        editbtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = PhysicalActivity.createIntentForEdit(getContext(), getId());
+                                getContext().startActivity(intent);
+                            }
+                        });
 
                         if (p.getWeight() == -1){
                             weightText.setText("No Data");
@@ -235,13 +252,23 @@ public class DailyDisplayActivity extends AppCompatActivity {
 
                     TextView title = (TextView) rootView.findViewById(R.id.illnessTitle);
                     ListView listview = (ListView) rootView.findViewById(R.id.listIllness);
+                    Button add = (Button) rootView.findViewById(R.id.illAdd);
 
-                    if (p == null){
-                        title.setText(title.getText().toString() + " - No Data Entered");
+                    if (p.isEmpty()){
+                        title.append(" - No Data Entered");
+                        listview.setVisibility(View.GONE);
+                        add.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getContext(), IllnessActivity.class);
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                     else{
                         title.setVisibility(View.GONE);
+                        add.setVisibility(View.GONE);
                         IllnessAdapter adapter = new IllnessAdapter(getActivity(), p);
                         listview.setAdapter(adapter);
                     }
@@ -256,13 +283,23 @@ public class DailyDisplayActivity extends AppCompatActivity {
 
                     TextView title = (TextView) rootView.findViewById(R.id.mealTitle1);
                     ListView listview = (ListView) rootView.findViewById(R.id.listMeals);
+                    Button addmeal = (Button) rootView.findViewById(R.id.mealAdd);
 
                     if (p.isEmpty()){
                         title.setText(title.getText().toString() + " - No Data Entered");
+                        listview.setVisibility(View.GONE);
+                        addmeal.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getContext(), Meals.class);
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                     else{
                         title.setVisibility(View.GONE);
+                        addmeal.setVisibility(View.GONE);
                         MealsAdapter adapter = new MealsAdapter(getActivity(), p);
                         listview.setAdapter(adapter);
                     }
@@ -277,13 +314,23 @@ public class DailyDisplayActivity extends AppCompatActivity {
 
                     TextView title = (TextView) rootView.findViewById(R.id.sleepTitle1);
                     ListView listview = (ListView) rootView.findViewById(R.id.listSleep);
+                    Button slpAdd = (Button) rootView.findViewById(R.id.slpAdd);
 
-                    if (p == null){
-                        title.setText(title.getText().toString() + " - No Data Entered");
+                    if (p.isEmpty()){
+                        title.append(" - No Data Entered");
+                        listview.setVisibility(View.GONE);
+                        slpAdd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = SleepingActivity.createIntent(getContext(), d);
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                     else{
                         title.setVisibility(View.GONE);
+                        slpAdd.setVisibility(View.GONE);
                         SleepAdapter adapter = new SleepAdapter(getActivity(), p);
                         listview.setAdapter(adapter);
                     }
@@ -295,18 +342,29 @@ public class DailyDisplayActivity extends AppCompatActivity {
                 LinearLayout exerLay = (LinearLayout) rootView.findViewById(R.id.exerciseLayout);
                 if (contentList.contains(Constants.exer)) {
 
+                    Log.d("Noora exer date ", d.toString());
                     ArrayList<Exercise> p = db.getExerciseAtDate(d, user_id);
 
                     ListView listview = (ListView) rootView.findViewById(R.id.listExer);
                     TextView title = (TextView) rootView.findViewById(R.id.exerTitle1);
+                    Button addbtn = (Button) rootView.findViewById(R.id.exerAdd);
 
 
-                    if (p == null){
-                        title.setText(title.getText().toString() + " - No Data Entered");
+                    if (p.isEmpty()){
+                        title.append(" - No Data Entered");
+                        listview.setVisibility(View.GONE);
+                        addbtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = ExercisesActivity.createIntent(getContext(), d);
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                     else{
                         title.setVisibility(View.GONE);
+                        addbtn.setVisibility(View.GONE);
                         ExerciseAdapter adapter = new ExerciseAdapter(getActivity(), p);
                         listview.setAdapter(adapter);
                     }
@@ -321,14 +379,23 @@ public class DailyDisplayActivity extends AppCompatActivity {
 
                     TextView title = (TextView) rootView.findViewById(R.id.moodTitle1);
                     ListView listview = (ListView) rootView.findViewById(R.id.listMood);
+                    Button moodAdd = (Button) rootView.findViewById(R.id.moodAdd);
 
-
-                    if (p == null){
-                        title.setText(title.getText().toString() + " - No Data Entered");
+                    if (p.isEmpty()){
+                        title.append(" - No Data Entered");
+                        listview.setVisibility(View.GONE);
+                        moodAdd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = MoodActivity.createIntent(getContext(), d);
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                     else{
                         title.setVisibility(View.GONE);
+                        moodAdd.setVisibility(View.GONE);
                         MoodAdapter adapter = new MoodAdapter(getActivity(), p);
                         listview.setAdapter(adapter);
 

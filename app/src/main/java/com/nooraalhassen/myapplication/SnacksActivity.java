@@ -2,6 +2,7 @@ package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
+import com.nooraalhassen.myapplication.model.Exercise;
+import com.nooraalhassen.myapplication.model.Meal;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +29,7 @@ import java.util.Date;
 
 public class SnacksActivity extends AppCompatActivity {
 
-
+    String activityMode;
     long user_id;
     EditText snacks_date;
     EditText snacks_time;
@@ -40,6 +43,8 @@ public class SnacksActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
         user_id = preferences.getLong(Constants.userId, -1);
+        Intent intent = getIntent();
+
 
         // to get current time
         snacks_date = (EditText) findViewById(R.id.snackDate);
@@ -78,20 +83,20 @@ public class SnacksActivity extends AppCompatActivity {
             }
         });
 
+        final DBmanager mgr = new DBmanager(SnacksActivity.this);
+        final long id = intent.getLongExtra(Constants.snackId, -1);
+        final SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
 
 
         save_snacks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                DBmanager mgr = new DBmanager(SnacksActivity.this);
-
                 // getting edittext values
                 String snack_name = snack.getText().toString();
                 String snack_Date = snacks_date.getText().toString();
                 String TimeSnack = snacks_time.getText().toString();
 
-                SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
                 Date DateSnack = null;
 
                 try {
@@ -101,19 +106,57 @@ public class SnacksActivity extends AppCompatActivity {
                 }
 
 
-                boolean saved = mgr.insert_meal(user_id, Constants.snack, snack_name, DateSnack, TimeSnack, null);
-                if (saved == true) {
-                    Toast.makeText(SnacksActivity.this, "Snacks entries are saved", Toast.LENGTH_LONG).show();
+                if (activityMode.equals(Constants.addMode)) {
+                    boolean saved = mgr.insert_meal(user_id, Constants.snack, snack_name, DateSnack, TimeSnack, null);
+                    if (saved == true) {
+                        Toast.makeText(SnacksActivity.this, "Snacks entries are saved", Toast.LENGTH_LONG).show();
 
-                    // go to another view - Meals view
-                    Intent intent = new Intent(SnacksActivity.this, LandingView.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(SnacksActivity.this, "Failed to save Snacks entries", Toast.LENGTH_LONG).show();
+                        // go to another view - Meals view
+                        Intent intent = new Intent(SnacksActivity.this, LandingView.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(SnacksActivity.this, "Failed to save Snacks entries", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else if (activityMode.equals(Constants.EditMode)){
+                    boolean updated = mgr.updateMeal(user_id, Constants.snack, snack_name, DateSnack, TimeSnack, null);
+                    if (updated == true) {
+                        Toast.makeText(SnacksActivity.this, "Meals entries are updated", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        Toast.makeText(SnacksActivity.this, "Failed to update Meals entries", Toast.LENGTH_LONG).show();
+                    }
                 }
 
             }
         });
+
+        if (id != -1){
+            activityMode = Constants.EditMode;
+            Meal s = mgr.getMealByID(id, user_id);
+
+            if (s != null){
+                snack.setText(s.getMealName());
+                snacks_time.setText(s.getMealTime());
+                snacks_date.setText(simpleDateFormatD.format(s.getMealDate()));
+            }
+            else {
+                Toast.makeText(SnacksActivity.this, "Invalid Meal ID", Toast.LENGTH_LONG).show();
+            }
+        }
+        else activityMode = Constants.addMode;
+    }
+
+
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, SnacksActivity.class);
+    }
+
+    public static Intent createIntentForEdit(Context context, long id) {
+        Intent intent = new Intent(context, SnacksActivity.class);
+        intent.putExtra(Constants.snackId, id);
+        return intent;
     }
 
 

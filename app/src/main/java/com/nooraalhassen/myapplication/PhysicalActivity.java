@@ -65,6 +65,10 @@ public class PhysicalActivity extends AppCompatActivity {
         final long id = intent.getLongExtra(Constants.sleepingID, -1);
         final DBmanager mgr = new DBmanager(PhysicalActivity.this);
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
+        final String dateString = intent.getStringExtra(Constants.physicalDate);
+        if (dateString != null){
+            phys_date.setText(dateString);
+        }
 
         // button action
         Button btn = (Button) findViewById(R.id.physical_save);
@@ -135,6 +139,12 @@ public class PhysicalActivity extends AppCompatActivity {
     public static Intent createIntentForEdit(Context context, long id) {
         Intent intent = new Intent(context, PhysicalActivity.class);
         intent.putExtra(Constants.physicalId, id);
+        return intent;
+    }
+
+    public static Intent createIntent(Context context, Date date) {
+        Intent intent = new Intent(context, PhysicalActivity.class);
+        intent.putExtra(Constants.physicalDate, date);
         return intent;
     }
 

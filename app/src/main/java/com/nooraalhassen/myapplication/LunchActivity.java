@@ -2,6 +2,7 @@ package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
+import com.nooraalhassen.myapplication.model.Meal;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,6 +30,7 @@ import java.util.Date;
 
 public class LunchActivity extends AppCompatActivity {
 
+    String activityMode;
     long user_id;
     EditText lunch_date;
     EditText lnch_time;
@@ -44,6 +47,8 @@ public class LunchActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
         user_id = preferences.getLong(Constants.userId, -1);
+        Intent intent = getIntent();
+
 
         // to get current time
         lunch_date = (EditText) findViewById(R.id.lunch_date);
@@ -107,22 +112,20 @@ public class LunchActivity extends AppCompatActivity {
             }
         });
 
+        final DBmanager mgr = new DBmanager(LunchActivity.this);
+        final long id = intent.getLongExtra(Constants.lunch_Id, -1);
+        final SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
+
         save_lnch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                DBmanager mgr = new DBmanager(LunchActivity.this);
 
                 // getting edittext values
                 String lunch_name = lunch.getText().toString();
                 String lunch_Date = lunch_date.getText().toString();
                 String TimeLunch = lnch_time.getText().toString();
 
-                SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_TimePattern);
-
                 Date DateLunch = null;
-
                 try {
                     DateLunch = simpleDateFormatD.parse(lunch_Date);
                 } catch (ParseException e) {
@@ -135,20 +138,56 @@ public class LunchActivity extends AppCompatActivity {
                 }
 
 
-                boolean saved = mgr.insert_meal(user_id, Constants.Lunch, lunch_name, DateLunch, TimeLunch, items);
-                if (saved == true) {
-                    Toast.makeText(LunchActivity.this, "Lunch entries are saved", Toast.LENGTH_LONG).show();
+                if (activityMode.equals(Constants.addMode)) {
+                    boolean saved = mgr.insert_meal(user_id, Constants.Lunch, lunch_name, DateLunch, TimeLunch, items);
+                    if (saved == true) {
+                        Toast.makeText(LunchActivity.this, "Lunch entries are saved", Toast.LENGTH_LONG).show();
 
-                    // go to another view - Meals view
-                    Intent intent = new Intent(LunchActivity.this, Meals.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(LunchActivity.this, "Failed to save Lunch entries", Toast.LENGTH_LONG).show();
+                        // go to another view - Meals view
+                        Intent intent = new Intent(LunchActivity.this, Meals.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(LunchActivity.this, "Failed to save Lunch entries", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else if (activityMode.equals(Constants.EditMode)){
+                    boolean updated = mgr.updateMeal(user_id, Constants.Lunch, lunch_name, DateLunch, TimeLunch, items);
+                    if (updated == true) {
+                        Toast.makeText(LunchActivity.this, "Lunch entries are updated", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        Toast.makeText(LunchActivity.this, "Lunch to update Dinner entries", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
+
+        if (id != -1){
+            activityMode = Constants.EditMode;
+            Meal s = mgr.getMealByID(id, user_id);
+
+            if (s != null){
+                lunch_date.setText(simpleDateFormatD.format(s.getMealDate()));
+                lnch_time.setText(s.getMealTime());
+                //lunch_item.setText((CharSequence) s.getMealItems());
+                lunch.setText(s.getMealName());
+            }
+            else {
+                Toast.makeText(LunchActivity.this, "Invalid Lunch ID", Toast.LENGTH_LONG).show();
+            }
+        }
+        else activityMode = Constants.addMode;
     }
 
+    public static Intent createIntentForEdit(Context context, long id) {
+        Intent intent = new Intent(context, LunchActivity.class);
+        intent.putExtra(Constants.lunch_Id, id);
+        return intent;
+    }
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, LunchActivity.class);
+    }
 
 
     private class dateDailogListener implements DatePickerDialog.OnDateSetListener{
@@ -163,7 +202,6 @@ public class LunchActivity extends AppCompatActivity {
 
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
             lnch_time.setText(hourOfDay + ":" + minute);
         }
     }

@@ -32,9 +32,29 @@ public class Constants {
     public static final String exer = "Exercises";
 
 
-
     // shared preference
     public static String sharedpreferencesId = "SHM";
     public static String userId = "UserId";
+
+    public static String sleepingID = "SleepingID";
+    public static String moodID = "MoodID";
+    public static String exerciseId = "ExerciseID";
+    public static String physicalId = "physicalID";
+    public static String snackId = "snackID";
+    public static String BF_Id = "BreakfastID";
+    public static String lunch_Id = "LunchID";
+    public static String dinner_Id = "DinnerID";
+    public static String shortIllness_Id = "ShortIllnessID";
+    public static String longIllness_Id = "LongIllnessID";
+
+
+    public static String EditMode = "Edit";
+    public static String addMode = "Add";
+
+    public static String moodDate = "MoodDate";
+    public static String exerciseDate = "ExerciseDate";
+    public static String sleepDate = "ExerciseDate";
+    public static String physicalDate = "ExerciseDate";
+
 
 }

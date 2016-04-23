@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
+import com.nooraalhassen.myapplication.model.Meal;
+
 public class Meals extends AppCompatActivity {
 
     Button breakfast;
@@ -34,7 +36,7 @@ public class Meals extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Meals.this, BreakfastActivity.class);
+                Intent intent = BreakfastActivity.createIntent(Meals.this);
                 startActivity(intent);
             }
         });
@@ -44,7 +46,7 @@ public class Meals extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Meals.this, LunchActivity.class);
+                Intent intent = LunchActivity.createIntent(Meals.this);
                 startActivity(intent);
             }
         });
@@ -54,7 +56,7 @@ public class Meals extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Meals.this, DinnerActivity.class);
+                Intent intent = DinnerActivity.createIntent(Meals.this);
                 startActivity(intent);
             }
         });
@@ -63,12 +65,10 @@ public class Meals extends AppCompatActivity {
         snacks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(Meals.this, SnacksActivity.class);
+                Intent intent = SnacksActivity.createIntent(Meals.this);
                 startActivity(intent);
             }
         });
-
 
     }
 

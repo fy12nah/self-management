@@ -76,7 +76,7 @@ public class Illness extends ArrayList<Illness> {
         this.eIllnessDate = eIllnessDate;
     }
 
-    public ArrayList<IllnessMed> getMealItems() {
+    public ArrayList<IllnessMed> getMedsList() {
         return medsList;
     }
 

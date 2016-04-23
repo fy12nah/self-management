@@ -2,6 +2,7 @@ package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
+import com.nooraalhassen.myapplication.model.Exercise;
+import com.nooraalhassen.myapplication.model.Sleeping;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,6 +31,7 @@ import java.util.Date;
 
 public class ExercisesActivity extends AppCompatActivity {
 
+    String activityMode;
     long user_id;
     EditText exer_date;
     EditText exer_end;
@@ -55,6 +59,7 @@ public class ExercisesActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
         user_id = preferences.getLong(Constants.userId, -1);
+        Intent intent = getIntent();
 
         ImageView dateDialog = (ImageView) findViewById(R.id.exdateDialog);
         dateDialog.setOnClickListener(new View.OnClickListener() {
@@ -89,19 +94,21 @@ public class ExercisesActivity extends AppCompatActivity {
 
         // defining widgets for use
         final EditText exer_type = (EditText) findViewById(R.id.exerType);
-        final EditText exer_date = (EditText) findViewById(R.id.exer_date);
-        final EditText exer_start = (EditText) findViewById(R.id.exer_start);
-        final EditText exer_end = (EditText) findViewById(R.id.exer_end);
         final Button save_exer = (Button) findViewById(R.id.exerSave);
         exer_dur = (TextView) findViewById(R.id.exerDur);
 
+        final DBmanager mgr = new DBmanager(ExercisesActivity.this);
+        final SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
+        final long id = intent.getLongExtra(Constants.exerciseId, -1);
+        final String dateString = intent.getStringExtra(Constants.exerciseDate);
+        if (dateString != null){
+            exer_date.setText(dateString);
+        }
 
 
         save_exer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                DBmanager mgr = new DBmanager(ExercisesActivity.this);
 
                 // getting edittext values
                 String exerType = exer_type.getText().toString();
@@ -110,7 +117,6 @@ public class ExercisesActivity extends AppCompatActivity {
                 String EndExer = exer_end.getText().toString();
                 String durExer = exer_dur.getText().toString();
 
-                SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
 
                 Date DateExer = null;
                 try {
@@ -119,19 +125,50 @@ public class ExercisesActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                boolean saved = mgr.insert_exer(user_id, exerType, DateExer, StartExer, EndExer, durExer);
-                if (saved == true) {
-                    Toast.makeText(ExercisesActivity.this, "Exercises entries are saved", Toast.LENGTH_LONG).show();
 
-                    // go to another view - Landing view
-                    Intent intent = new Intent(ExercisesActivity.this, LandingView.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(ExercisesActivity.this, "Failed to save Exercises entries", Toast.LENGTH_LONG).show();
+                if (activityMode.equals(Constants.addMode)) {
+
+                    boolean saved = mgr.insert_exer(user_id, exerType, DateExer, StartExer, EndExer, durExer);
+                    if (saved == true) {
+                        Toast.makeText(ExercisesActivity.this, "Exercises entries are saved", Toast.LENGTH_LONG).show();
+
+                        // go to another view - Landing view
+                        Intent intent = new Intent(ExercisesActivity.this, LandingView.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(ExercisesActivity.this, "Failed to save Exercises entries", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else if (activityMode.equals(Constants.EditMode)){
+                    boolean updated = mgr.updateExercise(user_id, exerType, DateExer, StartExer, EndExer, durExer);
+                    if (updated == true) {
+                        Toast.makeText(ExercisesActivity.this, "Sleeping Hours entries are updated", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        Toast.makeText(ExercisesActivity.this, "Failed to update Sleeping Hours entries", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
+
+        if (id != -1){
+            activityMode = Constants.EditMode;
+            Exercise s = mgr.getExerciseByID(id, user_id);
+
+            if (s != null){
+                exer_date.setText(simpleDateFormatD.format(s.getExerDate()));
+                exer_type.setText(s.getExerType());
+                exer_dur.setText(s.getExerDur());
+                exer_start.setText(s.getsExerTime());
+                exer_end.setText(s.geteExerTime());
+            }
+            else {
+                Toast.makeText(ExercisesActivity.this, "Invalid Exercise ID", Toast.LENGTH_LONG).show();
+            }
+        }
+        else activityMode = Constants.addMode;
     }
+
 
     private void CalculateDur(){
 
@@ -143,7 +180,7 @@ public class ExercisesActivity extends AppCompatActivity {
             int h = Integer.parseInt(parts[0]);
             int m = Integer.parseInt(parts[1]);
 
-            int time1 = h*60+m;
+            int time1 = h * 60 + m;
 
             String ed = exer_end.getText().toString();
             parts = ed.split(":");
@@ -163,10 +200,30 @@ public class ExercisesActivity extends AppCompatActivity {
     }
 
 
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, ExercisesActivity.class);
+    }
+
+    public static Intent createIntentForEdit(Context context, long id) {
+        Intent intent = new Intent(context, ExercisesActivity.class);
+        intent.putExtra(Constants.exerciseId, id);
+        return intent;
+    }
+
+
+    public static Intent createIntent(Context context, Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
+        Intent intent = new Intent(context, Exercise.class);
+        intent.putExtra(Constants.exerciseDate, simpleDateFormat.format(date));
+        return intent;
+    }
+
+
     private class dateDailogListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            exer_date.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
+            exer_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
         }
     }
 

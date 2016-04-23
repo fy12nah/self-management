@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import com.nooraalhassen.myapplication.*;
 
@@ -46,6 +47,19 @@ public class DBmanager extends SQLiteOpenHelper {
         db.execSQL(UsersIllnessTable.sql_create);
         db.execSQL(IllnessDetailsTable.sql_create);
 
+        Log.d("Noora",UsersTable.sql_create);
+        Log.d("Noora", UsersProfileTable.sql_create);
+        Log.d("Noora", CategoryTable.sql_create);
+        Log.d("Noora", ProfileCategoryTable.sql_create);
+        Log.d("Noora", UsersPhysicalTable.sql_create);
+        Log.d("Noora", UsersMealsTable.sql_create);
+        Log.d("Noora", MealDetailsTable.sql_create);
+        Log.d("Noora", UsersSleepTable.sql_create);
+        Log.d("Noora", UsersExerciseTable.sql_create);
+        Log.d("Noora", UsersMoodTable.sql_create);
+        Log.d("Noora", UsersIllnessTable.sql_create);
+        Log.d("Noora", IllnessDetailsTable.sql_create);
+
         populateCategotyTable(db);
     }
 
@@ -68,6 +82,47 @@ public class DBmanager extends SQLiteOpenHelper {
 
         onCreate(db);
     }
+
+
+
+
+    /*public Meal getMealByID(long id, long user_id) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+
+        Cursor c = db.query(UsersMealsTable.table_name, null, UsersMealsTable.Col_userId + " = ? and " +
+                UsersMealsTable._ID + " = ? ", new String[]{String.valueOf(user_id),
+                String.valueOf(id)}, null, null, null);
+
+        if (c.moveToFirst()){
+
+            do {
+
+                Meal p = null;
+
+                String mealType = c.getString(c.getColumnIndex(UsersMealsTable.Col_mealType));
+                String mealName = c.getString(c.getColumnIndex(UsersMealsTable.Col_mealName));
+                String mealTime = c.getString(c.getColumnIndex(UsersMealsTable.Col_mealTime));
+
+                Date d = null;
+                if (!c.isNull(c.getColumnIndex(UsersMealsTable.Col_mealDate)))
+                    try {
+                        d = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersMealsTable.Col_mealDate)));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                p = new Meal(id, user_id, mealType, mealName, d, mealTime);
+
+                fillMealItems(p);
+
+            } while (c.moveToNext());
+
+        }
+        db.close();
+        return p;
+    }*/
 
 
     // creating a UserTable in database
@@ -431,7 +486,7 @@ public class DBmanager extends SQLiteOpenHelper {
         values.put(UsersProfileTable.Col_gradStudy, simpleDateFormat.format(profile.getGrad_Study()));
 
 
-        long id = db.update(UsersProfileTable.table_name, values, UsersProfileTable._ID+" = "+profile.getId(), null);
+        long id = db.update(UsersProfileTable.table_name, values, UsersProfileTable._ID + " = " + profile.getId(), null);
 
         for (HashMap.Entry<String, Boolean> s: profile.getCategories().entrySet()){
             values = new ContentValues();
@@ -509,222 +564,163 @@ public class DBmanager extends SQLiteOpenHelper {
 
 
     // method to allow users to update their physical attributes
-    public boolean updatePhysical(Physical phys){
+    public boolean updatePhysical(long id, String weight, String height, Date date){
         SQLiteDatabase db = getWritableDatabase();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
         ContentValues values = new ContentValues();
-        values.put(UsersPhysicalTable.Col_weight, phys.getWeight());
-        values.put(UsersPhysicalTable.Col_height, phys.getHeight());
-        values.put(UsersPhysicalTable.Col_date, simpleDateFormat.format(phys.getDate()));
+        values.put(UsersPhysicalTable.Col_weight, weight);
+        values.put(UsersPhysicalTable.Col_height, height);
+        values.put(UsersPhysicalTable.Col_date, simpleDateFormat.format(date));
 
-        long id = db.update(UsersPhysicalTable.table_name, values, UsersPhysicalTable._ID+" = "+phys.getId(), null);
+        long count = db.update(UsersPhysicalTable.table_name, values, UsersPhysicalTable._ID + " = " + id, null);
 
         // Closing database
         db.close();
 
-        if (id == -1){
+        if (count == 0){
             return false;
         }
         return true;
     }
 
 
-    public Physical getPhysical(long userid){
-        SQLiteDatabase db = getReadableDatabase();
 
-        Cursor c = db.query(UsersPhysicalTable.table_name, null, UsersPhysicalTable.Col_userID + " = ? ",
-                new String[]{String.valueOf(userid)}, null, null, null);
-
-        Physical p = null;
-        if (c.moveToFirst()){
-
-            try {
-                long id = c.getLong(c.getColumnIndex(UsersPhysicalTable._ID));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
-                float weight = c.getFloat(c.getColumnIndex(UsersPhysicalTable.Col_weight));
-                float height = c.getFloat(c.getColumnIndex(UsersPhysicalTable.Col_height));
-
-                Date date = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersPhysicalTable.Col_date)));
-
-                p = new Physical(id, userid, weight, height, date);
-
-                c.close();
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return p;
-    }
-
-
-    // method to allow users to update their profiles
-    public boolean updateExercise(Exercise exercise){
+    // method to allow users to update
+    public boolean updateExercise(long id, String exerType, Date exerDate, String sExerTime, String eExerTime, String exerDur){
         SQLiteDatabase db = getWritableDatabase();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
         ContentValues values = new ContentValues();
-        values.put(UsersExerciseTable.Col_exerType, exercise.getExerType());
-        values.put(UsersExerciseTable.Col_exerDate, simpleDateFormat.format(exercise.getExerDate()));
-        values.put(UsersExerciseTable.Col_sExerTime, exercise.getsExerTime());
-        values.put(UsersExerciseTable.Col_eExerTime, exercise.geteExerTime());
-        values.put(UsersExerciseTable.Col_exerDur, exercise.getExerDur());
+        values.put(UsersExerciseTable.Col_exerType, exerType);
+        values.put(UsersExerciseTable.Col_exerDate, simpleDateFormat.format(exerDate));
+        values.put(UsersExerciseTable.Col_sExerTime, sExerTime);
+        values.put(UsersExerciseTable.Col_eExerTime, eExerTime);
+        values.put(UsersExerciseTable.Col_exerDur, exerDur);
 
-        long id = db.update(UsersExerciseTable.table_name, values, UsersExerciseTable._ID+" = "+exercise.getId(), null);
+        long count = db.update(UsersExerciseTable.table_name, values, UsersExerciseTable._ID+" = "+id, null);
 
         // Closing database
         db.close();
 
-        if (id == -1){
+        if (count == 0){
             return false;
         }
         return true;
     }
 
 
-    public Exercise getExercise(long userid){
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor c = db.query(UsersExerciseTable.table_name, null, UsersExerciseTable.Col_userID + " = ? ",
-                new String[]{String.valueOf(userid)}, null, null, null);
-
-        Exercise p = null;
-        if (c.moveToFirst()){
-
-            try {
-                long id = c.getLong(c.getColumnIndex(UsersExerciseTable._ID));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
-                String type = c.getString(c.getColumnIndex(UsersExerciseTable.Col_exerType));
-                String dur = c.getString(c.getColumnIndex(UsersExerciseTable.Col_exerDur));
-
-                Date date = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersExerciseTable.Col_exerDate)));
-                String start_exer = c.getString(c.getColumnIndex(UsersExerciseTable.Col_sExerTime));
-                String end_exer = c.getString(c.getColumnIndex(UsersExerciseTable.Col_eExerTime));
 
 
-                p = new Exercise(id, userid, type, date, start_exer, end_exer, dur);
-
-                c.close();
-
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return p;
-    }
-
-
-    public boolean updateSleeping(Sleeping slp){
+    public boolean updateSleeping(long id, Date dateSlp, String sleepStart, String sleepEnd, String durSlp){
         SQLiteDatabase db = getWritableDatabase();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
         ContentValues values = new ContentValues();
-        values.put(UsersSleepTable.Col_sSleepTime, slp.getsSleepTime());
-        values.put(UsersSleepTable.Col_eSleepTime, slp.geteSleepTime());
-        values.put(UsersSleepTable.Col_sleepDate, simpleDateFormat.format(slp.getSleepDate()));
-        values.put(UsersSleepTable.Col_sleepDur, slp.getSleepDur());
+        values.put(UsersSleepTable.Col_sSleepTime, sleepStart);
+        values.put(UsersSleepTable.Col_eSleepTime, sleepEnd);
+        values.put(UsersSleepTable.Col_sleepDate, simpleDateFormat.format(dateSlp));
+        values.put(UsersSleepTable.Col_sleepDur, durSlp);
 
-        long id = db.update(UsersSleepTable.table_name, values, UsersSleepTable._ID+" = "+slp.getId(), null);
+        long count = db.update(UsersSleepTable.table_name, values, UsersSleepTable._ID+" = "+id, null);
 
         // Closing database
         db.close();
 
-        if (id == -1){
+        if (count == 0){
             return false;
         }
         return true;
     }
 
 
-    public Sleeping getSleeping(long userid){
-        SQLiteDatabase db = getReadableDatabase();
 
-        Cursor c = db.query(UsersSleepTable.table_name, null, UsersSleepTable.Col_userId + " = ? ",
-                new String[]{String.valueOf(userid)}, null, null, null);
-
-        Sleeping p = null;
-        if (c.moveToFirst()){
-
-            try {
-                long id = c.getLong(c.getColumnIndex(UsersSleepTable._ID));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
-                String strt = c.getString(c.getColumnIndex(UsersSleepTable.Col_sSleepTime));
-                String end = c.getString(c.getColumnIndex(UsersSleepTable.Col_eSleepTime));
-                String dur = c.getString(c.getColumnIndex(UsersSleepTable.Col_sleepDur));
-
-                Date date = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersSleepTable.Col_sleepDate)));
-
-                p = new Sleeping(id, userid, date, strt, end, dur);
-
-                c.close();
-
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return p;
-    }
-
-
-    public boolean updateMood(Mood mood){
+    public boolean updateMood(long id, String moodname, String moodreason, Date moodDate, String moodtime){
         SQLiteDatabase db = getWritableDatabase();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
         ContentValues values = new ContentValues();
-        values.put(UsersMoodTable.Col_moodName, mood.getMoodName());
-        values.put(UsersMoodTable.Col_moodReason, mood.getMoodName());
-        values.put(UsersMoodTable.Col_moodDate, simpleDateFormat.format(mood.getMoodDate()));
-        values.put(UsersMoodTable.Col_moodTime, mood.getMoodTime());
+        values.put(UsersMoodTable.Col_moodName, moodname);
+        values.put(UsersMoodTable.Col_moodReason, moodreason);
+        values.put(UsersMoodTable.Col_moodDate, simpleDateFormat.format(moodDate));
+        values.put(UsersMoodTable.Col_moodTime, moodtime);
 
-        long id = db.update(UsersMoodTable.table_name, values, UsersMoodTable._ID+" = "+mood.getId(), null);
+        long count = db.update(UsersMoodTable.table_name, values, UsersMoodTable._ID+" = "+id, null);
 
         // Closing database
         db.close();
 
-        if (id == -1){
+        if (count == 0){
             return false;
         }
         return true;
     }
 
 
-    public Mood getMood(long userid){
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor c = db.query(UsersMoodTable.table_name, null, UsersMoodTable.Col_userId + " = ? ",
-                new String[]{String.valueOf(userid)}, null, null, null);
-
-        Mood p = null;
-        if (c.moveToFirst()){
-
-            try {
-                long id = c.getLong(c.getColumnIndex(UsersMoodTable._ID));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
-                String name = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodName));
-                String reason = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodReason));
-
-                Date date = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersMoodTable.Col_moodDate)));
-                String time = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodTime));
-
-                p = new Mood(id, userid, name, reason, date, time);
-
-                c.close();
 
 
-            } catch (ParseException e) {
-                e.printStackTrace();
+    public boolean updateMeal(long id, String mealType, String mealName, Date mealDate, String mealTime, ArrayList<String>items){
+        SQLiteDatabase db = getWritableDatabase();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+        ContentValues values = new ContentValues();
+        values.put(UsersMealsTable.Col_mealType, mealType);
+        values.put(UsersMealsTable.Col_mealName, mealName);
+        values.put(UsersMealsTable.Col_mealDate, simpleDateFormat.format(mealDate));
+        values.put(UsersMealsTable.Col_mealTime, mealTime);
+
+        long count = db.update(UsersMealsTable.table_name, values, UsersMealsTable._ID+" = "+id, null);
+
+        if (items != null) {
+
+            for (String s : items) {
+                values = new ContentValues();
+                values.put(MealDetailsTable.Col_mealID, id);
+                values.put(MealDetailsTable.Col_mealItem, s);
+                db.insert(MealDetailsTable.table_name, null, values);
             }
-
         }
-        return p;
+
+        // Closing database
+        db.close();
+
+        if (count == 0){
+            return false;
+        }
+        return true;
     }
 
+
+    public boolean updateIllness(long id, String illnessType, String illnessName, Date sIllnessDate, Date eIllnessDate, ArrayList<String>meds){
+        SQLiteDatabase db = getWritableDatabase();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+        ContentValues values = new ContentValues();
+        values.put(UsersIllnessTable.Col_illnessType, illnessType);
+        values.put(UsersIllnessTable.Col_illnessName, illnessName);
+        values.put(UsersIllnessTable.Col_sIllnessDate, simpleDateFormat.format(sIllnessDate));
+        values.put(UsersIllnessTable.Col_eIllnessDate, simpleDateFormat.format(eIllnessDate));
+
+        long count = db.update(UsersIllnessTable.table_name, values, UsersIllnessTable._ID+" = "+id, null);
+
+        if (meds != null) {
+
+            for (String s : meds) {
+                values = new ContentValues();
+                values.put(IllnessDetailsTable.Col_illnessID, id);
+                values.put(IllnessDetailsTable.Col_illnessMed, s);
+                db.insert(IllnessDetailsTable.table_name, null, values);
+            }
+        }
+
+        // Closing database
+        db.close();
+
+        if (count == 0){
+            return false;
+        }
+        return true;
+    }
 
 
 
@@ -741,14 +737,10 @@ public class DBmanager extends SQLiteOpenHelper {
 
         // input values in col
         values.put(UsersPhysicalTable.Col_userID, userId);
-
-        if (weight.equals("")) values.putNull(UsersPhysicalTable.Col_weight);
-        else values.put(UsersPhysicalTable.Col_weight, weight);
-
-        if (height.equals("")) values.putNull(UsersPhysicalTable.Col_height);
-        else values.put(UsersPhysicalTable.Col_height, height);
-
+        values.put(UsersPhysicalTable.Col_weight, weight);
+        values.put(UsersPhysicalTable.Col_height, height);
         values.put(UsersPhysicalTable.Col_date, simpleDateFormat.format(physicaldate));
+
         long id = db.insert(UsersPhysicalTable.table_name, null, values);
 
         // Closing database
@@ -1003,7 +995,7 @@ public class DBmanager extends SQLiteOpenHelper {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
 
-        Cursor c = db.query(UsersIllnessTable.table_name, null, UsersIllnessTable.Col_userID + " = ? and "+ UsersIllnessTable.Col_sIllnessDate+
+        Cursor c = db.query(UsersIllnessTable.table_name, null, UsersIllnessTable.Col_userID + " = ? and " + UsersIllnessTable.Col_sIllnessDate +
                 " = ?", new String[]{String.valueOf(user_id), simpleDateFormat.format(d)}, null, null, null);
 
         ArrayList<Illness> list = new ArrayList<>();
@@ -1012,7 +1004,6 @@ public class DBmanager extends SQLiteOpenHelper {
             do {
 
                 Illness p = null;
-
                 long id = c.getLong(c.getColumnIndex(UsersIllnessTable._ID));
 
                 String illnessType = c.getString(c.getColumnIndex(UsersIllnessTable.Col_illnessType));
@@ -1076,7 +1067,7 @@ public class DBmanager extends SQLiteOpenHelper {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
 
 
-        Cursor c = db.query(UsersMealsTable.table_name, null, UsersMealsTable.Col_userId + " = ? and "+ UsersMealsTable.Col_mealDate+
+        Cursor c = db.query(UsersMealsTable.table_name, null, UsersMealsTable.Col_userId + " = ? and " + UsersMealsTable.Col_mealDate +
                 " = ?", new String[]{String.valueOf(user_id), simpleDateFormat.format(d)}, null, null, null);
 
         ArrayList<Meal> list = new ArrayList<>();
@@ -1138,24 +1129,23 @@ public class DBmanager extends SQLiteOpenHelper {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
 
-        Cursor c = db.query(UsersMoodTable.table_name, null, UsersMoodTable.Col_userId + " = ? and "+ UsersMoodTable.Col_moodDate+
+        Cursor c = db.query(UsersMoodTable.table_name, null, UsersMoodTable.Col_userId + " = ? and " + UsersMoodTable.Col_moodDate +
                 " = ?", new String[]{String.valueOf(user_id), simpleDateFormat.format(d)}, null, null, null);
 
         Mood p = null;
 
         if (c.moveToFirst()){
+            do {
 
-            long id = c.getLong(c.getColumnIndex(UsersMoodTable._ID));
+                long id = c.getLong(c.getColumnIndex(UsersMoodTable._ID));
 
-            String moodName = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodName));
-            String moodReason = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodReason));
+                String moodName = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodName));
+                String moodReason = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodReason));
+                String moodTime = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodTime));
 
-            String temp = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodTime));
-            String moodTime = temp;
-
-
-            p = new Mood(id, user_id, moodName, moodReason, d, moodTime);
-            list.add(p);
+                p = new Mood(id, user_id, moodName, moodReason, d, moodTime);
+                list.add(p);
+            } while (c.moveToNext());
         }
         db.close();
         return list;
@@ -1163,24 +1153,27 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
-    // getting Exercises entries
+    // getting Exercises entries for display by a date
     public ArrayList<Exercise> getExerciseAtDate(Date d, long user_id){
 
+        ArrayList<Exercise> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
 
-        Cursor c = db.query(UsersExerciseTable.table_name, null, UsersExerciseTable.Col_userID + " = ? and "+  UsersExerciseTable.Col_exerDate+
-                " = ?", new String[]{String.valueOf(user_id), simpleDateFormat.format(d)}, null, null, null);
+        Cursor c = db.query(UsersExerciseTable.table_name, null, UsersExerciseTable.Col_userID + " = ? and "+
+                UsersExerciseTable.Col_exerDate+ " = ?", new String[]{String.valueOf(user_id), simpleDateFormat.format(d)},
+                null, null, null);
 
-        ArrayList<Exercise> list = new ArrayList<>();
+
+        /*Cursor c = db.query(UsersExerciseTable.table_name, null, null, null,
+                null, null, null);*/
+
+        Exercise p = null;
+
         if (c.moveToFirst()){
 
             do {
-
-
-                Exercise p = null;
-                long id = c.getLong(c.getColumnIndex(UsersMealsTable._ID));
+                long id = c.getLong(c.getColumnIndex(UsersExerciseTable._ID));
 
                 String exerType = c.getString(c.getColumnIndex(UsersExerciseTable.Col_exerType));
                 String exerDur = c.getString(c.getColumnIndex(UsersExerciseTable.Col_exerDur));
@@ -1188,7 +1181,8 @@ public class DBmanager extends SQLiteOpenHelper {
                 String endExerTime = c.getString(c.getColumnIndex(UsersExerciseTable.Col_eExerTime));
 
                 p = new Exercise(id, user_id, exerType, d, startExerTime, endExerTime, exerDur);
-
+                Log.d("Noora Excersize: " , p.toString());
+                Log.d("Noora Excersize: " , String.valueOf(d));
                 list.add(p);
 
             } while (c.moveToNext());
@@ -1212,14 +1206,16 @@ public class DBmanager extends SQLiteOpenHelper {
         Sleeping p = null;
         if (c.moveToFirst()){
 
-            long id = c.getLong(c.getColumnIndex(UsersSleepTable._ID));
-            String sleepDur = c.getString(c.getColumnIndex(UsersSleepTable.Col_sleepDur));
-            String startTime = c.getString(c.getColumnIndex(UsersSleepTable.Col_sSleepTime));
-            String endTime = c.getString(c.getColumnIndex(UsersSleepTable.Col_eSleepTime));
+            do {
+                long id = c.getLong(c.getColumnIndex(UsersSleepTable._ID));
+                String sleepDur = c.getString(c.getColumnIndex(UsersSleepTable.Col_sleepDur));
+                String startTime = c.getString(c.getColumnIndex(UsersSleepTable.Col_sSleepTime));
+                String endTime = c.getString(c.getColumnIndex(UsersSleepTable.Col_eSleepTime));
 
 
-            p = new Sleeping(id, user_id, d, startTime, endTime, sleepDur);
-            list.add(p);
+                p = new Sleeping(id, user_id, d, startTime, endTime, sleepDur);
+                list.add(p);
+            }while(c.moveToNext());
         }
         db.close();
         return list;
@@ -1397,6 +1393,8 @@ public class DBmanager extends SQLiteOpenHelper {
     }
 
 
+
+
     // getting physical entries to json file
     public List<Meal> getMealsInDateRange(Date from, Date to, long user_id) {
 
@@ -1474,15 +1472,15 @@ public class DBmanager extends SQLiteOpenHelper {
                     }
                 }
 
-                Date d = null;
-                if (!c.isNull(c.getColumnIndex(UsersMealsTable.Col_mealDate)))
+                Date startD = null;
+                if (!c.isNull(c.getColumnIndex(UsersIllnessTable.Col_sIllnessDate)))
                     try {
-                        d = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersMealsTable.Col_mealDate)));
+                        startD = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersIllnessTable.Col_sIllnessDate)));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
 
-                p = new Illness(id, user_id, illnessType, illnessName, d, endDate);
+                p = new Illness(id, user_id, illnessType, illnessName, startD, endDate);
 
                 fillIllnessMeds(p);
                 list.add(p);
@@ -1492,6 +1490,225 @@ public class DBmanager extends SQLiteOpenHelper {
         }
         db.close();
         return list;
+    }
+
+
+
+    public Sleeping getSleepingByID(long id, long user_id){
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+
+        Cursor c = db.query(UsersSleepTable.table_name, null, UsersSleepTable.Col_userId + " = ? and " +
+                UsersSleepTable._ID + " = ? ", new String[]{String.valueOf(user_id),
+                String.valueOf(id)}, null, null, null);
+
+        Sleeping p = null;
+
+        if (c.moveToFirst()) {
+
+            String sleepDur = c.getString(c.getColumnIndex(UsersSleepTable.Col_sleepDur));
+            String startTime = c.getString(c.getColumnIndex(UsersSleepTable.Col_sSleepTime));
+            String endTime = c.getString(c.getColumnIndex(UsersSleepTable.Col_eSleepTime));
+
+            Date d = null;
+            if (!c.isNull(c.getColumnIndex(UsersSleepTable.Col_sleepDate)))
+                try {
+                    d = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersSleepTable.Col_sleepDate)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+            p = new Sleeping(id, user_id, d, startTime, endTime, sleepDur);
+        }
+        db.close();
+        return p;
+    }
+
+
+
+    public Mood getMoodByID(long id, long user_id) {
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+
+        Cursor c = db.query(UsersMoodTable.table_name, null, UsersMoodTable.Col_userId + " = ? and " +
+                UsersMoodTable._ID + " = ? ", new String[]{String.valueOf(user_id),
+                String.valueOf(id)}, null, null, null);
+
+        Mood p = null;
+        if (c.moveToFirst()) {
+
+            String moodName = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodName));
+            String moodReason = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodReason));
+
+            String moodTime = c.getString(c.getColumnIndex(UsersMoodTable.Col_moodTime));
+
+            Date d = null;
+            if (!c.isNull(c.getColumnIndex(UsersMoodTable.Col_moodDate)))
+                try {
+                    d = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersMoodTable.Col_moodDate)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            p = new Mood(id, user_id, moodName, moodReason, d, moodTime);
+
+        }
+        db.close();
+        return p;
+    }
+
+
+    public Exercise getExerciseByID(long id, long user_id) {
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+
+        Cursor c = db.query(UsersExerciseTable.table_name, null, UsersExerciseTable.Col_userID + " = ? and " +
+                UsersExerciseTable._ID + " = ? ", new String[]{String.valueOf(user_id),
+                String.valueOf(id)}, null, null, null);
+
+        Exercise p = null;
+        if (c.moveToFirst()) {
+
+            String exerType = c.getString(c.getColumnIndex(UsersExerciseTable.Col_exerType));
+            String exerDur = c.getString(c.getColumnIndex(UsersExerciseTable.Col_exerDur));
+            String startExerTime = c.getString(c.getColumnIndex(UsersExerciseTable.Col_sExerTime));
+            String endExerTime = c.getString(c.getColumnIndex(UsersExerciseTable.Col_eExerTime));
+
+            Date d = null;
+            if (!c.isNull(c.getColumnIndex(UsersExerciseTable.Col_exerDate)))
+                try {
+                    d = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersExerciseTable.Col_exerDate)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            p = new Exercise(id, user_id, exerType, d, startExerTime, endExerTime, exerDur);
+
+        }
+        db.close();
+        return p;
+    }
+
+
+
+    public Physical getPhysicalByID(long id, long user_id) {
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+
+        Cursor c = db.query(UsersPhysicalTable.table_name, null, UsersPhysicalTable.Col_userID + " = ? and " +
+                UsersPhysicalTable._ID + " = ? ", new String[]{String.valueOf(user_id),
+                String.valueOf(id)}, null, null, null);
+
+        Physical p = null;
+        if (c.moveToFirst()) {
+
+            float weight = c.getFloat(c.getColumnIndex(UsersPhysicalTable.Col_weight));
+            float height = c.getFloat(c.getColumnIndex(UsersPhysicalTable.Col_height));
+
+            Date date = null;
+            if (!c.isNull(c.getColumnIndex(UsersExerciseTable.Col_exerDate)))
+                try {
+                    date = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersExerciseTable.Col_exerDate)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            p = new Physical(id, user_id, weight, height, date);
+
+        }
+        db.close();
+        return p;
+    }
+
+
+    // getting Illness entries for download
+    public Illness getIllnessByID(long id, long user_id){
+
+        SQLiteDatabase db = getReadableDatabase();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+
+        Cursor c = db.query(UsersIllnessTable.table_name, null, UsersIllnessTable.Col_userID + " = ? and " +
+                UsersIllnessTable._ID + " = ? ", new String[]{String.valueOf(user_id),
+                String.valueOf(id)}, null, null, null);
+
+        Illness p = null;
+
+        if (c.moveToFirst()){
+
+                String illnessType = c.getString(c.getColumnIndex(UsersIllnessTable.Col_illnessType));
+                String illnessName = c.getString(c.getColumnIndex(UsersIllnessTable.Col_illnessName));
+
+                String temp = c.getString(c.getColumnIndex(UsersIllnessTable.Col_eIllnessDate));
+                Date endDate = null;
+
+                if (temp != null) {
+                    try {
+                        endDate = simpleDateFormat.parse(temp);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                Date startDate = null;
+                if (!c.isNull(c.getColumnIndex(UsersIllnessTable.Col_sIllnessDate)))
+                    try {
+                        startDate = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersIllnessTable.Col_sIllnessDate)));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                p = new Illness(id, user_id, illnessType, illnessName, startDate, endDate);
+
+                fillIllnessMeds(p);
+        }
+        db.close();
+        return p;
+    }
+
+
+    // getting physical entries to json file
+    public Meal getMealByID(long id, long user_id) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
+
+
+        Cursor c = db.query(UsersMealsTable.table_name, null, UsersMealsTable.Col_userId + " = ? and " +
+                UsersMealsTable._ID + " = ? ", new String[]{String.valueOf(user_id),
+                String.valueOf(id)}, null, null, null);
+
+        Meal p = null;
+
+        if (c.moveToFirst()){
+
+                String mealType = c.getString(c.getColumnIndex(UsersMealsTable.Col_mealType));
+                String mealName = c.getString(c.getColumnIndex(UsersMealsTable.Col_mealName));
+                String mealTime = c.getString(c.getColumnIndex(UsersMealsTable.Col_mealTime));
+
+                Date d = null;
+                if (!c.isNull(c.getColumnIndex(UsersMealsTable.Col_mealDate)))
+                    try {
+                        d = simpleDateFormat.parse(c.getString(c.getColumnIndex(UsersMealsTable.Col_mealDate)));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                p = new Meal(id, user_id, mealType, mealName, d, mealTime);
+
+                fillMealItems(p);
+
+        }
+        db.close();
+        return p;
     }
 }
 

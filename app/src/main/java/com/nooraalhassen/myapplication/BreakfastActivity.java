@@ -2,6 +2,7 @@ package com.nooraalhassen.myapplication;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
+import com.nooraalhassen.myapplication.model.Meal;
+import com.nooraalhassen.myapplication.model.Sleeping;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,6 +31,7 @@ import java.util.Date;
 
 public class BreakfastActivity extends AppCompatActivity {
 
+    String activityMode;
     long user_id;
     EditText bf_Date;
     EditText bf_Time;
@@ -45,6 +49,8 @@ public class BreakfastActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
         user_id = preferences.getLong(Constants.userId, -1);
+        Intent intent = getIntent();
+
 
         bf_Date = (EditText) findViewById(R.id.bf_date);
         bf_Time = (EditText) findViewById(R.id.BFTime);
@@ -58,8 +64,6 @@ public class BreakfastActivity extends AppCompatActivity {
 
         // defining widgets for use
         final EditText breakfast = (EditText) findViewById(R.id.BFName);
-        final EditText date_edittext = (EditText) findViewById(R.id.bf_date);
-        final EditText time_edittext = (EditText) findViewById(R.id.BFTime);
 
         final Button save_bf = (Button) findViewById(R.id.BFSave);
         final ImageView add_bf = (ImageView) findViewById(R.id.addBF);
@@ -111,19 +115,22 @@ public class BreakfastActivity extends AppCompatActivity {
             }
         });
 
+        final DBmanager mgr = new DBmanager(BreakfastActivity.this);
+        final long id = intent.getLongExtra(Constants.BF_Id, -1);
+        final SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
+
+
         // if save button is clicked, entries must be saved into database
         save_bf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                DBmanager mgr = new DBmanager(BreakfastActivity.this);
 
                 // getting edittext values
                 String bf_name = breakfast.getText().toString();
-                String bfDate = date_edittext.getText().toString();
-                String TimeBF = time_edittext.getText().toString();
+                String bfDate = bf_Date.getText().toString();
+                String TimeBF = bf_Time.getText().toString();
 
-                SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
                 Date DateBF = null;
 
                 try {
@@ -138,19 +145,56 @@ public class BreakfastActivity extends AppCompatActivity {
                     items.add(et.getText().toString());
                 }
 
-                boolean saved = mgr.insert_meal(user_id, Constants.BF, bf_name, DateBF, TimeBF, items);
-                if (saved == true){
-                    Toast.makeText(BreakfastActivity.this, "Breakfast entries are saved", Toast.LENGTH_LONG).show();
+                if (activityMode.equals(Constants.addMode)) {
+                    boolean saved = mgr.insert_meal(user_id, Constants.BF, bf_name, DateBF, TimeBF, items);
+                    if (saved == true) {
+                        Toast.makeText(BreakfastActivity.this, "Breakfast entries are saved", Toast.LENGTH_LONG).show();
 
-                    // go to another view - Meals view
-                    Intent intent = new Intent(BreakfastActivity.this, LandingView.class);
-                    startActivity(intent);
+                        // go to another view - Meals view
+                        Intent intent = new Intent(BreakfastActivity.this, LandingView.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(BreakfastActivity.this, "Failed to save Breakfast entries", Toast.LENGTH_LONG).show();
+                    }
                 }
-                else {
-                    Toast.makeText(BreakfastActivity.this, "Failed to save Breakfast entries", Toast.LENGTH_LONG).show();
+                else if (activityMode.equals(Constants.EditMode)){
+                    boolean updated = mgr.updateMeal(user_id, Constants.BF, bf_name, DateBF, TimeBF, items);
+                    if (updated == true) {
+                        Toast.makeText(BreakfastActivity.this, "Breakfast entries are updated", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        Toast.makeText(BreakfastActivity.this, "Failed to update Breakfast entries", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
+
+        if (id != -1){
+            activityMode = Constants.EditMode;
+            Meal s = mgr.getMealByID(id, user_id);
+
+            if (s != null){
+                bf_Date.setText(simpleDateFormatD.format(s.getMealDate()));
+                bf_Time.setText(s.getMealTime());
+                //bf_item.setText((CharSequence) s.getMealItems());
+                breakfast.setText(s.getMealName());
+            }
+            else {
+                Toast.makeText(BreakfastActivity.this, "Invalid Breakfast ID", Toast.LENGTH_LONG).show();
+            }
+        }
+        else activityMode = Constants.addMode;
+    }
+
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, BreakfastActivity.class);
+    }
+
+    public static Intent createIntentForEdit(Context context, long id) {
+        Intent intent = new Intent(context, BreakfastActivity.class);
+        intent.putExtra(Constants.BF_Id, id);
+        return intent;
     }
 
 
