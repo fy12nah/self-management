@@ -990,7 +990,7 @@ public class DBmanager extends SQLiteOpenHelper {
         if (startillness.equals("")) values.putNull(UsersIllnessTable.Col_sIllnessDate);
         else values.put(UsersIllnessTable.Col_sIllnessDate, simpleDateFormat.format(startillness));
 
-        if (endillness.equals("")) values.putNull(UsersIllnessTable.Col_eIllnessDate);
+        if (endillness == null) values.putNull(UsersIllnessTable.Col_eIllnessDate);
         else values.put(UsersIllnessTable.Col_eIllnessDate, simpleDateFormat.format(endillness));
 
         long id = db.insert(UsersIllnessTable.table_name, null, values);

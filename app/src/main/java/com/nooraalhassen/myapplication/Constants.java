@@ -54,7 +54,7 @@ public class Constants {
     public static String moodDate = "MoodDate";
     public static String exerciseDate = "ExerciseDate";
     public static String sleepDate = "ExerciseDate";
-    public static String physicalDate = "ExerciseDate";
+    public static String physicalDate = "PhysicalDate";
 
 
 }

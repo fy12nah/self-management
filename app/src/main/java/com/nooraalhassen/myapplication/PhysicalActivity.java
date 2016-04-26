@@ -59,7 +59,7 @@ public class PhysicalActivity extends AppCompatActivity {
         // defining widgets for use
         final EditText weight_edittext= (EditText) findViewById(R.id.weight);
         final EditText height_edittext= (EditText) findViewById(R.id.height);
-        final EditText date_edittext= (EditText) findViewById(R.id.phys_date);
+        //final EditText date_edittext= (EditText) findViewById(R.id.phys_date);
 
 
         final long id = intent.getLongExtra(Constants.sleepingID, -1);
@@ -79,13 +79,13 @@ public class PhysicalActivity extends AppCompatActivity {
                 // getting edittext values
                 String weight = weight_edittext.getText().toString();
                 String height = height_edittext.getText().toString();
-                String phys_date = date_edittext.getText().toString();
+                String date = phys_date.getText().toString();
 
 
                 Date physdate = null;
 
                 try {
-                    physdate = simpleDateFormat.parse(phys_date);
+                    physdate = simpleDateFormat.parse(date);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -120,12 +120,12 @@ public class PhysicalActivity extends AppCompatActivity {
             Physical s = mgr.getPhysicalByID(id, user_id);
 
             if (s != null){
-                date_edittext.setText(simpleDateFormat.format(s.getDate()));
+                phys_date.setText(simpleDateFormat.format(s.getDate()));
                 weight_edittext.setText((int) s.getWeight());
                 height_edittext.setText((int) s.getHeight());
             }
             else {
-                Toast.makeText(PhysicalActivity.this, "Invalid Sleeping ID", Toast.LENGTH_LONG).show();
+                Toast.makeText(PhysicalActivity.this, "Invalid Physical ID", Toast.LENGTH_LONG).show();
             }
         }
         else activityMode = Constants.addMode;
@@ -143,10 +143,12 @@ public class PhysicalActivity extends AppCompatActivity {
     }
 
     public static Intent createIntent(Context context, Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
         Intent intent = new Intent(context, PhysicalActivity.class);
-        intent.putExtra(Constants.physicalDate, date);
+        intent.putExtra(Constants.physicalDate, simpleDateFormat.format(date));
         return intent;
     }
+
 
     // creating a calander dialog for physical date
     private class PhysdDailogListener implements DatePickerDialog.OnDateSetListener{
