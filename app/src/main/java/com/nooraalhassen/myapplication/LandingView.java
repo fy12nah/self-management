@@ -6,8 +6,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
@@ -17,7 +19,7 @@ import java.util.HashMap;
 
 public class LandingView extends AppCompatActivity {
 
-    Button profile_tv;
+    ImageButton profile_tv;
     Button physical_tv;
     Button illness_tv;
     Button meals_tv;
@@ -32,7 +34,7 @@ public class LandingView extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        profile_tv = (Button) findViewById(R.id.landing_profile);
+        profile_tv = (ImageButton) findViewById(R.id.LVProfile);
         physical_tv = (Button) findViewById(R.id.landing_physical);
         illness_tv = (Button) findViewById(R.id.landing_illness);
         meals_tv = (Button) findViewById(R.id.landing_meals);
@@ -44,15 +46,23 @@ public class LandingView extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
         long user_id = preferences.getLong(Constants.userId, -1);
 
+
         Profile p = manager.getProfile(user_id);
+
+        if (p == null){
+            logout();
+            return;
+        }
+
+        Log.d("Noora", p.toString());
 
         for (HashMap.Entry<String, Boolean> s: p.getCategories().entrySet()){
             switch (s.getKey()){
-                case "Profile":
+/*                case "Profile":
                     if (s.getValue())
                         profile_tv.setVisibility(View.VISIBLE);
                     else profile_tv.setVisibility(View.GONE);
-                    break;
+                    break;*/
 
                 case "Physical":
                     if (s.getValue())
@@ -186,26 +196,33 @@ public class LandingView extends AppCompatActivity {
             }
         });
 
+
+
+
         ImageView logout = (ImageView) findViewById(R.id.btnLogout);
         logout.setColorFilter(color);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.remove(Constants.userId);
-                editor.commit();
-
-                // go to another view - landing view
-                Intent intent = new Intent(LandingView.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                logout();
 
             }
         });
 
 
+    }
+
+    public void logout(){
+        SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(Constants.userId);
+        editor.commit();
+
+        // go to another view - landing view
+        Intent intent = new Intent(LandingView.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

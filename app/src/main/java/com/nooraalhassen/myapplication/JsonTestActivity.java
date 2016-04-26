@@ -186,12 +186,16 @@ public class JsonTestActivity extends AppCompatActivity {
             if (sleep) json += json.equals("") ? "" :","+ " \"Sleeping Hours\":"+gson.toJson(slp);
             json += "}";
 
+            Log.d("Noora", json);
+
 
             Uri mDirectoryPathname = Uri
                     .parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"
                             + "Self-Health-Manager" + "/");
 
             createDirectoryAndSaveFile(JsonTestActivity.this, json, "Model.txt", mDirectoryPathname);
+            //Toast.makeText(JsonTestActivity.this, "Invalid Exercise ID", Toast.LENGTH_LONG).show();
+            finish();
             return null;
         }
     }

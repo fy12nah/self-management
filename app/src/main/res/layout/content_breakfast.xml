@@ -103,10 +103,10 @@
         android:layout_height="wrap_content"
         android:text="save"
         android:id="@+id/BFSave"
+        android:layout_marginBottom="62dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="114dp"
         android:layout_alignRight="@+id/itemBF"
         android:layout_alignEnd="@+id/itemBF" />
 

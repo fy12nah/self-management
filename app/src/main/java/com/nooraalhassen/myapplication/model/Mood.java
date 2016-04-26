@@ -10,12 +10,13 @@ public class Mood extends ArrayList<Mood> {
 
     private long id;
     private long userId;
-    private String moodName;
     private String moodReason;
     private Date moodDate;
     private String moodTime;
+    private MoodName moodName;
 
-    public Mood(long id, long userId, String moodName, String moodReason, Date moodDate, String moodTime) {
+
+    public Mood(long id, long userId, MoodName moodName, String moodReason, Date moodDate, String moodTime) {
         this.id = id;
         this.userId = userId;
         this.moodName = moodName;
@@ -41,11 +42,11 @@ public class Mood extends ArrayList<Mood> {
         this.userId = userId;
     }
 
-    public String getMoodName() {
+    public MoodName getMoodName() {
         return moodName;
     }
 
-    public void setMoodName(String moodName) {
+    public void setMoodName(MoodName moodName) {
         this.moodName = moodName;
     }
 

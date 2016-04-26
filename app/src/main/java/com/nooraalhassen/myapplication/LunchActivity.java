@@ -16,11 +16,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.model.DBmanager;
 import com.nooraalhassen.myapplication.model.Meal;
+import com.nooraalhassen.myapplication.model.MealItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +39,7 @@ public class LunchActivity extends AppCompatActivity {
     RelativeLayout layout;
     EditText lunch_item;
     ArrayList<EditText> edittexts = new ArrayList<>();
+    int newId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,17 +101,7 @@ public class LunchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                EditText item1 = new EditText(LunchActivity.this);
-                item1.setWidth(100);
-
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                params.addRule(RelativeLayout.ALIGN_LEFT, R.id.itemLunch);
-                params.addRule(RelativeLayout.BELOW, R.id.itemLunch);
-                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-
-                layout.addView(item1, params);
-                edittexts.add(item1);
+                addField();
             }
         });
 
@@ -169,14 +162,45 @@ public class LunchActivity extends AppCompatActivity {
             if (s != null){
                 lunch_date.setText(simpleDateFormatD.format(s.getMealDate()));
                 lnch_time.setText(s.getMealTime());
-                //lunch_item.setText((CharSequence) s.getMealItems());
                 lunch.setText(s.getMealName());
+                lunch_item.setText(s.getMealItems().get(0).getMealItem());
+                for (int i = 1; i < s.getMealItems().size(); i++) {
+                    EditText newText = addField();
+                    newText.setText(s.getMealItems().get(i).getMealItem());
+                }
+
             }
             else {
                 Toast.makeText(LunchActivity.this, "Invalid Lunch ID", Toast.LENGTH_LONG).show();
             }
         }
         else activityMode = Constants.addMode;
+    }
+
+    public EditText addField(){
+
+        EditText item1 = new EditText(LunchActivity.this);
+        item1.setWidth(100);
+
+        if (newId == -1){
+            newId = R.id.itemLunch;
+        }
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.ALIGN_LEFT, R.id.itemLunch);
+        params.addRule(RelativeLayout.BELOW, newId);
+        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+
+        while (findViewById(newId) != null){
+            newId++;
+        }
+        item1.setId(newId);
+
+        layout.addView(item1, params);
+        edittexts.add(item1);
+
+        return item1;
     }
 
     public static Intent createIntentForEdit(Context context, long id) {

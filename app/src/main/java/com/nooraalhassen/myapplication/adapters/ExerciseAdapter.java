@@ -57,8 +57,7 @@ public class ExerciseAdapter extends ArrayAdapter<Exercise> {
             }
         });
 
-        type.setText(String.valueOf(m.getExerType()));
-        Log.d("Noora", String.valueOf(m.getExerType())+m.getExerDate().toString());
+        type.setText(String.valueOf(m.getExerType().getExerType()));
         exerSTime.setText(m.getsExerTime());
         exerETime.setText(m.geteExerTime());
         durMsg.setText("This Exercise Last for "+ m.getExerDur());

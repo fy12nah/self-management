@@ -37,6 +37,7 @@ public class DinnerActivity extends AppCompatActivity {
     EditText dinner_time;
     RelativeLayout layout;
     EditText dinner_item;
+    int newId = -1;
     ArrayList<EditText> edittexts = new ArrayList<>();
 
     @Override
@@ -100,19 +101,7 @@ public class DinnerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                EditText item1 = new EditText(DinnerActivity.this);
-                item1.setWidth(100);
-
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                params.addRule(RelativeLayout.ALIGN_LEFT, R.id.itemDinner);
-                params.addRule(RelativeLayout.BELOW, R.id.itemDinner);
-                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-
-
-                layout.addView(item1, params);
-                edittexts.add(item1);
-
+                addField();
             }
         });
 
@@ -174,8 +163,12 @@ public class DinnerActivity extends AppCompatActivity {
             if (s != null){
                 dinner_date.setText(simpleDateFormatD.format(s.getMealDate()));
                 dinner_time.setText(s.getMealTime());
-                //dinner_item.setText((CharSequence) s.getMealItems());
                 dinner.setText(s.getMealName());
+                dinner_item.setText(s.getMealItems().get(0).getMealItem());
+                for (int i = 1; i < s.getMealItems().size(); i++) {
+                    EditText newText = addField();
+                    newText.setText(s.getMealItems().get(i).getMealItem());
+                }
             }
             else {
                 Toast.makeText(DinnerActivity.this, "Invalid Dinner ID", Toast.LENGTH_LONG).show();
@@ -183,6 +176,33 @@ public class DinnerActivity extends AppCompatActivity {
         }
         else activityMode = Constants.addMode;
 
+    }
+
+
+    public EditText addField(){
+
+        EditText item1 = new EditText(DinnerActivity.this);
+        item1.setWidth(100);
+
+        if (newId == -1){
+            newId = R.id.itemDinner;
+        }
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.ALIGN_LEFT, R.id.itemDinner);
+        params.addRule(RelativeLayout.BELOW, newId);
+        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+
+        while (findViewById(newId) != null){
+            newId++;
+        }
+        item1.setId(newId);
+
+        layout.addView(item1, params);
+        edittexts.add(item1);
+
+        return item1;
     }
 
     public static Intent createIntentForEdit(Context context, long id) {

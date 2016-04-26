@@ -32,6 +32,7 @@ public class LongT_Illness extends AppCompatActivity {
     long user_id;
     EditText LT_sdate, LT_edate;
     RelativeLayout layout;
+    int newId = -1;
     ArrayList<EditText> edittexts = new ArrayList<>();
 
     @Override
@@ -90,17 +91,7 @@ public class LongT_Illness extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                EditText item1 = new EditText(LongT_Illness.this);
-                item1.setWidth(100);
-
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                params.addRule(RelativeLayout.ALIGN_LEFT, R.id.LTI_med);
-                params.addRule(RelativeLayout.BELOW, R.id.LTI_med);
-                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-
-                layout.addView(item1, params);
-                edittexts.add(item1);
+                addField();
             }
         });
 
@@ -169,8 +160,11 @@ public class LongT_Illness extends AppCompatActivity {
                 LT_sdate.setText(simpleDateFormat.format(s.getsIllnessDate()));
                 LT_edate.setText(simpleDateFormat.format(s.geteIllnessDate()));
                 LT_name.setText(s.getIllnessName());
-                //LT_med.setText((CharSequence) s.getMedsList());
-            }
+                LT_med.setText(s.getMedsList().get(0).getIllnessMed());
+                for (int i = 1; i < s.getMedsList().size(); i++) {
+                    EditText newText = addField();
+                    newText.setText(s.getMedsList().get(i).getIllnessMed());
+                }            }
             else {
                 Toast.makeText(LongT_Illness.this, "Invalid Long-Term Illness ID", Toast.LENGTH_LONG).show();
             }
@@ -178,6 +172,36 @@ public class LongT_Illness extends AppCompatActivity {
         else activityMode = Constants.addMode;
 
     }
+
+
+
+    public EditText addField(){
+
+        EditText item1 = new EditText(LongT_Illness.this);
+        item1.setWidth(100);
+
+        if (newId == -1){
+            newId = R.id.LTI_med;
+        }
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.ALIGN_LEFT, R.id.LTI_med);
+        params.addRule(RelativeLayout.BELOW, newId);
+        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+
+        while (findViewById(newId) != null){
+            newId++;
+        }
+        item1.setId(newId);
+
+        layout.addView(item1, params);
+        edittexts.add(item1);
+
+        return item1;
+    }
+
+
 
     public static Intent createIntentForEdit(Context context, long id) {
         Intent intent = new Intent(context, LongT_Illness.class);

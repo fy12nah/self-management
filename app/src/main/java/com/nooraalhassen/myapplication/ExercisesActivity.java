@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,12 +17,16 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.nooraalhassen.myapplication.adapters.ExerciseTypeAdapter;
+import com.nooraalhassen.myapplication.adapters.MoodNameAdapter;
 import com.nooraalhassen.myapplication.model.DBmanager;
 import com.nooraalhassen.myapplication.model.Exercise;
+import com.nooraalhassen.myapplication.model.ExerciseType;
 import com.nooraalhassen.myapplication.model.Sleeping;
 
 import java.text.ParseException;
@@ -37,6 +42,8 @@ public class ExercisesActivity extends AppCompatActivity {
     EditText exer_end;
     EditText exer_start;
     TextView exer_dur;
+    Spinner exer_type;
+    final DBmanager mgr = new DBmanager(ExercisesActivity.this);
 
 
     @Override
@@ -93,11 +100,13 @@ public class ExercisesActivity extends AppCompatActivity {
 
 
         // defining widgets for use
-        final EditText exer_type = (EditText) findViewById(R.id.exerType);
+        exer_type = (Spinner) findViewById(R.id.exerType);
+        populateExerType();
+
         final Button save_exer = (Button) findViewById(R.id.exerSave);
         exer_dur = (TextView) findViewById(R.id.exerDur);
 
-        final DBmanager mgr = new DBmanager(ExercisesActivity.this);
+        //final DBmanager mgr = new DBmanager(ExercisesActivity.this);
         final SimpleDateFormat simpleDateFormatD = new SimpleDateFormat(Constants.display_DatePattern);
         final long id = intent.getLongExtra(Constants.exerciseId, -1);
         final String dateString = intent.getStringExtra(Constants.exerciseDate);
@@ -111,7 +120,7 @@ public class ExercisesActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // getting edittext values
-                String exerType = exer_type.getText().toString();
+                long exerTypeID = exer_type.getSelectedItemId();
                 String exerDate = exer_date.getText().toString();
                 String StartExer = exer_start.getText().toString();
                 String EndExer = exer_end.getText().toString();
@@ -128,7 +137,7 @@ public class ExercisesActivity extends AppCompatActivity {
 
                 if (activityMode.equals(Constants.addMode)) {
 
-                    boolean saved = mgr.insert_exer(user_id, exerType, DateExer, StartExer, EndExer, durExer);
+                    boolean saved = mgr.insert_exer(user_id, exerTypeID, DateExer, StartExer, EndExer, durExer);
                     if (saved == true) {
                         Toast.makeText(ExercisesActivity.this, "Exercises entries are saved", Toast.LENGTH_LONG).show();
 
@@ -140,12 +149,12 @@ public class ExercisesActivity extends AppCompatActivity {
                     }
                 }
                 else if (activityMode.equals(Constants.EditMode)){
-                    boolean updated = mgr.updateExercise(user_id, exerType, DateExer, StartExer, EndExer, durExer);
+                    boolean updated = mgr.updateExercise(user_id, exerTypeID, DateExer, StartExer, EndExer, durExer);
                     if (updated == true) {
-                        Toast.makeText(ExercisesActivity.this, "Sleeping Hours entries are updated", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ExercisesActivity.this, "Exercise entries are updated", Toast.LENGTH_LONG).show();
                         finish();
                     } else {
-                        Toast.makeText(ExercisesActivity.this, "Failed to update Sleeping Hours entries", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ExercisesActivity.this, "Failed to update Exercise entries", Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -157,16 +166,32 @@ public class ExercisesActivity extends AppCompatActivity {
 
             if (s != null){
                 exer_date.setText(simpleDateFormatD.format(s.getExerDate()));
-                exer_type.setText(s.getExerType());
                 exer_dur.setText(s.getExerDur());
                 exer_start.setText(s.getsExerTime());
                 exer_end.setText(s.geteExerTime());
+                int count = exer_type.getCount();
+                for (int i = 0; i < count; i++){
+                    if (exer_type.getItemIdAtPosition(i) == s.getExerType().getExerTypeID()){
+                        exer_type.setSelection(i);
+                        break;
+                    }
+                }
             }
             else {
                 Toast.makeText(ExercisesActivity.this, "Invalid Exercise ID", Toast.LENGTH_LONG).show();
             }
         }
         else activityMode = Constants.addMode;
+    }
+
+
+    public void populateExerType(){
+
+        Cursor c = mgr.getExerciseTypeCursor(user_id);
+
+        ExerciseTypeAdapter adapter = new ExerciseTypeAdapter(this, c, false);
+        exer_type.setAdapter(adapter);
+
     }
 
 
@@ -214,7 +239,7 @@ public class ExercisesActivity extends AppCompatActivity {
 
     public static Intent createIntent(Context context, Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.display_DatePattern);
-        Intent intent = new Intent(context, Exercise.class);
+        Intent intent = new Intent(context, ExercisesActivity.class);
         intent.putExtra(Constants.exerciseDate, simpleDateFormat.format(date));
         return intent;
     }
@@ -242,5 +267,4 @@ public class ExercisesActivity extends AppCompatActivity {
             CalculateDur();
         }
     }
-
 }

@@ -57,7 +57,7 @@ public class MoodAdapter extends ArrayAdapter<Mood> {
             }
         });
 
-        moodName.setText(String.valueOf(m.getMoodName()));
+        moodName.setText(String.valueOf(m.getMoodName().getMoodName()));
         moodReason.setText(String.valueOf(m.getMoodReason()));
         moodTime.setText(m.getMoodTime());
 

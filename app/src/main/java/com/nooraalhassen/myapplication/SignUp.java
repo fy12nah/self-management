@@ -84,9 +84,12 @@ public class SignUp extends AppCompatActivity {
                     gender = 'F';
                 }
 
+                if (username_edittext == null || name_edittext == null || password_edittext == null || birthdate_edittext == null) {
+                    Toast.makeText(SignUp.this, "Please Complete all compulsory fields", Toast.LENGTH_LONG).show();
+                }
+
                 // action when signup data are entered
                 long id;
-
                 id =  mgr.signup(username, name, password, birthdialog, gender);
 
                 if (id != -1){
@@ -115,7 +118,5 @@ public class SignUp extends AppCompatActivity {
             birthdate_edittext.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
         }
     }
-
-
 }
 

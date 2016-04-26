@@ -34,6 +34,7 @@ public class ShortT_Illness extends AppCompatActivity {
     long user_id;
     EditText ST_sdate, ST_edate;
     RelativeLayout layout;
+    int newId = -1;
     ArrayList<EditText> edittexts = new ArrayList<>();
 
     @Override
@@ -91,17 +92,7 @@ public class ShortT_Illness extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                EditText item1 = new EditText(ShortT_Illness.this);
-                item1.setWidth(100);
-
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                params.addRule(RelativeLayout.ALIGN_LEFT, R.id.STI_med);
-                params.addRule(RelativeLayout.BELOW, R.id.STI_med);
-                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-
-                layout.addView(item1, params);
-                edittexts.add(item1);
+                addField();
             }
         });
 
@@ -171,12 +162,17 @@ public class ShortT_Illness extends AppCompatActivity {
             activityMode = Constants.EditMode;
             Illness s = mgr.getIllnessByID(id, user_id);
 
-            if (s != null){
+            if (s != null) {
                 ST_sdate.setText(simpleDateFormat.format(s.getsIllnessDate()));
                 ST_edate.setText(simpleDateFormat.format(s.geteIllnessDate()));
                 ST_name.setText(s.getIllnessName());
-                //ST_med.setText((CharSequence) s.getMedsList());
+                ST_med.setText(s.getMedsList().get(0).getIllnessMed());
+                for (int i = 1; i < s.getMedsList().size(); i++) {
+                    EditText newText = addField();
+                    newText.setText(s.getMedsList().get(i).getIllnessMed());
+                }
             }
+
             else {
                 Toast.makeText(ShortT_Illness.this, "Invalid Short-Term Illness ID", Toast.LENGTH_LONG).show();
             }
@@ -184,6 +180,36 @@ public class ShortT_Illness extends AppCompatActivity {
         else activityMode = Constants.addMode;
 
     }
+
+
+
+    public EditText addField(){
+
+        EditText item1 = new EditText(ShortT_Illness.this);
+        item1.setWidth(100);
+
+        if (newId == -1){
+            newId = R.id.STI_med;
+        }
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.ALIGN_LEFT, R.id.STI_med);
+        params.addRule(RelativeLayout.BELOW, newId);
+        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+
+        while (findViewById(newId) != null){
+            newId++;
+        }
+        item1.setId(newId);
+
+        layout.addView(item1, params);
+        edittexts.add(item1);
+
+        return item1;
+    }
+
+
 
     public static Intent createIntentForEdit(Context context, long id) {
         Intent intent = new Intent(context, ShortT_Illness.class);

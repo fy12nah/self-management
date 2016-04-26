@@ -37,6 +37,7 @@ public class BreakfastActivity extends AppCompatActivity {
     EditText bf_Time;
     RelativeLayout layout;
     EditText bf_item;
+    int newId = -1;
     ArrayList<EditText> edittexts = new ArrayList<>();
 
 
@@ -99,19 +100,7 @@ public class BreakfastActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                EditText item1 = new EditText(BreakfastActivity.this);
-                item1.setWidth(100);
-
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                params.addRule(RelativeLayout.ALIGN_LEFT, R.id.itemBF);
-                params.addRule(RelativeLayout.BELOW, R.id.itemBF);
-                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-
-
-                layout.addView(item1, params);
-                edittexts.add(item1);
-
+                addField();
             }
         });
 
@@ -176,14 +165,45 @@ public class BreakfastActivity extends AppCompatActivity {
             if (s != null){
                 bf_Date.setText(simpleDateFormatD.format(s.getMealDate()));
                 bf_Time.setText(s.getMealTime());
-                //bf_item.setText((CharSequence) s.getMealItems());
                 breakfast.setText(s.getMealName());
+                bf_item.setText(s.getMealItems().get(0).getMealItem());
+                for (int i = 1; i < s.getMealItems().size(); i++) {
+                    EditText newText = addField();
+                    newText.setText(s.getMealItems().get(i).getMealItem());
+                }
             }
             else {
                 Toast.makeText(BreakfastActivity.this, "Invalid Breakfast ID", Toast.LENGTH_LONG).show();
             }
         }
         else activityMode = Constants.addMode;
+    }
+
+
+    public EditText addField(){
+
+        EditText item1 = new EditText(BreakfastActivity.this);
+        item1.setWidth(100);
+
+        if (newId == -1){
+            newId = R.id.itemBF;
+        }
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.ALIGN_LEFT, R.id.itemBF);
+        params.addRule(RelativeLayout.BELOW, newId);
+        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+
+        while (findViewById(newId) != null){
+            newId++;
+        }
+        item1.setId(newId);
+
+        layout.addView(item1, params);
+        edittexts.add(item1);
+
+        return item1;
     }
 
 

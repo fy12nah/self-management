@@ -19,9 +19,7 @@ public class Profile {
         if  (!categories.keySet().contains(category)){
             categories.put(category, show);
         }
-
     }
-
 
     public Profile(long id, String name, Date birthdate, String uniname, Date start_Study, Date grad_Study, char gender) {
         this.id = id;
@@ -80,15 +78,18 @@ public class Profile {
         this.gender = gender;
     }
 
+
     @Override
     public String toString() {
         return "Profile{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", uniname='" + uniname + '\'' +
                 ", birthdate=" + birthdate +
                 ", start_Study=" + start_Study +
                 ", grad_Study=" + grad_Study +
-                ", categories=" + categories +
                 ", gender=" + gender +
+                ", categories=" + categories +
                 '}';
     }
 }

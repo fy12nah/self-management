@@ -232,6 +232,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if (nameText == null || uniText == null || birthDText == null || startDText == null || gradDText == null){
+                    Toast.makeText(ProfileActivity.this, "Please Complete all compulsory fields", Toast.LENGTH_LONG).show();
+                }
+
                 // save and update profile
                 saveprofile();
 

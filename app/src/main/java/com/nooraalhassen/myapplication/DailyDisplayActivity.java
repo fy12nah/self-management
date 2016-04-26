@@ -194,6 +194,7 @@ public class DailyDisplayActivity extends AppCompatActivity {
                         addbtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                Log.d("Noora", String.valueOf(d));
                                 Intent intent = PhysicalActivity.createIntent(getContext(), d);
                                 startActivity(intent);
                             }
@@ -342,13 +343,11 @@ public class DailyDisplayActivity extends AppCompatActivity {
                 LinearLayout exerLay = (LinearLayout) rootView.findViewById(R.id.exerciseLayout);
                 if (contentList.contains(Constants.exer)) {
 
-                    Log.d("Noora exer date ", d.toString());
                     ArrayList<Exercise> p = db.getExerciseAtDate(d, user_id);
 
                     ListView listview = (ListView) rootView.findViewById(R.id.listExer);
                     TextView title = (TextView) rootView.findViewById(R.id.exerTitle1);
                     Button addbtn = (Button) rootView.findViewById(R.id.exerAdd);
-
 
                     if (p.isEmpty()){
                         title.append(" - No Data Entered");

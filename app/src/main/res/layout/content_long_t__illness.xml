@@ -43,7 +43,7 @@
         android:layout_below="@+id/textView58"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="47dp" />
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
         android:layout_below="@+id/textView59"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="41dp" />
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -65,19 +65,19 @@
         android:layout_below="@+id/textView60"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="54dp" />
+        android:layout_marginTop="30dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="save"
         android:id="@+id/LT_save"
-        android:layout_below="@+id/textView61"
-        android:layout_marginTop="86dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="59dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -142,7 +142,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/LTaddMed"
         android:src="@android:drawable/ic_input_add"
-        android:layout_above="@+id/LT_save"
+        android:layout_alignBottom="@+id/LTI_med"
         android:layout_toLeftOf="@+id/LTI_med"
         android:layout_toStartOf="@+id/LTI_med" />
 </RelativeLayout>

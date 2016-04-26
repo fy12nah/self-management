@@ -40,7 +40,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Start Date:"
         android:id="@+id/textView53"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/textView52"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -54,7 +54,7 @@
         android:layout_below="@+id/textView53"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="47dp" />
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,8 +63,8 @@
         android:text="Medication:"
         android:id="@+id/textView55"
         android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/textView54"
+        android:layout_marginTop="30dp"/>
 
 
     <EditText
@@ -74,7 +74,6 @@
         android:layout_above="@+id/textView53"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView56"
         android:layout_alignLeft="@+id/STI_sdate"
         android:layout_alignStart="@+id/STI_sdate" />
 
@@ -102,11 +101,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/STI_med"
-        android:layout_alignBottom="@+id/textView55"
-        android:layout_alignLeft="@+id/STI_edate"
-        android:layout_alignStart="@+id/STI_edate"
-        android:layout_alignRight="@+id/STI_edate"
-        android:layout_alignEnd="@+id/STI_edate" />
+        android:layout_alignBottom="@+id/addMed"
+        android:layout_toRightOf="@+id/sDate_Dialog"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 
     <Button
@@ -114,12 +112,12 @@
         android:layout_height="wrap_content"
         android:text="save"
         android:id="@+id/STI_save"
+        android:layout_marginBottom="44dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="85dp"
-        android:layout_alignRight="@+id/STI_med"
-        android:layout_alignEnd="@+id/STI_med"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -144,7 +142,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/addMed"
         android:src="@android:drawable/ic_input_add"
-        android:layout_alignBottom="@+id/STI_med"
+        android:layout_alignBottom="@+id/textView55"
         android:layout_toLeftOf="@+id/STI_med"
         android:layout_toStartOf="@+id/STI_med" />
 </RelativeLayout>

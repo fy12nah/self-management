@@ -9,13 +9,13 @@ public class Exercise {
 
     private long id;
     private long userId;
-    private String exerType;
+    private ExerciseType exerType;
     private Date exerDate;
     private String sExerTime;
     private String eExerTime;
     private String exerDur;
 
-    public Exercise(long id, long userId, String exerType, Date exerDate, String sExerTime, String eExerTime, String exerDur) {
+    public Exercise(long id, long userId, ExerciseType exerType, Date exerDate, String sExerTime, String eExerTime, String exerDur) {
         this.id = id;
         this.userId = userId;
         this.exerType = exerType;
@@ -41,11 +41,11 @@ public class Exercise {
         this.userId = userId;
     }
 
-    public String getExerType() {
+    public ExerciseType getExerType() {
         return exerType;
     }
 
-    public void setExerType(String exerType) {
+    public void setExerType(ExerciseType exerType) {
         this.exerType = exerType;
     }
 

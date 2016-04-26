@@ -12,30 +12,18 @@
     tools:context="com.nooraalhassen.myapplication.LandingView"
     tools:showIn="@layout/activity_landing_view">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PROFILE"
-        android:id="@+id/landing_profile"
-        android:layout_marginTop="34dp"
-        android:visibility="visible"
-        android:layout_below="@+id/btnLogout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PHYSICAL"
         android:id="@+id/landing_physical"
-        android:layout_below="@+id/landing_profile"
+        android:visibility="visible"
+        android:layout_below="@+id/textView15"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/landing_profile"
-        android:layout_alignEnd="@+id/landing_profile"
-        android:visibility="visible"/>
+        android:layout_alignRight="@+id/btnLogout"
+        android:layout_alignEnd="@+id/btnLogout" />
 
     <Button
         android:layout_width="wrap_content"
@@ -104,14 +92,15 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Self-Health Manager"
         android:id="@+id/textView15"
-        android:layout_below="@+id/inspect"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/LVProfile"
         android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnLogout"
-        android:src="@android:drawable/ic_lock_power_off"
+        android:src="@mipmap/ic_logout"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -120,18 +109,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/inspect"
-        android:src="@android:drawable/ic_input_get"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/btnLogout"
-        android:layout_toStartOf="@+id/btnLogout" />
+        android:src="@mipmap/ic_inspect"
+        android:layout_alignTop="@+id/LVProfile"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/LVdownload"
-        android:src="@android:drawable/stat_sys_download_done"
-        android:layout_above="@+id/landing_profile"
-        android:layout_toLeftOf="@+id/inspect"
-        android:layout_toStartOf="@+id/inspect" />
+        android:src="@mipmap/ic_download"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/inspect"
+        android:layout_toEndOf="@+id/inspect" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/LVProfile"
+        android:src="@mipmap/ic_user"
+        android:layout_alignTop="@+id/btnLogout"
+        android:layout_toLeftOf="@+id/btnLogout"
+        android:layout_toStartOf="@+id/btnLogout" />
 
 </RelativeLayout>
