@@ -1051,8 +1051,10 @@ public class DBmanager extends SQLiteOpenHelper {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.SQLite_DatePattern);
 
-        Cursor c = db.query(UsersIllnessTable.table_name, null, UsersIllnessTable.Col_userID + " = ? and " + UsersIllnessTable.Col_sIllnessDate +
-                " = ?", new String[]{String.valueOf(user_id), simpleDateFormat.format(d)}, null, null, null);
+        Cursor c = db.query(UsersIllnessTable.table_name, null, UsersIllnessTable.Col_userID + " = ? and " +
+                UsersIllnessTable.Col_sIllnessDate + " <= ? and ("+ UsersIllnessTable.Col_eIllnessDate+" is null or "
+                + UsersIllnessTable.Col_eIllnessDate+" >= ?)", new String[]{String.valueOf(user_id),
+                simpleDateFormat.format(d), simpleDateFormat.format(d)}, null, null, null);
 
         ArrayList<Illness> list = new ArrayList<>();
 
@@ -1790,6 +1792,57 @@ public class DBmanager extends SQLiteOpenHelper {
                 " = ? )", new String[]{String.valueOf(user_id)}, null, null, null);
 
         return c;
+    }
+
+
+    // insert users' entries into UsersSleepTable
+    public boolean insert_moodName(long user_id, String moodName){
+
+        // allow to write into database
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        // input values in col
+        values.put(MoodNameTable.Col_userID, user_id);
+        values.put(MoodNameTable.Col_moodName, moodName);
+
+
+        long id = db.insert(MoodNameTable.table_name, null, values);
+
+        // Closing database
+        db.close();
+
+        if (id == -1){
+            return false;
+        }
+
+        return true;
+    }
+
+
+    // insert users' entries into UsersSleepTable
+    public boolean insert_exerType(long user_id, String exerType){
+
+        // allow to write into database
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        // input values in col
+        values.put(ExerciseTypeTable.Col_userID, user_id);
+        values.put(ExerciseTypeTable.Col_exerType, exerType);
+
+        long id = db.insert(ExerciseTypeTable.table_name, null, values);
+
+        // Closing database
+        db.close();
+
+        if (id == -1){
+            return false;
+        }
+
+        return true;
     }
 }
 

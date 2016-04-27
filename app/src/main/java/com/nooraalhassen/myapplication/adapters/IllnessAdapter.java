@@ -77,7 +77,9 @@ public class IllnessAdapter extends ArrayAdapter<Illness>{
         type.setText(String.valueOf(m.getIllnessType()));
         illName.setText(String.valueOf(m.getIllnessName()));
         sDateText.setText(simpleDateFormat.format(m.getsIllnessDate()));
-        eDateText.setText(simpleDateFormat.format(m.geteIllnessDate()));
+        if (m.geteIllnessDate() != null){
+            eDateText.setText(simpleDateFormat.format(m.geteIllnessDate()));
+        }
 
         IllnessMedsAdapter adapter = new IllnessMedsAdapter(getContext(), m.getMedsList());
         medsList.setAdapter(adapter);

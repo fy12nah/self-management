@@ -1,8 +1,10 @@
 package com.nooraalhassen.myapplication;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -11,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -38,6 +41,11 @@ public class MoodActivity extends AppCompatActivity {
     EditText mood_date;
     EditText mood_Time;
     final DBmanager mgr = new DBmanager(MoodActivity.this);
+    AlertDialog dialog;
+    AlertDialog.Builder builder = null;
+    LayoutInflater inflater = null;
+    View view = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,9 @@ public class MoodActivity extends AppCompatActivity {
         user_id = preferences.getLong(Constants.userId, -1);
         Intent intent = getIntent();
 
+        builder = new AlertDialog.Builder(this);
+        inflater = MoodActivity.this.getLayoutInflater();
+        view = inflater.inflate(R.layout.dialog_layout, null);
 
         // getting current time
         mood_date = (EditText) findViewById(R.id.moodDate);
@@ -88,6 +99,15 @@ public class MoodActivity extends AppCompatActivity {
             }
         });
 
+        final ImageView addMood = (ImageView) findViewById(R.id.addNewMood);
+        addMood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();;
+
+            }
+        });
+
 
         final long id = intent.getLongExtra(Constants.moodID, -1);
         final String dateString = intent.getStringExtra(Constants.moodDate);
@@ -120,10 +140,7 @@ public class MoodActivity extends AppCompatActivity {
                     boolean saved = mgr.insert_mood(user_id, mood_nameID, moodReason, DateMood, moodTime);
                     if (saved == true) {
                         Toast.makeText(MoodActivity.this, "Mood entries are saved", Toast.LENGTH_LONG).show();
-
-                        // go to another view - Landing view
-                        Intent intent = new Intent(MoodActivity.this, LandingView.class);
-                        startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(MoodActivity.this, "Failed to save Mood entries", Toast.LENGTH_LONG).show();
                     }
@@ -161,6 +178,28 @@ public class MoodActivity extends AppCompatActivity {
             }
         }
         else activityMode = Constants.addMode;
+
+
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(view)
+                // Add action buttons
+                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        EditText editText = (EditText) view.findViewById(R.id.editText);
+                        mgr.insert_moodName(user_id, editText.getText().toString());
+                        populateMoodNames();
+
+
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        dialog = builder.create();
 
     }
 

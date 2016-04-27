@@ -166,4 +166,13 @@
         android:layout_toStartOf="@+id/exer_date"
         android:src="@android:drawable/ic_menu_month"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addExerType"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_alignBottom="@+id/exerType"
+        android:layout_toRightOf="@+id/textView47"
+        android:layout_toEndOf="@+id/textView47" />
+
 </RelativeLayout>

@@ -1,17 +1,17 @@
 package com.nooraalhassen.myapplication;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,11 +23,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nooraalhassen.myapplication.adapters.ExerciseTypeAdapter;
-import com.nooraalhassen.myapplication.adapters.MoodNameAdapter;
 import com.nooraalhassen.myapplication.model.DBmanager;
 import com.nooraalhassen.myapplication.model.Exercise;
-import com.nooraalhassen.myapplication.model.ExerciseType;
-import com.nooraalhassen.myapplication.model.Sleeping;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,6 +40,10 @@ public class ExercisesActivity extends AppCompatActivity {
     EditText exer_start;
     TextView exer_dur;
     Spinner exer_type;
+    AlertDialog dialog;
+    AlertDialog.Builder builder = null;
+    LayoutInflater inflater = null;
+    View view = null;
     final DBmanager mgr = new DBmanager(ExercisesActivity.this);
 
 
@@ -67,6 +68,10 @@ public class ExercisesActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
         user_id = preferences.getLong(Constants.userId, -1);
         Intent intent = getIntent();
+
+        builder = new AlertDialog.Builder(this);
+        inflater = ExercisesActivity.this.getLayoutInflater();
+        view = inflater.inflate(R.layout.dialog_layout, null);
 
         ImageView dateDialog = (ImageView) findViewById(R.id.exdateDialog);
         dateDialog.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +100,15 @@ public class ExercisesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 TimePickerDialog timePick = new TimePickerDialog(ExercisesActivity.this, new endTimeDialogList(), hour, minute, true);
                 timePick.show();
+            }
+        });
+
+
+        final ImageView addExer = (ImageView) findViewById(R.id.addExerType);
+        addExer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();;
             }
         });
 
@@ -140,10 +154,8 @@ public class ExercisesActivity extends AppCompatActivity {
                     boolean saved = mgr.insert_exer(user_id, exerTypeID, DateExer, StartExer, EndExer, durExer);
                     if (saved == true) {
                         Toast.makeText(ExercisesActivity.this, "Exercises entries are saved", Toast.LENGTH_LONG).show();
+                        finish();
 
-                        // go to another view - Landing view
-                        Intent intent = new Intent(ExercisesActivity.this, LandingView.class);
-                        startActivity(intent);
                     } else {
                         Toast.makeText(ExercisesActivity.this, "Failed to save Exercises entries", Toast.LENGTH_LONG).show();
                     }
@@ -182,6 +194,27 @@ public class ExercisesActivity extends AppCompatActivity {
             }
         }
         else activityMode = Constants.addMode;
+
+
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(view)
+                // Add action buttons
+                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        EditText editText = (EditText) view.findViewById(R.id.editText);
+                        mgr.insert_exerType(user_id, editText.getText().toString());
+                        populateExerType();
+
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        dialog = builder.create();
     }
 
 
@@ -191,7 +224,6 @@ public class ExercisesActivity extends AppCompatActivity {
 
         ExerciseTypeAdapter adapter = new ExerciseTypeAdapter(this, c, false);
         exer_type.setAdapter(adapter);
-
     }
 
 
