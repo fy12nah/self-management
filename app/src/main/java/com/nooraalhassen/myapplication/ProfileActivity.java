@@ -39,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
     Profile p = null;
     private RadioButton maleRadio;
     private RadioButton femaleRadio;
-    CheckBox chkProfile;
+    //CheckBox chkProfile;
     CheckBox chkPhys;
     CheckBox chkMeals;
     CheckBox chkExer;
@@ -64,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         maleRadio = (RadioButton) findViewById(R.id.radioMale);
         femaleRadio = (RadioButton) findViewById(R.id.radioFemale);
 
-        chkProfile = (CheckBox) findViewById(R.id.radioProf);
+        //chkProfile = (CheckBox) findViewById(R.id.radioProf);
         chkPhys = (CheckBox) findViewById(R.id.radioPhys);
         chkMeals = (CheckBox) findViewById(R.id.radioMeals);
         chkExer = (CheckBox) findViewById(R.id.radioExer);
@@ -72,12 +72,12 @@ public class ProfileActivity extends AppCompatActivity {
         chkMood = (CheckBox) findViewById(R.id.radioMood);
         chkIllness = (CheckBox) findViewById(R.id.radioIllness);
 
-        chkProfile.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+/*        chkProfile.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     p.getCategories().put("Profile", isChecked);
             }
-        });
+        });*/
 
         chkPhys.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -154,10 +154,10 @@ public class ProfileActivity extends AppCompatActivity {
 
             for (HashMap.Entry<String, Boolean> s: p.getCategories().entrySet()){
                 switch (s.getKey()){
-                    case Constants.pro:
+/*                    case Constants.pro:
                         if (s.getValue())
                         chkProfile.setChecked(true);
-                        break;
+                        break;*/
 
                     case Constants.phys:
                         if (s.getValue())
@@ -192,7 +192,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
         }
-        else Toast.makeText(this, "Try to login", Toast.LENGTH_LONG).show();
+        else Toast.makeText(this, "Invalid Username or password!", Toast.LENGTH_LONG).show();
 
 
         // calendar dialog for birthdate when image is clicked
@@ -233,13 +233,11 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (nameText == null || uniText == null || birthDText == null || startDText == null || gradDText == null){
-                    Toast.makeText(ProfileActivity.this, "Please Complete all compulsory fields", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, "Please Complete all fields", Toast.LENGTH_LONG).show();
                 }
 
                 // save and update profile
                 saveprofile();
-
-                // move to landing view
                 Intent intent = new Intent(ProfileActivity.this, LandingView.class);
                 startActivity(intent);
             }

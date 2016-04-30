@@ -67,7 +67,7 @@
         android:layout_marginTop="30dp"/>
 
 
-    <EditText
+    <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/shrtIll_name"
@@ -145,4 +145,13 @@
         android:layout_alignBottom="@+id/textView55"
         android:layout_toLeftOf="@+id/STI_med"
         android:layout_toStartOf="@+id/STI_med" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addSTName"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_alignBottom="@+id/textView52"
+        android:layout_toRightOf="@+id/textView52"
+        android:layout_toEndOf="@+id/textView52" />
 </RelativeLayout>

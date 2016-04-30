@@ -85,7 +85,7 @@ public class SignUp extends AppCompatActivity {
                 }
 
                 if (username_edittext == null || name_edittext == null || password_edittext == null || birthdate_edittext == null) {
-                    Toast.makeText(SignUp.this, "Please Complete all compulsory fields", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUp.this, "Please Complete all fields", Toast.LENGTH_LONG).show();
                 }
 
                 // action when signup data are entered

@@ -5,20 +5,20 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by nooraalhassen on 3/29/16.
+ * Created by nooraalhassen
  */
 public class Illness extends ArrayList<Illness> {
 
     private long id;
     private long userID;
     private String illnessType;
-    private String illnessName;
+    private IllnessName illnessName;
     private Date sIllnessDate;
     private Date eIllnessDate;
     private ArrayList<IllnessMed> medsList = new ArrayList<>();
 
 
-    public Illness(long id, long userID, String illnessType, String illnessName, Date sIllnessDate, Date eIllnessDate) {
+    public Illness(long id, long userID, String illnessType, IllnessName illnessName, Date sIllnessDate, Date eIllnessDate) {
         this.id = id;
         this.userID = userID;
         this.illnessType = illnessType;
@@ -52,11 +52,11 @@ public class Illness extends ArrayList<Illness> {
         this.illnessType = illnessType;
     }
 
-    public String getIllnessName() {
+    public IllnessName getIllnessName() {
         return illnessName;
     }
 
-    public void setIllnessName(String illnessName) {
+    public void setIllnessName(IllnessName illnessName) {
         this.illnessName = illnessName;
     }
 

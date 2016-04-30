@@ -54,16 +54,9 @@ public class LandingView extends AppCompatActivity {
             return;
         }
 
-        Log.d("Noora", p.toString());
 
         for (HashMap.Entry<String, Boolean> s: p.getCategories().entrySet()){
             switch (s.getKey()){
-/*                case "Profile":
-                    if (s.getValue())
-                        profile_tv.setVisibility(View.VISIBLE);
-                    else profile_tv.setVisibility(View.GONE);
-                    break;*/
-
                 case "Physical":
                     if (s.getValue())
                         physical_tv.setVisibility(View.VISIBLE);
@@ -96,7 +89,6 @@ public class LandingView extends AppCompatActivity {
                     break;
             }
         }
-
 
 
         // action - goes to ProfileActivity view when text is clicked
@@ -197,8 +189,6 @@ public class LandingView extends AppCompatActivity {
         });
 
 
-
-
         ImageView logout = (ImageView) findViewById(R.id.btnLogout);
         logout.setColorFilter(color);
         logout.setOnClickListener(new View.OnClickListener() {
@@ -224,5 +214,4 @@ public class LandingView extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 }

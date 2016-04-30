@@ -135,10 +135,7 @@ public class LunchActivity extends AppCompatActivity {
                     boolean saved = mgr.insert_meal(user_id, Constants.Lunch, lunch_name, DateLunch, TimeLunch, items);
                     if (saved == true) {
                         Toast.makeText(LunchActivity.this, "Lunch entries are saved", Toast.LENGTH_LONG).show();
-
-                        // go to another view - Meals view
-                        Intent intent = new Intent(LunchActivity.this, Meals.class);
-                        startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(LunchActivity.this, "Failed to save Lunch entries", Toast.LENGTH_LONG).show();
                     }

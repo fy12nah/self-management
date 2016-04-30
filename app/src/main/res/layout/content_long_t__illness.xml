@@ -79,7 +79,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <EditText
+    <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/longIll_name"
@@ -145,4 +145,14 @@
         android:layout_alignBottom="@+id/LTI_med"
         android:layout_toLeftOf="@+id/LTI_med"
         android:layout_toStartOf="@+id/LTI_med" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addLTName"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_alignBottom="@+id/textView58"
+        android:layout_alignLeft="@+id/LTaddMed"
+        android:layout_alignStart="@+id/LTaddMed" />
 </RelativeLayout>

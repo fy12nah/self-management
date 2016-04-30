@@ -191,30 +191,23 @@
             android:layout_below="@+id/textView9">
 
             <CheckBox
-                android:id="@+id/radioProf"
+                android:id="@+id/radioPhys"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:checked="false"
-                android:text="Profile" />
+                android:text="Physical" />
 
             <CheckBox
                 android:id="@+id/radioMeals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@+id/radioProf"
+                android:layout_toRightOf="@+id/radioPhys"
                 android:checked="false"
                 android:text="Meals" />
 
-            <CheckBox
-                android:id="@+id/radioPhys"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/radioProf"
-                android:checked="false"
-                android:text="Physical" />
 
             <CheckBox
                 android:id="@+id/radioMood"

@@ -95,10 +95,7 @@ public class PhysicalActivity extends AppCompatActivity {
                     boolean saved = mgr.insert_physical(user_id, weight, height, physdate);
                     if (saved == true) {
                         Toast.makeText(PhysicalActivity.this, "physical entries saved", Toast.LENGTH_LONG).show();
-
-                        // go to another view - landing view
-                        Intent intent = new Intent(PhysicalActivity.this, LandingView.class);
-                        startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(PhysicalActivity.this, "Failed to save physical entries", Toast.LENGTH_LONG).show();
                     }
