@@ -212,7 +212,7 @@ public class LongT_Illness extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         EditText editText = (EditText) view.findViewById(R.id.editText);
-                        mgr.insert_STI(user_id, editText.getText().toString());
+                        mgr.insert_LTIName(user_id, editText.getText().toString());
                         populateIllnessName();
                     }
                 })

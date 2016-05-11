@@ -164,8 +164,6 @@ public class LandingView extends AppCompatActivity {
         });
 
         ImageView insp = (ImageView) findViewById(R.id.inspect);
-        int color = Color.parseColor("#FF000000");
-        insp.setColorFilter(color);
         insp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,7 +175,6 @@ public class LandingView extends AppCompatActivity {
         });
 
         ImageView download = (ImageView) findViewById(R.id.LVdownload);
-        download.setColorFilter(color);
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,12 +187,20 @@ public class LandingView extends AppCompatActivity {
 
 
         ImageView logout = (ImageView) findViewById(R.id.btnLogout);
-        logout.setColorFilter(color);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 logout();
+            }
+        });
+
+        ImageView sync = (ImageView) findViewById(R.id.LVSync);
+        sync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new SynchronizeTask(LandingView.this).execute();
 
             }
         });

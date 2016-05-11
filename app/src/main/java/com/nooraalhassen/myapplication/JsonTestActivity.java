@@ -29,12 +29,16 @@ import com.nooraalhassen.myapplication.model.Physical;
 import com.nooraalhassen.myapplication.model.Profile;
 import com.nooraalhassen.myapplication.model.Sleeping;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -105,10 +109,10 @@ public class JsonTestActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (fromD == null || toD == null) Toast.makeText(JsonTestActivity.this, "You must choose your date range", Toast.LENGTH_LONG).show();
-                /*else if (!chkProf.isChecked() && !chkPhys.isChecked() && !chkMeals.isChecked() && !chkMood.isChecked()
+                else if (!chkProf.isChecked() && !chkPhys.isChecked() && !chkMeals.isChecked() && !chkMood.isChecked()
                         && !chkSleep.isChecked() && !chkIllness.isChecked() && chkExer.isChecked()) {
                     Toast.makeText(JsonTestActivity.this, "You must choose at least one category", Toast.LENGTH_LONG).show();
-                }*/
+                }
                 else new Task().execute();
             }
         });
@@ -116,7 +120,7 @@ public class JsonTestActivity extends AppCompatActivity {
     }
 
 
-    private class Task extends AsyncTask<Void,Void,Void> {
+    private class Task extends AsyncTask<Void,Void,Uri> {
 
         boolean prof = false;
         boolean phys = false;
@@ -159,7 +163,7 @@ public class JsonTestActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Uri doInBackground(Void... params) {
             DBmanager db = new DBmanager(JsonTestActivity.this);
 
             SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
@@ -191,12 +195,20 @@ public class JsonTestActivity extends AppCompatActivity {
                     .parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"
                             + "Self-Health-Manager" + "/");
 
-            createDirectoryAndSaveFile(JsonTestActivity.this, json, "Model.txt", mDirectoryPathname);
-            //Toast.makeText(JsonTestActivity.this, "Your user model is successfully downloaded!", Toast.LENGTH_LONG).show();
-            finish();
-            return null;
+           return  createDirectoryAndSaveFile(JsonTestActivity.this, json, "Model.txt", mDirectoryPathname);
+
+        }
+
+        @Override
+        protected void onPostExecute(Uri aUri) {
+            Toast.makeText(JsonTestActivity.this, "Your user model is successfully downloaded! to "
+                    + aUri.toString(), Toast.LENGTH_LONG).show();
+
         }
     }
+
+
+
 
 
     private static Uri createDirectoryAndSaveFile(Context context,

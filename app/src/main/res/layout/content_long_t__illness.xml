@@ -83,11 +83,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/longIll_name"
+        android:layout_alignBottom="@+id/addLTName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_above="@+id/textView59"
-        android:layout_alignRight="@+id/LT_save"
-        android:layout_alignEnd="@+id/LT_save"
-        android:layout_toEndOf="@+id/textView58"
-        android:layout_toRightOf="@+id/textView58" />
+        android:layout_toRightOf="@+id/addLTName"
+        android:layout_toEndOf="@+id/addLTName" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -153,6 +154,6 @@
         android:id="@+id/addLTName"
         android:src="@android:drawable/ic_input_add"
         android:layout_alignBottom="@+id/textView58"
-        android:layout_alignLeft="@+id/LTaddMed"
-        android:layout_alignStart="@+id/LTaddMed" />
+        android:layout_toRightOf="@+id/textView58"
+        android:layout_toEndOf="@+id/textView58" />
 </RelativeLayout>

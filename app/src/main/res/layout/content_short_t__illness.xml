@@ -124,18 +124,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/sDate_Dialog"
         android:src="@android:drawable/ic_menu_month"
-        android:layout_above="@+id/textView54"
-        android:layout_toRightOf="@+id/textView52"
-        android:layout_toEndOf="@+id/textView52" />
+        android:layout_alignBottom="@+id/STI_sdate"
+        android:layout_toLeftOf="@+id/STI_sdate"
+        android:layout_toStartOf="@+id/STI_sdate" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/eDate_Dialog"
         android:src="@android:drawable/ic_menu_month"
-        android:layout_alignBottom="@+id/textView54"
-        android:layout_toLeftOf="@+id/STI_edate"
-        android:layout_toStartOf="@+id/STI_edate" />
+        android:layout_alignBottom="@+id/STI_edate"
+        android:layout_toLeftOf="@+id/STI_med"
+        android:layout_toStartOf="@+id/STI_med" />
 
     <ImageView
         android:layout_width="wrap_content"

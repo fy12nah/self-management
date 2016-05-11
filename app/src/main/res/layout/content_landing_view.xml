@@ -128,8 +128,14 @@
         android:layout_height="50dp"
         android:id="@+id/LVProfile"
         android:src="@mipmap/ic_user"
-        android:layout_alignTop="@+id/btnLogout"
+        android:layout_toRightOf="@+id/LVdownload"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/LVSync"
+        android:src="@mipmap/ic_sync"
         android:layout_toLeftOf="@+id/btnLogout"
-        android:layout_toStartOf="@+id/btnLogout" />
+/>
 
 </RelativeLayout>

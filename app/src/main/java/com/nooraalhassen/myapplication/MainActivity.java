@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
         long user_id = preferences.getLong(Constants.userId, -1);
 
-        if (user_id == -1) {
 
+        if (user_id == -1) {
 
             // buttons declaration
             btnlogin = (Button) findViewById(R.id.buttonLog);
@@ -51,26 +51,32 @@ public class MainActivity extends AppCompatActivity {
                     String checkUser = username.getText().toString();
                     String checkPass = pass.getText().toString();
 
-
                     DBmanager manager = new DBmanager(MainActivity.this);
 
-                    // if username and password do match in database, then user is a member
-                    long id = manager.authenticate(checkUser, checkPass);
-                    if (id != -1) {
+                    if (checkUser.equals("") || checkPass.equals("")) {
+                        Toast.makeText(MainActivity.this, "Please Complete all fields", Toast.LENGTH_LONG).show();
+                    }
+                    else {
 
-                        // save user id in shared preferences for multi user environment
-                        SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putLong(Constants.userId, id);
-                        editor.commit();
+                        // if username and password do match in database, then user is a member
+                        long id = manager.authenticate(checkUser, checkPass);
+                        if (id != -1) {
 
-                        // go to another view - landing view
-                        Intent intent = new Intent(MainActivity.this, LandingView.class);
-                        startActivity(intent);
-                        finish();
-                    } else
-                        Toast.makeText(MainActivity.this, "Login Failed!", Toast.LENGTH_LONG).show();
+                            // save user id in shared preferences for multi user environment
+                            SharedPreferences preferences = getSharedPreferences(Constants.sharedpreferencesId, 0);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putLong(Constants.userId, id);
+                            editor.commit();
 
+                            // go to another view - landing view
+                            Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(MainActivity.this, LandingView.class);
+                            startActivity(intent);
+                            finish();
+                        } else
+                            Toast.makeText(MainActivity.this, "Login Failed!", Toast.LENGTH_LONG).show();
+
+                    }
                 }
             });
 

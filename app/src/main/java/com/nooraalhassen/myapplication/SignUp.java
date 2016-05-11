@@ -100,6 +100,8 @@ public class SignUp extends AppCompatActivity {
                     editor.putLong(Constants.userId, id);
                     editor.commit();
 
+                    Toast.makeText(SignUp.this, "Signup is successful; please complete your profile", Toast.LENGTH_LONG).show();
+
                     // goes to profile view to complete profile entries
                     Intent intent = new Intent(SignUp.this, ProfileActivity.class);
                     startActivity(intent);
